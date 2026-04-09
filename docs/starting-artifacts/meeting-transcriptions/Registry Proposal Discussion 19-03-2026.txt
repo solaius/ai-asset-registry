@@ -1,0 +1,198 @@
+# Registry Proposal Discussion 19-03-2026
+
+  Meeting started: 3/19/2026, 3:30:20 PM
+  Duration: 30 minutes
+  Participants: Adam Bellusci, Chris Hambridge, Dan Kuc, Edson Tirelli, Jon Burdo, Peter Double
+
+  [View original transcript](https://app.tactiq.io/api/2/u/m/r/LePLdRbSL7nQcsA8UpD7?o=txt)
+
+    
+
+  
+
+  
+    ## Highlights
+
+    > 06:10 Edson Tirelli: They are quite. Detailed in in the in their development process. We have four, you know, bugs and things like, This is very quick, You know, submit the tickets submit, We are get smart very quick but for features and development there is quite a bit of,
+> 07:04 Edson Tirelli: They do is everything that we do together, it gets broke down into it's very small PRS for review. So we need to take everything that we want to do and and break down into PRS that are easy to code review. I mean there is AI review that is automated but they do go through like they They make very detailed comments in all the PRs that we we submit. And again this is a good thing but it takes
+> 07:48 Edson Tirelli: initial goal with this. Because saying, we want, you know, we completely generic
+> 16:37 Edson Tirelli: Yeah, and they forget, you know, the the design that I showed here probably has about 10 15. So, you know, it's important that we understand. Okay. What are the
+> 18:29 Edson Tirelli: extract that into a separate very focused document that we will use to create this first design to submit and then work from there.
+> 19:03 Peter Double: Yeah. Just kubeflow. Yeah, and that's where that's where this for the PR. That's still out there. That's being looked at right now to turn it into a plug-in architecture. That's I was already talking about How do we get faster And then I was told about that PR, and it was just like, Yeah. And like, can we get there? So, being being able to, I think the biggest lift is going to be, you know, the actual creation of that plug-in architecture to allow for the addition of, of the new pieces and Adam, The entire idea of that is that we can put in new pieces downstream ourselves if we want, and then see about putting them upstream later. But I think that that's really the kind of first goal would be, can we build something like that into Mlflow Chris
+> 21:06 Jon Burdo: kubeflow catalog-gen by alessio: https://github.com/kubeflow/model-registry/pull/2219
+> 24:32 Peter Double: Things like that as well as data sets notebooks and whatever comes out tomorrow
+> 28:23 Edson Tirelli: okay, well, next week we have the, the whole
+> 28:33 Edson Tirelli: Next week could be hard.
+
+  ## Transcript
+
+  00:00 Edson Tirelli: The document with you.
+00:01 Jon Burdo: I don't think so.
+00:03 Edson Tirelli: know I, I
+00:04 Peter Double: I got you.
+00:08 Edson Tirelli: So John and Dan? I don't know how to pronounce his name is. His last name is Key. A C.
+00:16 Jon Burdo: recruits like like a TS at the end I believe he said
+00:22 Edson Tirelli: so, Then.
+00:27 Edson Tirelli: dan kuc
+00:29 Peter Double: Oh, pardon the good morning. I just copied and pasted to do it. I said to Edson
+00:30 Edson Tirelli: Pardon the rank.
+00:33 Peter Double: John I can throw it over to Dan as well, actually. Since he's on here, oh, Dan dank, that's amazing.
+00:47 Dan Kuc: Yes.
+00:52 Peter Double: Love it.
+01:00 Edson Tirelli: Okay. Again gives out here Um I don't know Peter. If you know everybody here that
+01:09 Peter Double: I know a Jon and I have been on calls. We've never actually been introduced
+01:09 Adam Bellusci: Yeah. Yeah.
+01:12 Peter Double: John. Nice to meet you Dan. I don't think we've ever met before but yeah, nice to meet you both. I am the product manager over the mcp portions of Openshift AI and I've been also looking at some of the other AIS sets that we'd be dealing with Only which is where we're coming together here but just so you are aware if you well, yeah. The ecosystem is just going kind of like minimum viable product for three four. So, you know, probably, you know, all about the catalog but the lifecycle operator, the Gateway partner, ecosystems all part of three, four. And then for three five, we're shooting to try to get not only the MCP registry out there but the agent registry and now the Skills Registry is on the table as well. And all of those are looking at being included within MLFLOW from my understanding. You know, I I know that the Skills registry just came in and is being asked for by the field and we're heavily. Looking at how skills are gonna work, Mcps been a long slog of getting it moving and dealing with it. And then, of course, we already have the model registry in catalog, which longer term there's deciding, how the Registry is gonna evolve into possibly MLFLOW for the models as well. But I'm just very I said how AI asset management is taking place and how we're going to move forward with that. So yeah, nice to officially meet you both. Finally.
+02:38 Jon Burdo: Likewise.
+02:41 Adam Bellusci: Is there any other work you'd like to put on the table before you before we started?
+02:44 Peter Double: I have some side projects going on that. I'd love to talk to you guys about but no.
+02:50 Edson Tirelli: Okay.
+02:51 Adam Bellusci: So for Peter and I work closely so we, you know, we're we're all good. You know, Peter for your edification or or you know, we're currently in the process of doing the eval of MVP for getting models over to to Mlflow, we're
+03:09 Peter Double: Okay.
+03:15 Adam Bellusci: committed to doing a hard stop on any new development in kubeflow as it relates to registries, so that everything can go to Mlflow and you know landing landing other pieces of the AI hub with in three, five would be freaking fantastic if we can do it.
+03:38 Edson Tirelli: okay, I the reason I asked to have this conversation Peter, Adam, Is more to talk about our approach to this, then the actual content of the requirements documents that Peter shared. I think the documents are very comprehensive. I think you know you did a good job trying to keep focused on the what not so much on the how. So I appreciate that, thank you. But I think we need to be clear in beyond the same page in how we are going to achieve that.
+04:27 Edson Tirelli: My understanding and Chris young and then can correct me if I'm wrong. But my understanding is the ownership in the engineering will be with your teams. Is that? rightly understood is There, any question there?
+04:42 Chris Hambridge: Yeah. No.
+04:45 Edson Tirelli: I don't know if you'll be working with me as the Arctic on on this or if it's going to be someone in gems organization or if it's Both and I know Chris, you have been doing a lot of the architecture work yourself. So
+05:07 Chris Hambridge: Likely with you is what my guess would be in terms of the collaboration and the
+05:08 Edson Tirelli: You know.
+05:11 Chris Hambridge: fact that you guys already have that, you know, correspondence with Mlflow. But I mean in terms of how we bring it up within the organization, broadly kind of thing, I think, you know, The standard process will.
+05:26 Edson Tirelli: Okay. So Peter and and Adam, I just wanted to clarify this here with you. And and the team here is where I think we need to take action. Um, databricks and the Mlflow community, they have been extremely cooperative and very happy to work with us. I personally am surprised after years. Hearing horror stories about working with databricks, so the experience has been much more positive than than I was expecting.
+06:04 Edson Tirelli: however, there is, how is however,
+06:07 Adam Bellusci: but,
+06:09 Peter Double: Yeah.
+06:10 Edson Tirelli: They are quite. Detailed in in the in their development process. We have four, you know, bugs and things like, This is very quick, You know, submit the tickets submit, We are get smart very quick but for features and development there is quite a bit of,
+06:33 Edson Tirelli: you know, analysis and back and forth and discussions in order to to get, you know, good quality out of the out of the gate. So it's not a bad thing. It's a good thing because everything that goes in, you know, it's really easy to proper testing documentation, and and quality. But at the same time it takes time to get there. Okay, the other thing is everything. That.
+07:04 Edson Tirelli: They do is everything that we do together, it gets broke down into it's very small PRS for review. So we need to take everything that we want to do and and break down into PRS that are easy to code review. I mean there is AI review that is automated but they do go through like they They make very detailed comments in all the PRs that we we submit. And again this is a good thing but it takes
+07:39 Edson Tirelli: time. So what I think we need to do here is understand exactly what is our
+07:39 Peter Double: Sure.
+07:48 Edson Tirelli: initial goal with this. Because saying, we want, you know, we completely generic
+07:57 Edson Tirelli: registry for assets. is a good thing, from a architecture in design perspective, but trying to Land this all at once, will be very tricky. So, what I wanted to hear from especially u Peter and Adam is what are the expectations that you have for this registries? So I'll use registers in the plural here and try. For us to try to agree on the first steps. So that the team here and myself we can get started upstream. As soon as possible because it will take a while.
+08:46 Peter Double: Sure.
+08:47 Adam Bellusci: Can I ask and I won't pin you to this, but what are we talking about a while?
+08:50 Edson Tirelli: okay, let me
+08:53 Adam Bellusci: Are we saying we can land one of these per our release which is per quarter? Do we think we can consume to? Is it like, Do we, what do we, what I mean, just a general expectation, would be nice.
+09:09 Edson Tirelli: Show you a medium size. So you so it will be easier for me to understand for me to explain. You know.
+09:23 Adam Bellusci: I mean, Peter from our perspective MCP needs to go first because we're going to have the catalog. We need a registry to go along with that. And I think agencies it has to has to be super fast follow.
+09:33 Peter Double: And the agent. And we we on our side and edson. I completely get the databrick side on, on a slow moving. Make sure it's right situation. But just to give you all the heads up that agent Registry and MCP, registry will be to top big rocks. That would be working on for three five, Jeff has agreed. That those will be very, very high priority. But as you said like it doesn't matter how fast we are if ML if databricks isn't ready or if we don't have the right pieces in place. But from my perspective, MCP and agents are going to be, we're gonna be pushing hard to get those in because those are the two that must. But when you're saying as well like what would be there? I was, you know, the number of AI assets might even be able to be there, but not all the connecting, functionalities and pieces outside of there, right? That's also a possibility.
+10:30 Edson Tirelli: You. Yeah, and and what I want to what I want to clarify is if we were developing something from scratch, we would, you know, immediately design something that is completely generic for assets and then we would build on top, right? Because we are building on top of Mlflow. We want to get there but we don't get there in a single step. We start to remove the tech deck engineer size anything that is specific. I mean, the architecture of Mlflow is pretty good. It has plugins everywhere already but anything that we detect that needs to be generalized and a plug-in applicant apply to it plugging the sign applied to it We do it incrementally right? So that's the key point. So let me explain to you
+11:16 Peter Double: Okay.
+11:20 Edson Tirelli: what happens there. This is an example of a feature that is medium sized, medium medium to large. Is feature tracer, careful. This is the design that we have to agree on in order to get the approval to commit the code. Okay? So you can see here that there is, you know, the list of requirements that we want to engage the scope. Why we're doing this. And then we go into the example, APIs. And then, what are the changes to the APIs? And in this case here, And line. And then What are the decision matrix? So what are the alternatives and impacts and then on the options, which are the options, you know, file structure in this case, like folder structure in this case. So, my point here is, you know, changes to the databases changes to the rest API. My point is it's very detailed.
+12:19 Edson Tirelli: so, this design here, Took a little over a month to agree to get agreed on. So the back and forth. Between us and databricks had, you know, over a hundred comments in in the design that we were back and forth deciding and and drilling down etc. Once this is ready, then it's just a matter of how fast can you do the code, okay. So To have an idea while I was working on them. With the design, I was working the coding parallel.
+12:54 Edson Tirelli: So when I got approval the other day, then I split down into seven different PRS and they are reviewing the PRS and probably in a week or two, we will get all of this merged. But getting to that point where the design is approved, is the long road. Okay. Most of this don't don't be scared. Most of this is aI generated,
+13:14 Peter Double: Okay.
+13:20 Edson Tirelli: right? So we say I you can generate a lot but because of the back and forth, this is not a full-time job. It's like Those hour or two per day, that you have to keep iterating, iterating, iterating, until you reach agreement. Does. Does that clarify why? It takes time and how the process their works.
+13:43 Peter Double: Yeah, I mean admin situation needs to be taken care of before you can actually
+13:44 Adam Bellusci: Yep.
+13:47 Peter Double: even lay hands on keyboard. So,
+13:50 Edson Tirelli: Yeah.
+13:50 Peter Double: That. Yeah, they want to make sure that they have it buttoned up, so they're not wasting their time, reviewing actual full PRS
+13:57 Edson Tirelli: Yeah. And and again
+13:57 Peter Double: Yeah.
+14:01 Edson Tirelli: this is, I was doing the holding parallel so it's not, it's not like a waste of time, but you know, if if you if we work on the coding parallel to accelerate at the end, but we need to always be prepared to change based on feedback and comments and and etc to it's a great on.
+14:22 Peter Double: Okay.
+14:23 Edson Tirelli: Okay.
+14:23 Adam Bellusci: I'm gonna, I'm gonna ask a, I'm gonna ask a dumb question. I always ask them questions, I'm good for those. The MLFLOW registry is a metadata store at its heart. Just like the Cube Flow
+14:37 Edson Tirelli: Yeah.
+14:38 Adam Bellusci: registry.
+14:39 Edson Tirelli: Yeah.
+14:41 Adam Bellusci: One AI asset, another AI asset. I don't care, right? The commonality between these things are huge. so, getting a different Type into the into the flow into mlflow should be. I mean to me it feels like it should be relatively easy as long as we're not worried overall necessarily about the connecti bits quite yet and the connecti bits could actually live downstream until we get Approval from Mlflow, right? Like there's there's some ways to work this so that
+15:13 Peter Double: Yeah.
+15:18 Adam Bellusci: we can get the Functionality. Lit, right? And and in the right place and it's like, Okay, yes what? But you know the automation parts are going to be handled by our dashboard. See our previous conversation of, should the dashboard just be a downstream thing and not an upstream thing? Etc etc. Like it feels like These wouldn't be necessarily large PRS because you're like Oh you know we need to track these other things for an MCP server, right? Like we want metadata associated with the tools that are in the MCP server. That's not something that we have for for models, and then skills will have some, you know, they'll be little bits of of changes to the database structure.
+16:07 Adam Bellusci: But they shouldn't shouldn't be huge, right?
+16:09 Edson Tirelli: Yeah, more. I fully agree with you but we don't, we will not my point here is not the size of the changes, but how we approach this in the process with them. Let's Understand what is the priority for us and start immediately on those because the the document that Peter shared I think there are like a hundred and ten of functional requirement listed.
+16:35 Peter Double: Just a couple, just a couple. Yeah.
+16:37 Edson Tirelli: Yeah, and they forget, you know, the the design that I showed here probably has about 10 15. So, you know, it's important that we understand. Okay. What are the
+16:49 Edson Tirelli: priorities for us? Let's break this down into several designs. Let's start working on the first one immediately because it will take time until we get the approval. Once you get the approval, then getting the code merged is faster.
+17:04 Peter Double: Hmm. Yeah.
+17:04 Adam Bellusci: is there a PM over on the databrick side that we could interface with that might Cut some of this. Back and forth.
+17:15 Edson Tirelli: Um, I The answer is, I don't know. We interact all the time with the engineering team and the back and forth is not so much on. The requirements. It's more on the design. How do we incorporate, you know, those from those functional requirements? Yeah.
+17:33 Adam Bellusci: Okay, then we probably can't add any value then, okay?
+17:37 Edson Tirelli: But we like, we interact with databricks daily. They are very responsive, there
+17:37 Peter Double: Okay.
+17:44 Edson Tirelli: are some difficulties on, some of them are in Hong Kong and in, you know, Asia, so the time lines, like, you know, don't always align but if we work during the day they review and provide answers during the night and then we work during day again and tons of
+18:01 Adam Bellusci: Yep. Okay.
+18:06 Edson Tirelli: Okay. so, Peter and Adam, I think they ask for you is of that. What is the real priority? What we tackle first. And I don't need like an answer right now, but we need to flag that in the document because we will have to
+18:26 Peter Double: Okay.
+18:29 Edson Tirelli: extract that into a separate very focused document that we will use to create this first design to submit and then work from there.
+18:41 Peter Double: Right? And, and Jon, I wanted to ask you, were you the individual that submitted the PR for the kubeflow plugin architecture?
+18:50 Jon Burdo: No.
+18:50 Peter Double: now, that was
+18:51 Edson Tirelli: It wasn't.
+18:51 Peter Double: Who was that?
+18:52 Edson Tirelli: Met.
+18:53 Peter Double: Matt. Okay. Yeah. And that's really I mean,
+18:55 Chris Hambridge: No, you're talking about Alessio.
+18:58 Peter Double: It was Alessio that did it.
+19:00 Chris Hambridge: for the kubeflow plug-in architecture, we're talking about
+19:03 Peter Double: Yeah. Just kubeflow. Yeah, and that's where that's where this for the PR. That's still out there. That's being looked at right now to turn it into a plug-in architecture. That's I was already talking about How do we get faster And then I was told about that PR, and it was just like, Yeah. And like, can we get there? So, being being able to, I think the biggest lift is going to be, you know, the actual creation of that plug-in architecture to allow for the addition of, of the new pieces and Adam, The entire idea of that is that we can put in new pieces downstream ourselves if we want, and then see about putting them upstream later. But I think that that's really the kind of first goal would be, can we build something like that into Mlflow Chris
+19:47 Chris Hambridge: So I just wanted to give Edson a little clarification. The plug-in architecture that he's talking about is being able to add
+19:51 Edson Tirelli: Yeah.
+19:54 Chris Hambridge: Ai assets into the catalog portion using a plugin kind of capability. So, you
+19:57 Edson Tirelli: Okay.
+20:00 Chris Hambridge: know, currently we've built models and mcp, but we figured out, Oh, there's a lot that we can genericize, there's code, we can make common kind of things. So how do we approach it from that flow is with the
+20:11 Edson Tirelli: Okay, now that makes sense. I I got confused. I thought it was the mlflow plugin for Kubernetes for
+20:18 Chris Hambridge: Yeah.
+20:20 Peter Double: I was actually looking for the link for it and, of course, in the middle of meeting when you need it, it's hard to find. But yeah, the idea, there definitely being there's commonalities, keep the common pieces across, but then give the ability to extend with, you know, specific things for mcpe or for skills or for agents on top of that. But yeah, I I can definitely try to kind of create a structured kind of step forward from an MVP standpoint for what we could get to immediately. What is required versus what will be the later nice to have over time. And again, we're just we're trying to get to a DP by three five of being able to have at least agents and Mcps in there. That's like a must have. But my assumption is skills would be coming because I mean the field is
+21:02 Edson Tirelli: Me.
+21:06 Jon Burdo: kubeflow catalog-gen by alessio: https://github.com/kubeflow/model-registry/pull/2219
+21:06 Peter Double: multiple people, Multiple clients from the field have been asking for that as well. But that is even there's no real deployment or anything to worry about there so much because they're just the MD files. It's more of just a tracking system at that point of what's the version. Of them as well.
+21:20 Edson Tirelli: Yes. Okay. Yeah. The you know Mlflow uses the same model at the moment for models and for prompts however I do think there is some tech debt in there on how they did that. So we will have to Drill down into the actual code and proposal design that takes that into account. That takes, you know, incoming new assets into account.
+21:49 Peter Double: Okay. Yep. Totally makes sense.
+21:50 Chris Hambridge: Because right right now prompts are our models right? Those with a special flag
+21:54 Edson Tirelli: Yeah.
+21:56 Chris Hambridge: that says, This is a prompt by the way.
+21:59 Edson Tirelli: Yeah.
+22:00 Peter Double: Yeah, okay so I didn't know that on the backend that it's hilarious though. So they're not even thought so that's another question. That would be interesting for databricks as well, is do they want to kind of build in a semi-green space within the project and have this just all stood up there and then retro fit to what's there to make that a little bit more free flowing of getting things in there.
+22:24 Edson Tirelli: This yeah, it is a discussion that we will have to have with them.
+22:28 Peter Double: Okay.
+22:28 Edson Tirelli: But, you know, tell us what is the, the priority there? If it sends a DNA agents that's it, they are super interested in Mcbn agents by the way, especially agent. So we we do have their interest there in their willingness to to collaborate the faster we get started the better. And by the way, the only reason we haven't started is because we told them, we are not ready for it. So it's on us as soon as we are ready. They are happy to get started.
+23:02 Peter Double: Okay with with K gente being pushed really fast and really hard the agent registry is going to become a very top need and so yeah I think we are ready you know in a place to be able to get ready. Did have a quick question though that I was hoping as a talking point for today, was really the five, a couple policy linking like, Where where do you you all see and Adam, you might even if it's not the right place, we can talk about it severely as well. But Chris, you brought this up in the document was, You know, we're gonna have gateways gateways, you're gonna be enforcing policy. The registry needs to be aware of that policy, but it's not the policy system, right? It's linking to a policy system. Is that correct? Like, it's not maintaining the policy. It's it's a reference metadata point to the policy system. Correct. All right. And then on the lifecycling of these for
+23:55 Adam Bellusci: Yep.
+23:59 Peter Double: we have the MCP lifecycle operator coming in. But as edson, you put in the document as well. Each one would be handling. The registries would not handle the lifecycling though would be using tools that that do the lifecycling the actual outside of the registry tools that do that. So, you know, for agents Kay Gente is doing the lifecycling as far as I'm aware of I would have to check with Adam on that one. You know skills. Little Amory is actively looking at skills right now but we've got guardrails prompts knowledge sources evaluators coming.
+24:32 Peter Double: Things like that as well as data sets notebooks and whatever comes out tomorrow
+24:33 Adam Bellusci: Data sets. I know.
+24:37 Peter Double: morning, you know? Like so that's one of the reasons we really wanted to push for the plug-in architecture. Is that every day? Something new is coming and we don't want to take a year to get there so I don't know how
+24:45 Edson Tirelli: Yes. Yes.
+24:50 Peter Double: We got lucky semi-lucky that OCP was like, Hey, we want to build this MCP live cycle, operator but for models, we built out all the deployment pieces for that. As far as I'm aware, we're not using a third party, but we built that all these other ones. It'll be interesting to see how we plan on lifecycling them, but I would not necessarily include The lifecycling out, you know, as part of this MVP, it would be use the lifecycle operator for mcpe, use Cageent for agents, and then we'll see if they figure out something for skills.
+25:21 Peter Double: So it's more about the metadata and registry just getting those available basically.
+25:27 Edson Tirelli: Okay. Chris in John and Dan, I think we need to talk. I don't know who is managing the workload of the team, but we need to talk about commitments there and Peter and Adam, as soon as you have the priorities flagged in the document, let us know. It's a starting point and we go from there.
+25:55 Peter Double: All right. Yeah. That the only other thing is, I'll make sure I'll be talking
+25:55 Adam Bellusci: Okay.
+25:59 Peter Double: with Jeff again to make sure that it is clearly listed on the one to endless as a high priority. So that way, if anybody gets in your way, you'll see that as a high priority 2.2 Chris.
+26:10 Adam Bellusci: And we'll need that from a UI perspective.
+26:13 Peter Double: Oh yeah. Chris.
+26:16 Chris Hambridge: I think the only lesson learned that I want to take away is make sure that we get some of this in front of Jason and Jessica sooner rather than later. So that we don't go through six months of. This is how we think we might do something for MCP, registry and then it changes because of face-to-face happens and we actually get people in the room to talk about it.
+26:36 Peter Double: Chris. That's exactly why. We're not telling them until three five. Yeah, I have
+26:41 Adam Bellusci: Yeah.
+26:42 Peter Double: to talk to. I want to talk to Jason about it, really why I wanted to get Edson and Chris you you two really looking at this as well as a couple others like Anne and Cat. Taking a look at it as well, was to make sure that we're all kind of in line before I approach Jessica and Jason, but I'll definitely be checking in with them to say, Hey, this is where we're looking to go. This is how we're looking to do it and make sure that they're fully on board so they can tell other people that is the decision.
+27:07 Peter Double: So yeah, I love the idea though, Mlflow going to GA everything coming around here. It seems like this is a good way to move forward and Adam, finally may get his wish of one registry to rule them all. So, that would be a win for all of
+27:21 Adam Bellusci: Edson just listened to me early. We would be there already.
+27:21 Peter Double: us. so,
+27:29 Adam Bellusci: No good. This this is, this is progress. It's a matter of how do we work with our new partner? And how do we get this? How do we get this out? The door, you know, and how do we architect this in such a way that we Can't be blocked by them. If we write like, this is my biggest concern because we're gonna get so much pressure from the people above us to deliver things. And then we have an externality, which is why this pluggable architecture with the downstream UI.
+27:58 Adam Bellusci: is really attractive to me from a concept because We control our own fates at that point.
+28:05 Edson Tirelli: No Adam. I I don't know if if you want to kick this off or if you want me to
+28:05 Peter Double: Yeah.
+28:13 Edson Tirelli: kick it off because we need to bring other into this discussion.
+28:18 Adam Bellusci: Yeah, go ahead. Go ahead and schedule something for us as early as Monday.
+28:23 Edson Tirelli: okay, well, next week we have the, the whole
+28:25 Adam Bellusci: There's a big present.
+28:28 Edson Tirelli: Workshop on 3.43.5. SO
+28:31 Peter Double: In Monday Tuesday Wednesday. Yeah.
+28:33 Edson Tirelli: Next week could be hard.
+28:35 Adam Bellusci: Okay. Well, as soon as soon as you guys free up, let's get something on the schedule and Peter. I Peter, and I can work our magic on our side and and see
+28:40 Edson Tirelli: I,
+28:45 Adam Bellusci: what we can see what skids we can grease.
+28:50 Peter Double: And once we kind of get the requirements in place, just a reminder that and because I I can't ask me this yesterday as well. Adam owns the overall solution and and the individual PMS, over each asset will kind of take control of what needs to be there, but I'm very invested in this. So I'll be that right there
+29:04 Adam Bellusci: Yeah.
+29:07 Peter Double: with Adam on this throughout.
+29:09 Edson Tirelli: so,
+29:10 Adam Bellusci: Okay, you can't get rid of us. We're like bad pennies. No. Hey, for the folks that work with us, if you know, you guys know, we're, we're we're good at. We're good. Faith actors. So, Anytime you find a roadblock if it's in the engineering Org or if it's in the be org doesn't matter bring it to one of us and we will help try to batter it down.
+29:34 Peter Double: Yeah.
+29:35 Adam Bellusci: Right. Like, I don't believe in the distinction between the two organizations, we deliver one product
+29:42 Peter Double: Yeah, and we're definitely going to try to get roblox out of your way because this is a known need across the board here. Not just from us saying it, but the clients asking for it. So
+29:52 Adam Bellusci: It and I'll tell you one thing if we can if we can move from delivering just an MCP catalog to develop a preview in 12 months because we were talking about it when some it ended last year. To actually delivering several registries and several new options for for customers in a much shorter amount of time we can point to this team and this group and say, Look at what's been done right? And and that like, this is how we can, how we can model.
+30:24 Adam Bellusci: Doing things as I think Peter. And I and, and Chris, I'm sure you've felt it as well, the frustration of the endless cycles of back and forth and and churning in our own organization, right? We got to break it.
+30:39 Peter Double: All right.
+30:39 Edson Tirelli: Let's go then.
+  

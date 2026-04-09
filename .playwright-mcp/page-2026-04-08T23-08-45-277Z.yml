@@ -1,0 +1,448 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: RH
+        - text: AI Asset Registry
+      - generic [ref=e6]:
+        - link "Why Now" [ref=e7] [cursor=pointer]:
+          - /url: "#why-now"
+        - link "Problem" [ref=e8] [cursor=pointer]:
+          - /url: "#problem"
+        - link "Solution" [ref=e9] [cursor=pointer]:
+          - /url: "#three-parts"
+        - link "Architecture" [ref=e10] [cursor=pointer]:
+          - /url: "#architecture"
+        - link "Flow" [ref=e11] [cursor=pointer]:
+          - /url: "#flow"
+        - link "Assets" [ref=e12] [cursor=pointer]:
+          - /url: "#assets"
+        - link "Roadmap" [ref=e13] [cursor=pointer]:
+          - /url: "#roadmap"
+        - link "The Ask" [ref=e14] [cursor=pointer]:
+          - /url: "#the-ask"
+  - generic [ref=e16]:
+    - generic [ref=e17]:
+      - generic [ref=e18]: Red Hat OpenShift AI
+      - heading "A Plugin Architecture for AI Asset Registries." [level=1] [ref=e19]:
+        - text: A Plugin Architecture for
+        - text: AI Asset Registries.
+      - paragraph [ref=e20]: Build the plugin framework in MLflow that enables MCP Server, Agent, and Skills registries for RHOAI 3.5 — then rapidly extend it to every AI asset type without building bespoke registries one at a time.
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: 5→0
+          - generic [ref=e24]: Manual steps eliminated
+        - generic [ref=e25]:
+          - generic [ref=e26]: 7+
+          - generic [ref=e27]: Asset types governed by one framework
+        - generic [ref=e28]:
+          - generic [ref=e29]: 11+
+          - generic [ref=e30]: Competing registries already launched
+    - img [ref=e32]:
+      - generic [ref=e41]:
+        - generic [ref=e43]: MCP
+        - generic [ref=e44]: Servers
+        - generic [ref=e46]: Agents
+        - generic [ref=e48]: Skills
+        - generic [ref=e50]: Models
+        - generic [ref=e52]: Guard-
+        - generic [ref=e53]: rails
+        - generic [ref=e55]: Prompts
+        - generic [ref=e57]: Data
+        - generic [ref=e58]: Sources
+        - generic [ref=e60]: Plugins
+      - generic [ref=e63]: 1 PLUGIN
+      - generic [ref=e64]: Architecture
+      - generic [ref=e65]: MLflow
+  - generic [ref=e67]:
+    - generic [ref=e68]: Registry = Governance • Catalog = Discovery
+    - paragraph [ref=e69]: Registries manage identity, lifecycle, policy, and trust. Catalogs help users browse, search, and select. Separate concerns. Unified experience.
+    - generic [ref=e70]:
+      - generic [ref=e71]:
+        - heading "MLflow" [level=4] [ref=e72]
+        - paragraph [ref=e73]:
+          - text: Registry backend
+          - text: Storage, versioning, governance
+      - generic [ref=e74]: ↔
+      - generic [ref=e75]:
+        - heading "Kubeflow Hub" [level=4] [ref=e76]
+        - paragraph [ref=e77]:
+          - text: Catalog backend
+          - text: Discovery, browsing, selection
+  - generic [ref=e79]:
+    - generic [ref=e80]: Momentum
+    - heading "Why Now" [level=2] [ref=e81]
+    - paragraph [ref=e82]: Internal products, upstream partners, and enterprise customers are converging on this requirement simultaneously.
+    - generic [ref=e83]:
+      - generic [ref=e84]:
+        - heading "The window is open — and closing" [level=3] [ref=e85]
+        - paragraph [ref=e86]: Databricks is building the skills registry prototype by end of April 2026. If Red Hat is not at the table with a design proposal when that work begins, we lose influence over the upstream direction of MLflow's plugin architecture. Every release without a registry framework means another bespoke integration per asset type.
+        - generic [ref=e87]: The upstream design approval cycle is approximately one month. Starting the proposal now is not early — it is the minimum lead time to influence the outcome.
+      - generic [ref=e89]:
+        - generic [ref=e90]:
+          - img [ref=e92]
+          - generic [ref=e94]:
+            - heading "Products Building Agents" [level=4] [ref=e95]
+            - paragraph [ref=e96]: OCP, AAP, and Lightspeed are each building agents, MCPs, and skills. 4 MCP servers ship in the 3.4 catalog.
+        - generic [ref=e97]:
+          - img [ref=e99]
+          - generic [ref=e102]:
+            - heading "Partners Asking" [level=4] [ref=e103]
+            - paragraph [ref=e104]: Microsoft asked about plugin support in April 2026. Partners need to know how we package and distribute integrations.
+        - generic [ref=e105]:
+          - img [ref=e107]
+          - generic [ref=e111]:
+            - heading "Enterprise Customers" [level=4] [ref=e112]
+            - paragraph [ref=e113]: State Farm, Citibank, Dell, Prudential, Florida Blue are actively asking how RHOAI will govern MCP servers and agents in production.
+        - generic [ref=e114]:
+          - img [ref=e116]
+          - generic [ref=e119]:
+            - heading "Upstream Alignment" [level=4] [ref=e120]
+            - paragraph [ref=e121]: MLflow is expanding GenAI capabilities. Databricks targets end of April 2026 for the skills registry prototype.
+        - generic [ref=e122]:
+          - img [ref=e124]
+          - generic [ref=e127]:
+            - heading "Ecosystem Exploding" [level=4] [ref=e128]
+            - paragraph [ref=e129]: Smithery, Docker, GitHub, and 11+ MCP catalogs/registries have launched. The market is forming now.
+        - generic [ref=e130]:
+          - img [ref=e132]
+          - generic [ref=e135]:
+            - heading "Governance Gap" [level=4] [ref=e136]
+            - paragraph [ref=e137]:
+              - text: Most competitors do
+              - emphasis [ref=e138]: discovery only
+              - text: . Nobody does enterprise governance. That is Red Hat's lane.
+  - generic [ref=e140]:
+    - generic [ref=e141]: The Problem
+    - heading "AI is Expanding Beyond Models" [level=2] [ref=e142]
+    - paragraph [ref=e143]: Organizations need to govern agents, MCP servers, prompts, skills, and more. The current model registry was not purpose-built for this — it was built for models and extended. Building a bespoke registry for each new asset type does not scale.
+    - generic [ref=e144]:
+      - generic [ref=e145]: The Reality Today
+      - paragraph [ref=e146]:
+        - text: In RHOAI 3.4, an MCP server goes from catalog to consumption through
+        - strong [ref=e147]: 5 steps across 4 disconnected systems
+        - text: ", with"
+        - strong [ref=e148]: 2 manual hand-offs
+        - text: and
+        - strong [ref=e149]: zero governance checkpoints
+        - text: . No system records who approved it, what version is deployed, or whether it passed security scanning. Now imagine doing this for agents, skills, prompts, guardrails, and every future AI asset type.
+    - generic [ref=e150]:
+      - generic [ref=e151]:
+        - img [ref=e153]
+        - generic [ref=e155]:
+          - heading "Fragmented Governance" [level=3] [ref=e156]
+          - paragraph [ref=e157]: Each new AI asset type would need its own registry effort. Duplicated work, inconsistent UX, slower time-to-market for new asset support.
+      - generic [ref=e158]:
+        - img [ref=e160]
+        - generic [ref=e163]:
+          - heading "Manual Stitching" [level=3] [ref=e164]
+          - paragraph [ref=e165]: Today, connecting catalog → deployment → gateway → Studio requires manual steps at every stage. Fragile and ungoverned.
+      - generic [ref=e166]:
+        - img [ref=e168]
+        - generic [ref=e171]:
+          - heading "No Source of Truth" [level=3] [ref=e172]
+          - paragraph [ref=e173]: No single system knows which assets are approved, deployed, consumable, or how they relate to each other.
+      - generic [ref=e174]:
+        - img [ref=e176]
+        - generic [ref=e180]:
+          - heading "Agent Sprawl" [level=3] [ref=e181]
+          - paragraph [ref=e182]: Enterprises face uncontrolled proliferation of agents, models, and tools. "DIY proliferation" creates risk, not value.
+  - generic [ref=e184]:
+    - generic [ref=e185]: The Solution
+    - heading "Three Parts, One Framework" [level=2] [ref=e186]
+    - paragraph [ref=e187]: The AI Asset Registry spans three distinct areas. The plugin architecture is what we are proposing now. Gen AI Studio already exists. The ecosystem is what comes next.
+    - generic [ref=e188]:
+      - img [ref=e190]
+      - generic [ref=e194]:
+        - generic [ref=e195]: What "Plugin Architecture" Means Concretely
+        - paragraph [ref=e196]:
+          - text: The plugin model extends MLflow's artifact type system so each AI asset type registers as a
+          - strong [ref=e197]: typed plugin
+          - text: with its own metadata schema, lifecycle states, and governance rules — without forking or rebuilding the core registry. One framework, many asset types, zero bespoke registries.
+    - generic [ref=e198]:
+      - generic [ref=e199]:
+        - generic [ref=e200]: "01"
+        - generic [ref=e201]: MVP — RHOAI 3.5 DP
+        - heading "The Plugin Architecture & Priority Registries" [level=3] [ref=e202]
+        - paragraph [ref=e203]: A plugin-based registry framework in MLflow that enables MCP Server, Agent, and Skills registries — and unlocks rapid addition of future asset types.
+        - generic [ref=e204]: "Backend: MLflow + Databricks upstream"
+        - list [ref=e205]:
+          - listitem [ref=e206]: MCP Server Registry (Dev Preview)
+          - listitem [ref=e207]: Agent Registry (Dev Preview)
+          - listitem [ref=e208]: Skills Registry (Dev Preview)
+          - listitem [ref=e209]: Metadata-first governance
+          - listitem [ref=e210]: Lifecycle state & certification tracking
+          - listitem [ref=e211]: RBAC-aware visibility
+          - listitem [ref=e212]: Plugin model for future asset types
+      - generic [ref=e213]:
+        - generic [ref=e214]: "02"
+        - generic [ref=e215]: Exists — RHOAI 3.4
+        - heading "Gen AI Studio" [level=3] [ref=e216]
+        - paragraph [ref=e217]: Already in OpenShift AI. Prompt management ships in 3.4. Will integrate with registry-governed assets for a unified consumption experience.
+        - generic [ref=e218]: Existing in RHOAI
+        - list [ref=e219]:
+          - listitem [ref=e220]: Prompt management (3.4)
+          - listitem [ref=e221]: Agent workspace & testing planned
+          - listitem [ref=e222]: Evaluation & iteration UI planned
+          - listitem [ref=e223]: Registry-governed asset consumption
+          - listitem [ref=e224]: Inner-loop → outer-loop workflows
+      - generic [ref=e225]:
+        - generic [ref=e226]: "03"
+        - generic [ref=e227]: Future
+        - heading "The Ecosystem" [level=3] [ref=e228]
+        - paragraph [ref=e229]: Marketplace, packaging, distribution, and partner plugin model. The hard, new problem that the registry foundation enables.
+        - generic [ref=e230]: "Backend: Federation Layer"
+        - list [ref=e231]:
+          - listitem [ref=e232]: Skill & plugin packaging format
+          - listitem [ref=e233]: Partner onboarding & distribution
+          - listitem [ref=e234]: Federation with external registries
+          - listitem [ref=e235]: Marketplace for governed assets
+          - listitem [ref=e236]: Cross-catalog discovery
+  - generic [ref=e238]:
+    - generic [ref=e239]: Architecture
+    - heading "System Overview" [level=2] [ref=e240]
+    - paragraph [ref=e241]: How the registry connects discovery, deployment, runtime enforcement, and consumption into one governed lifecycle.
+    - img [ref=e243]:
+      - generic [ref=e244]: SOURCES
+      - generic [ref=e245]:
+        - generic [ref=e247]: Internal Dev
+        - generic [ref=e248]: R&D teams
+        - generic [ref=e250]: Red Hat Products
+        - generic [ref=e251]: OCP, AAP, Lightspeed
+        - generic [ref=e253]: ISV Partners
+        - generic [ref=e254]: Microsoft, others
+        - generic [ref=e256]: Community
+        - generic [ref=e257]: Open source
+      - generic [ref=e258]:
+        - generic [ref=e259]: VALIDATION
+        - generic [ref=e261]: Security Pipeline
+        - generic [ref=e262]: SBOM • CVE Scan • Provenance • Attestation
+        - generic [ref=e264]: Quarantine
+        - generic [ref=e265]: Review queue
+        - generic [ref=e267]: PHASE 2+
+      - generic [ref=e268]: GOVERNANCE
+      - generic [ref=e270]: AI Asset Registry
+      - generic [ref=e271]: MLflow • Plugin Architecture • MCP Servers • Agents • Skills
+      - generic [ref=e272]: Identity • Metadata • Lifecycle • Certification • Trust • Audit
+      - generic [ref=e274]: metadata sync
+      - generic [ref=e275]: deploy CRD
+      - generic [ref=e277]: policy enforcement
+      - generic [ref=e280]: PLATFORM
+      - generic [ref=e282]: Catalog
+      - generic [ref=e283]: Kubeflow Hub • Discovery
+      - generic [ref=e285]: Lifecycle Operator
+      - generic [ref=e286]: k8s-sigs • Deployment
+      - generic [ref=e288]: MCP Gateway
+      - generic [ref=e289]: Kuadrant • Runtime
+      - generic [ref=e292]: governed access
+      - generic [ref=e293]: CONSUMPTION
+      - generic [ref=e295]: Gen AI Studio
+      - generic [ref=e296]: Prompt mgmt • Agent workspace • Evaluation
+      - generic [ref=e298]: AAA
+      - generic [ref=e299]: AI Available Assets
+      - generic [ref=e300]:
+        - generic [ref=e301]: "LEGEND:"
+        - generic [ref=e302]: Data flow
+        - generic [ref=e303]: Feedback loop
+        - generic [ref=e305]: Phase 2+ (not MVP scope)
+  - generic [ref=e307]:
+    - generic [ref=e308]: Lifecycle
+    - heading "From Manual to Governed" [level=2] [ref=e309]
+    - paragraph [ref=e310]: The registry eliminates manual stitching between platform components, creating one governed lifecycle.
+    - generic [ref=e311]:
+      - generic [ref=e312]:
+        - heading "Today (RHOAI 3.4)" [level=3] [ref=e313]
+        - generic [ref=e314]: Fragmented & Manual
+        - generic [ref=e315]:
+          - generic [ref=e316]:
+            - generic [ref=e317]: "1"
+            - generic [ref=e318]:
+              - text: Discover in Catalog
+              - generic [ref=e319]: Browse available MCP servers
+          - generic [ref=e320]:
+            - generic [ref=e321]: "2"
+            - generic [ref=e322]:
+              - text: Deploy via Operator
+              - generic [ref=e323]: MCPServer CRD → Deployment + Service
+          - generic [ref=e324]:
+            - generic [ref=e325]: "3"
+            - generic [ref=e326]:
+              - text: Register in Gateway manual
+              - generic [ref=e327]: Manually create MCPServer CR for gateway
+          - generic [ref=e328]:
+            - generic [ref=e329]: "4"
+            - generic [ref=e330]:
+              - text: Update ConfigMap manual
+              - generic [ref=e331]: Manually configure Studio access
+          - generic [ref=e332]:
+            - generic [ref=e333]: "5"
+            - generic [ref=e334]:
+              - text: Consume in Studio
+              - generic [ref=e335]: Available in Gen AI Studio
+      - generic [ref=e336]:
+        - heading "Target (RHOAI 3.5+)" [level=3] [ref=e337]
+        - generic [ref=e338]: Registry-Governed
+        - generic [ref=e339]:
+          - generic [ref=e340]:
+            - generic [ref=e341]: "1"
+            - generic [ref=e342]:
+              - text: Discover & Evaluate
+              - generic [ref=e343]: Sources evaluated via security pipeline
+          - generic [ref=e344]:
+            - generic [ref=e345]: "2"
+            - generic [ref=e346]:
+              - text: Govern in Registry system of record
+              - generic [ref=e347]: Metadata, lifecycle, certification, trust
+          - generic [ref=e348]:
+            - generic [ref=e349]: "3"
+            - generic [ref=e350]:
+              - text: Surface in Catalog automatic
+              - generic [ref=e351]: Approved assets appear for discovery
+          - generic [ref=e352]:
+            - generic [ref=e353]: "4"
+            - generic [ref=e354]:
+              - text: Deploy & Register automatic
+              - generic [ref=e355]: Registry-informed gateway configuration
+          - generic [ref=e356]:
+            - generic [ref=e357]: "5"
+            - generic [ref=e358]:
+              - text: Consume via Studio governed
+              - generic [ref=e359]: RBAC-scoped access through governed paths
+  - generic [ref=e361]:
+    - generic [ref=e362]: Coverage
+    - heading "AI Asset Types" [level=2] [ref=e363]
+    - paragraph [ref=e364]: The plugin architecture enables rapid addition of new asset types. Three priority registries drive the initial implementation; the rest follow via the same plugin model.
+    - paragraph [ref=e365]:
+      - strong [ref=e366]: "The proposal:"
+      - text: Build the plugin architecture for these 3 priority registries. Once the plugin framework exists, secondary asset types can be added rapidly without bespoke registry efforts.
+    - table [ref=e367]:
+      - rowgroup [ref=e368]:
+        - row "Asset Type Priority Registry Backend Status" [ref=e369]:
+          - columnheader "Asset Type" [ref=e370]
+          - columnheader "Priority" [ref=e371]
+          - columnheader "Registry Backend" [ref=e372]
+          - columnheader "Status" [ref=e373]
+      - rowgroup [ref=e374]:
+        - row "Priority Registries — 3.5 Dev Preview (Plugin Architecture MVP)" [ref=e375]:
+          - cell "Priority Registries — 3.5 Dev Preview (Plugin Architecture MVP)" [ref=e376]
+        - row "MCP Servers Highest MLflow 3.5 Dev Preview" [ref=e377]:
+          - cell "MCP Servers" [ref=e378]
+          - cell "Highest" [ref=e379]
+          - cell "MLflow" [ref=e380]
+          - cell "3.5 Dev Preview" [ref=e381]
+        - row "Agents Highest MLflow 3.5 Dev Preview" [ref=e382]:
+          - cell "Agents" [ref=e383]
+          - cell "Highest" [ref=e384]
+          - cell "MLflow" [ref=e385]
+          - cell "3.5 Dev Preview" [ref=e386]
+        - row "Skills Highest MLflow 3.5 Dev Preview" [ref=e387]:
+          - cell "Skills" [ref=e388]
+          - cell "Highest" [ref=e389]
+          - cell "MLflow" [ref=e390]
+          - cell "3.5 Dev Preview" [ref=e391]
+        - row "Secondary Assets — Enabled by Plugin Architecture" [ref=e392]:
+          - cell "Secondary Assets — Enabled by Plugin Architecture" [ref=e393]
+        - row "Models High Kubeflow Hub → MLflow Existing capability" [ref=e394]:
+          - cell "Models" [ref=e395]
+          - cell "High" [ref=e396]
+          - cell "Kubeflow Hub → MLflow" [ref=e397]
+          - cell "Existing capability" [ref=e398]
+        - row "Guardrails Medium TBD MCP guardrail DP in 3.4" [ref=e399]:
+          - cell "Guardrails" [ref=e400]
+          - cell "Medium" [ref=e401]
+          - cell "TBD" [ref=e402]
+          - cell "MCP guardrail DP in 3.4" [ref=e403]
+        - row "Prompts Medium MLflow Prompt Registry Migrating from MLflow's current solution" [ref=e404]:
+          - cell "Prompts" [ref=e405]
+          - cell "Medium" [ref=e406]
+          - cell "MLflow Prompt Registry" [ref=e407]
+          - cell "Migrating from MLflow's current solution" [ref=e408]
+        - row "Data Sources Future TBD Planned" [ref=e409]:
+          - cell "Data Sources" [ref=e410]
+          - cell "Future" [ref=e411]
+          - cell "TBD" [ref=e412]
+          - cell "Planned" [ref=e413]
+        - row "Notebooks Future TBD Planned" [ref=e414]:
+          - cell "Notebooks" [ref=e415]
+          - cell "Future" [ref=e416]
+          - cell "TBD" [ref=e417]
+          - cell "Planned" [ref=e418]
+        - row "Plugins Future TBD Skill/MCP/CLI/Template packaging" [ref=e419]:
+          - cell "Plugins" [ref=e420]
+          - cell "Future" [ref=e421]
+          - cell "TBD" [ref=e422]
+          - cell "Skill/MCP/CLI/Template packaging" [ref=e423]
+  - generic [ref=e425]:
+    - generic [ref=e426]: Roadmap
+    - heading "Phased Delivery" [level=2] [ref=e427]
+    - paragraph [ref=e428]: Build the plugin architecture and three priority registries for 3.5. Extend to secondary assets. Then build the ecosystem.
+    - generic [ref=e429]:
+      - generic [ref=e430]:
+        - generic [ref=e431]: April 2026
+        - generic [ref=e432]: RHOAI 3.4 — Foundation
+        - generic [ref=e433]: MCP Catalog with 4 servers, MCP Guardrail Dev Preview, Gen AI Studio with prompt management, Summit demo.
+        - generic [ref=e434]:
+          - generic [ref=e435]: MCP Catalog
+          - generic [ref=e436]: Guardrails DP
+          - generic [ref=e437]: Prompt Mgmt
+          - generic [ref=e438]: Summit Demo
+      - generic [ref=e439]:
+        - generic [ref=e440]: "Target: RHOAI 3.5"
+        - generic [ref=e441]: Plugin Architecture + 3 Priority Registries (MVP)
+        - generic [ref=e442]: Plugin-based registry framework in MLflow. MCP Server, Agent, and Skills registries as Dev Preview. MCP Gateway + Lifecycle Operator in RHOAI.
+        - generic [ref=e443]:
+          - generic [ref=e444]: MCP Registry DP
+          - generic [ref=e445]: Agent Registry DP
+          - generic [ref=e446]: Skills Registry DP
+          - generic [ref=e447]: Plugin Architecture
+          - generic [ref=e448]: Gateway in RHOAI
+          - generic [ref=e449]: Lifecycle Op
+      - generic [ref=e450]:
+        - generic [ref=e451]: Phase 2
+        - generic [ref=e452]: Secondary Asset Types via Plugins
+        - generic [ref=e453]: Models, guardrails, and prompts onboarded via plugin architecture. Relationship modeling across asset types. Lifecycle automation.
+        - generic [ref=e454]:
+          - generic [ref=e455]: Models (High)
+          - generic [ref=e456]: Guardrails (Med)
+          - generic [ref=e457]: Prompts Migration (Med)
+          - generic [ref=e458]: Supply Chain
+      - generic [ref=e459]:
+        - generic [ref=e460]: Phase 3
+        - generic [ref=e461]: Ecosystem & Marketplace
+        - generic [ref=e462]: Plugin packaging format, partner distribution, federation across registries, cross-catalog discovery, marketplace for governed assets.
+        - generic [ref=e463]:
+          - generic [ref=e464]: Plugin Packaging
+          - generic [ref=e465]: Federation
+          - generic [ref=e466]: Partner Distribution
+          - generic [ref=e467]: Marketplace
+  - generic [ref=e470]:
+    - img [ref=e472]
+    - heading "The Ask" [level=2] [ref=e476]
+    - paragraph [ref=e477]: "Approve the AI Asset Registry plugin architecture for RHOAI 3.5 Dev Preview:"
+    - generic [ref=e478]:
+      - generic [ref=e479]:
+        - generic [ref=e480]: "1"
+        - generic [ref=e481]:
+          - strong [ref=e482]: Submit upstream design proposal to Databricks/MLflow
+          - paragraph [ref=e483]: The ~1 month approval cycle means we must start immediately to influence the skills registry prototype direction.
+      - generic [ref=e484]:
+        - generic [ref=e485]: "2"
+        - generic [ref=e486]:
+          - strong [ref=e487]: Staff 3 priority registries as Dev Preview targets
+          - paragraph [ref=e488]: MCP Servers, Agents, and Skills — the three highest-demand asset types for RHOAI 3.5.
+      - generic [ref=e489]:
+        - generic [ref=e490]: "3"
+        - generic [ref=e491]:
+          - strong [ref=e492]: Include MCP Gateway + Lifecycle Operator in RHOAI 3.5
+          - paragraph [ref=e493]: These components are upstream-ready and complete the governed lifecycle. RHAIRFE-1457 RHAIRFE-1456
+    - generic [ref=e494]:
+      - img [ref=e495]
+      - generic [ref=e497]:
+        - generic [ref=e498]: Risk of Inaction
+        - paragraph [ref=e499]: Each release without a registry framework means another bespoke integration per asset type. Databricks is building the skills registry prototype by end of April 2026 — if we are not at the table, we lose influence over upstream direction.
+  - contentinfo [ref=e500]:
+    - paragraph [ref=e502]:
+      - text: AI Asset Registry Proposal — Red Hat OpenShift AI —
+      - link "RHAIRFE-1370" [ref=e503] [cursor=pointer]:
+        - /url: https://redhat.atlassian.net/browse/RHAIRFE-1370
+      - text: — Peter Double, Principal PM

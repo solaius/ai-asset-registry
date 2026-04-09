@@ -1,0 +1,320 @@
+# AI asset registries sync - RHAIRFE-1370 07-04-2026
+
+  Meeting started: 4/7/2026, 11:31:35 AM
+  Duration: 43 minutes
+  Participants: Aakanksha Duggal, Adam Bellusci, Adel Zaalouk, Ann Marie Fred, Charlie Doern, Chris Hambridge, Dimitri Saridakis, Eder Ignatowicz, Edson Tirelli, Emilio Garcia, Francisco Arceo, Gage Krumbach, Hunter Gerlach, Justin Sun, Matt Prahl, Peter Double, Varsha Prasad Narsing
+
+  [View original transcript](https://app.tactiq.io/api/2/u/m/r/S6CFixQDjL4ODe6bTLkr?o=txt)
+
+    
+
+  
+
+  
+    ## Highlights
+
+    > 06:50 Adam Bellusci: matter of devil's always in the details skills was probably third on my list. I probably it actually is third on my list of things that I that I think we need to get out there. But if if they're doing it, that's fantastic because that means we can work on MCP. Registry and agent registry, right? Like that's kind of like how to how do we do that? And Matt your work upstream with them to say Look we we want this generic asset registry so that we can plug in new asset types is exactly where this needs to be for everybody's benefit, right? Because next week, there might be something else new right. I can see a guardrails registry. I know that data sets are coming. I know, you know, all these things, so that I mean, this is so far, you know, a great news meeting. So
+> 09:56 Peter Double: are available to see what you can use. So just think like Registry is to me the most important thing and what I really even wanted for MCP, but I see mcpe making sense with a catalog. I'm having trouble understanding if the discoverability of skills is as important as the governance and versioning and keeping of the skills which I personally would find much more valuable but I'm
+> 11:50 Adam Bellusci: Hey composer. So I'm just gonna circ back to the previous comment about catalogs, registries etc. And and Peter, I was very much where your I was very much where you are back in the day when we were spinning up model registry and model catalog that I thought registries were the important, the the be all and end all that has not proven to be the case.
+> 13:13 Peter Double: registries be important because of the gateways that are being involved with
+> 15:27 Peter Double: Microsoft yesterday was very interested in our future for skills.  https://github.com/microsoft/azure-skills 
+++ on hunter
+> 18:51 Edson Tirelli: My my hand got lowered by mistake there. So I would jump in just reinforce the governance part of the, the registry in NY. The skills is important is
+> 19:50 Peter Double: It in just a throw in there on the catalog portion. I still don't. I'm still unaware of how that catalog would really look for skills because there's going to be a plethora and they're going to be very not optimized per use at that point so I you know on the registry front that's why for skills. I saw the registry being important edson, exactly that. So I'm still interested though if
+> 22:07 Emilio Garcia: This logic and all of the other components that it interacts with. And these are the other entities that you would be registering, right? Like your mgp tools, your skills. These are all pieces of a big picture that defines like the behavior of your application, right? And that's important governance piece that we will eventually need to cover no matter what So like those are like the free wins that we can maybe take in the mlflow space, you know, like How can we differentiate between an agent that you're developing versus the different instances that you've deployed and then all of the different things that it's touched and interact with on a daily basis. But that
+> 24:13 Adel Zaalouk: then like, you know, we have models. So if we break down an Asian, it's gonna turn into like a scale and MCV server model and a connection of all these things. And then let's supply chain of all these things and we have guardrails and other things as well that are coming. But what I'm trying to say is like Safe bets are and things that are less fluctuating because today is cloud code.
+> 24:33 Adel Zaalouk: Maybe tomorrow like something else open clock tomorrow is could be something else so we don't want to today, please take the strategy till we get our infrastructure, right? My my personal take would be. We should not marry their
+> 30:32 Adam Bellusci: and in my assumption is, That there may be issue, there may be areas where there's a compelling reason.
+> 33:53 Ann Marie Fred: That's the fundamental issue - there is no good portable format for skills across agents yet
+> 34:50 Aakanksha Duggal: I like https://github.com/zjunlp/SkillNet and it's super easy to download a skill through this tool.
+> 35:06 Adel Zaalouk: Cub one because I tried to submit a skill today actually did an antivirus thing
+
+  ## Transcript
+
+  00:00 Adam Bellusci: Good.
+00:01 Edson Tirelli: Their targeting end of April. I don't know if that is going to happen, but
+00:07 Adam Bellusci: Good.
+00:08 Aakanksha Duggal: Um, quick.
+00:09 Adam Bellusci: But the bat is so you said the good news. Does that mean there's bad news?
+00:14 Aakanksha Duggal: Can we?
+00:15 Edson Tirelli: The. So the concern and I think that's what we are going to discuss. Here is just to ensure that there is alignment.
+00:24 Charlie Doern: should we record?
+00:29 Justin Sun: Go ahead of you.
+00:31 Adam Bellusci: It doesn't hurt to record. Well.
+00:34 Francisco Arceo: yeah +1
+00:36 Aakanksha Duggal: Yeah, I'm gonna go ahead and record.
+00:38 Peter Double: Yeah.
+00:40 Adam Bellusci: How's the? suppose the question then becomes, like, So database is doing this, which is great. But we get what we get right? Like We, they're not going to change their plans because we're not in alignment, right? Like, that's that's how this works.
+01:04 Edson Tirelli: kind of,
+01:07 Adam Bellusci: Yeah.
+01:08 Francisco Arceo: I would so like I'll push back heavily on that framing in that. Like in llama
+01:08 Edson Tirelli: Name.
+01:13 Francisco Arceo: stack, we get whatever we want. And like is that the is that the right thing as like a business for us to like, but the house on obvious answer is no. So like I I think as a, we should really anchor on us having controls not always a good thing and VL and we You know, do a really great job of helping the community flourish. And that means that we lose control. Sorry.
+01:39 Adam Bellusci: Oh yeah. No, no I I well I mean I'm a pm. I'm a proponent of more control, not less. so right, so I will always air on that on that side because I see
+01:55 Francisco Arceo: I I hear you. I do think that like there are valid places where that creates downstream problems for us for sure.
+02:01 Adam Bellusci: Right, exactly exactly. That's all.
+02:04 Francisco Arceo: and in like I just like, That's priced in, you know? But
+02:08 Adam Bellusci: No, no, it totally is, and it's part of, it's part of, it's part of open source. And that's okay, right? But like in my comment is databricks is going to do what
+02:12 Francisco Arceo: Yeah.
+02:16 Adam Bellusci: they want and if we don't like it,
+02:17 Edson Tirelli: https://redhat-internal.slack.com/archives/C09RBJ4AJHY/p1775498885978359
+02:20 Adam Bellusci: What's our option, right? Like we have to, we have to alter it in some way, shape, or form, and then, right? Then we're back to the OH, Cool.
+02:34 Aakanksha Duggal: Yeah, I'm gonna bring us back quickly to the agenda. So this meeting was organized so that we could all sync on this rfe that was created by a hunter. I believe this has further broken being broken down into two individual parts. Now
+02:48 Adam Bellusci: I'm really good at getting off agendas ;-)
+02:54 Aakanksha Duggal: you can find the link in the notes document but I would like for us to come back to this point and discuss, Are there any teams that are already working on skills Registry? Before we go ahead with this rfe because the idea behind this building is to understand who are all the teams that are already looking into this understand. Where does each team contribute is? They're going to be one particular AI asset registry or there's already multiple formations happening.
+03:27 Aakanksha Duggal: So I will open the floor for whoever have already started working on this and
+03:33 Peter Double: I,
+03:33 Aakanksha Duggal: Come back with more questions. Go for it. It's
+03:37 Edson Tirelli: So I see, Matt just joined so I'll let him share the context. Matt, The question here is on the conversation with databricks on the asset registry and in
+03:46 Matt Prahl: Yeah.
+03:48 Edson Tirelli: particular skill registry.
+03:50 Matt Prahl: Yeah absolutely yeah. So maybe specifically to the skills registry because that's more concrete. So databricks MLFLOW maintainers are currently working on adding this. It's like a catalog and registry experience in MLFLOW. They're aiming for like end of April for delivering that so they already have a prototype. I've been in contact with them just providing some of the ideas and requirements from the ambient team. So there's a slack thread that I can share but the gist of it that is that we want a way to like, have an equivalent experience to NPM install where you have like a lock file and you have your specific versions and you would just be able to like, download your specific skills for your workflow from ML well. So thanks for linking that so that specifically around the skills registry. So the MCP registry is the other one that they're interested in.
+04:48 Matt Prahl: It's a little bit more complicated but what we are proposing essentially is, I think what has been previously proposed for quiplow Model? Registry / Aihub, which is to basically build off of anthropics, mcpe registry spec. But then also make it easy and ML float to add new registry types for different AI. it's so like have a system where we can just generate the boilerplate for it, the main Concern. So far with that is collaboration on UX design because they don't want just a generic UI for like an MCP registry, they want Taylor made for that but the back end can be generic and so that's And we also need to account that they're building out an MCP gateway in Mlflow.
+05:41 Matt Prahl: And so we need to account for the case where it needs to work. Well for their use case with the MCP gateway, but also work in isolation as well because we don't have the AI gateway enabled in our deployment, So those long ramble hopefully that kind of covered it. Well Edson can
+05:57 Peter Double: Yeah, and I don't know, Matt, if you want if when you're talking to them next
+05:59 Edson Tirelli: Yeah.
+06:00 Matt Prahl: And missing.
+06:01 Edson Tirelli: Thank you, Matt. I'll just make a comment and on Adam, your comment at the beginning that they are doing what they want. Yes, they are advanced on the prototype. But you can see in the thread there, that Matt is pasting that they are taking our requirements as well. So it's the right time for us to ensure that we have the clear requirements, because then it will work for both of us and goes into that direction Adam that you wanted of. Not proliferating, you know, one registry for each thing. We have a, you know, a consolidated registry that can provide that experience.
+06:45 Adam Bellusci: If this is a, I see this as an overall positive, right? But now it's just a
+06:49 Edson Tirelli: Yeah.
+06:50 Adam Bellusci: matter of devil's always in the details skills was probably third on my list. I probably it actually is third on my list of things that I that I think we need to get out there. But if if they're doing it, that's fantastic because that means we can work on MCP. Registry and agent registry, right? Like that's kind of like how to how do we do that? And Matt your work upstream with them to say Look we we want this generic asset registry so that we can plug in new asset types is exactly where this needs to be for everybody's benefit, right? Because next week, there might be something else new right. I can see a guardrails registry. I know that data sets are coming. I know, you know, all these things, so that I mean, this is so far, you know, a great news meeting. So
+07:39 Adam Bellusci: I'm waiting for the other shoe is,
+07:48 Peter Double: coming off of the MCP conference last week, you know, as everybody on this calls probably where the number one thing that was set at the beginning of every talk was is MCP dead. And what it really comes down to is that everybody sees the kind of the same way that it's wrapping these, Mcps with the skills and other pieces that you need with them, which is going to be where the value is. So I'm already gonna be throwing out there. That plugins are really going to be one that we're gonna be. You know, also looking at is how these can be packaged all together and be able to have registries of plugins. So that way they can be easily tracked and then served up. And I see one of the questions on there is about catalogs. I'd be interested with everybody's I am kind of feedback on the skills. I saw less value in the skills catalog and more value in a plug-in
+08:33 Edson Tirelli: I,
+08:36 Edson Tirelli: yeah, and a key point in the registry discussion with Databricks is linking the different assets
+08:36 Peter Double: catalog coming after we have a plug-in registry ready to go as well. But I would love to hear what people have to say about that, just to kind of get some ideas together. Emilio.
+08:46 Emilio Garcia: What do you mean by plugins?
+08:48 Peter Double: Plugins being more of the actual plugins that can be installed to your like, Claude Claude Code plugin. So a lot of discussions were about the fact that the skills and Mcps package together into a plug-in with CLI, with other config CONFIGS, that are necessary as part of those plugins.
+09:14 Aakanksha Duggal: Yeah, I would like to learn more around. Why would we require a registry versus a catalog? And what are a few caveats that were help us decide if you want to go with either or and what is stopping us from doing both?
+09:29 Peter Double: Sure. And the simplest way to not get too deep on that because this could be an hour, long conversation of people. Again, if we even get rid of the names registry and catalog and just say discoverability versus governance, really,
+09:39 Adam Bellusci: Catalog = Exploration
+09:44 Peter Double: just keeping it to that where the Registry is really going to end up controlling that governance and where the catalog is your, your mail order catalog, your
+09:49 Adam Bellusci: Registry = Governance
+09:52 Peter Double: your store front, your amazon.com of, you know your your different items that
+09:55 Gage Krumbach: ++
+09:56 Peter Double: are available to see what you can use. So just think like Registry is to me the most important thing and what I really even wanted for MCP, but I see mcpe making sense with a catalog. I'm having trouble understanding if the discoverability of skills is as important as the governance and versioning and keeping of the skills which I personally would find much more valuable but I'm
+10:20 Peter Double: interested in everybody's feedback on that. Emilio.
+10:25 Emilio Garcia: Yeah, I think there's a lot of it's My I think one, one thing that I'm curious about here is if is where what where we're headed with this? Are we trying is this going to be an agent builder? Is this gonna be like because if we're building catalogs, right? And these are things that I'm thinking about, like, Can I download this? That's the question. I would ask. Can I, can I take this? And can I put it into my app? Is that where we as Red Hat are heading? And is that where Mlflow as a product is heading? And if that both are true, then that's good to know.
+10:54 Peter Double: Yeah. I won't comment on Mlflow but I'll definitely comment on the product itself. We I literally just got off of a UX call, where they were going through, what the the packaging of the agent looks like and how that was going to be used more usable within our area. The way I look at it is Gen Ai studio and all these AI assets are your experimentation area where you can see what all those pieces are and then be able to code and put those together into an agent package where we will be moving more towards that that agent build perspective. So then, how Mlflow would be reacting to that? I'd be interested in everybody's feedback there but the idea. Yes, that we are moving much more towards the ability to put these agents together and then agents with agents together in terms of orchestration flows and things like that. We finally got the okay to move in that direction.
+11:45 Peter Double: Which is great news for like, you know, that's where I wanted to be all along. So
+11:50 Adam Bellusci: Hey composer. So I'm just gonna circ back to the previous comment about catalogs, registries etc. And and Peter, I was very much where your I was very much where you are back in the day when we were spinning up model registry and model catalog that I thought registries were the important, the the be all and end all that has not proven to be the case.
+12:17 Adam Bellusci: Now, I will explain catalog took off like a Like a fire, you know, like a firecracker, right? Like it just it just blew up and it like, I thought there was going to be some interest in it. And I thought there was gonna be a lot of interest in registry, and it was exactly the opposite, which is really interesting. I think it's because of where customers are in their journey, right? They haven't gotten to the governance piece.
+12:40 Adam Bellusci: They're like, we just want to know what we can use. And, and so like, i I think I think when we're looking at these things, the exploration discoverability piece gives us I think that gives us more more with the with the, with the customers to start and, and the registry can be like a really fast follow, like the next release you get the registry, right? So just
+13:06 Peter Double: I mean that's what we're doing with MCP and it seems like it will work. And the
+13:08 Adam Bellusci: Right.
+13:09 Peter Double: only piece I put there for registries is that I think now we're going to see
+13:10 Adam Bellusci: Yeah.
+13:13 Peter Double: registries be important because of the gateways that are being involved with
+13:15 Adam Bellusci: Yeah.
+13:16 Peter Double: what we're doing that. But yeah, I completely agree like I you know people want to get in they're not quite where we're at yet.
+13:26 Hunter Gerlach: I think I would like to give you so a few of, you know who I am. But for those of you don't, I'm part of our consulting services team and I want to give you kind of a real world use case of how we might use this. Just to kind of stick in your head and I completely agree that catalog is where everybody starts because they don't care. They just want to get it working. And then eventually don't care about the governance aspect of it a little too late. So if we can keep that together and make that available from day one that's that's just always a better signal to them. But from consulting and we're, we're really at the point where we have to rethink our business and and skills, I mean, we offer skills to customers like, you know, humans skills, right? We we go in and we do an activity and that's that's effectively what skills are ableing enabling customers to do without us. And so we're trying to find the right way to do this, to scale this throughout our organization so that, you know, a few thousand consultants can can have the same skills as The greatest consultants that are out there and so a catalog would help them find those and and deliver those faster and then we're kind of We're starting the conversation with customers of What would a trusted skills? Registry look like right? You can go and pull things from open car from from wherever else.
+14:42 Hunter Gerlach: You want to pull, pull skills or other capabilities from, but they're not trusted. And so that's how I see. This being useful is ultimately, getting us towards a trusted registry of Where we do what we're that does and provides things that they can rely on. But you know, for the random consultant who doesn't know, you know maybe they're a satellite expert and they don't know anything about AI and they want to pull down those those AI skills or AI capabilities, they can then use those. So just kind of keep those that that story in mind as as what we're thinking about, what we're trying to communicate to customers as you as you build things out going forward.
+15:27 Peter Double: Microsoft yesterday was very interested in our future for skills.  https://github.com/microsoft/azure-skills 
+++ on hunter
+15:33 Edson Tirelli: I don't know if.
+15:33 Dimitri Saridakis: Photoshop.
+15:37 Peter Double: Varsha, you know.
+15:39 Aakanksha Duggal: Thanks Hunter, that definitely helps
+15:40 Varsha Prasad Narsing: And sorry. So I just wanted to bring up the whole conversation since we are all talking about. Registries, I think a few months back, we also had a conversation with databricks on the agent, registries pre, and post deployment. And then there was a strat created for it. We started working on it, but since we are working towards Summit and that was not slated for Summit, we stopped working. And then we concentrate more on each and templates where all the Egypt for now.
+16:08 Varsha Prasad Narsing: The registry would just mean agent templates and get up repository and folks could just go and look at the depository, select the agent template and then create a container file deployed using kgt, and then somehow we bring in Mlflow later on. And then we use Post each and deployment registry integrated with MLFLOW. So I know we are talking about skills registry here somehow. We need to be able to coordinate all the assets on one place. So I just wanted to get back and check. Where are we? With each registries. Are we still going to go with MLFLOW for the agent registry? What is being there? Thoughts on this? And if so is it being prioritized post summit? Because they had been talks with agency which is another project that Okra had been working on. But I I took a quick look at that kind of didn't fit much on our pre-deployment part of it if we are going to integrate with them and flow with the whole question is And we shouldn't be working in isolation on skill Registry, MCP registry together and then bring up agent registry where both of them are. Many of them don't have coordination at all. So just to get an idea on where we are with the agent side of it.
+17:24 Adam Bellusci: My my priority is to try to get eight to try to get MCP and Agent registry out. Concurrently that would be the hope the 3.5 release sounds like with MLFLOW doing the sales piece, we might be able to get all three out but that's where there are tickets for the team to to be looking at both. MCP, registry and agent registry. And those were flagged as the two next ones we needed to work on.
+17:48 Peter Double: Yeah. Yeah, and on the agency front there, varsha um, I did speak to them a little bit about this, and I mentioned that I, I, of course, solution was have no say in the matter. But I think that those people need to be heavily involved to light speed us forward with what they've ran into, and how we might be able to bring in their functionality with this. But I, you know, again on the solutioning front, I think they're more from my perspective, we should be using their knowledge to get what we need in Mlflow. But yeah, Addle is over that piece. And I did mention to him today that we're going to need user stories and specifics around that, just like we're doing right now for MCP, and that we need to make sure that that is something that's being prioritized for right now, because it will take a while to get that as I believe Edson and John, we're telling me before we need to push those and make sure that we have strong requirements. For each one of the different registries we're asking for.
+18:51 Edson Tirelli: My my hand got lowered by mistake there. So I would jump in just reinforce the governance part of the, the registry in NY. The skills is important is
+19:09 Edson Tirelli: The linking between the assets in the version of the skills is something that we will need right away. So, if the skill is, depending on a particular version, a version of this Q is depending on a particular version of tools and in etc, news by agents that linking between the assets, I think will be a key differential. So the catalog give us the starting point but it is a static. And as the user
+19:36 Peter Double: That's exactly why i see the rise of registry importance.
+19:39 Edson Tirelli: adapts this CO2 it's only that versioning with the link into the other assets I think it's what to make the feature really useful.
+19:50 Peter Double: It in just a throw in there on the catalog portion. I still don't. I'm still unaware of how that catalog would really look for skills because there's going to be a plethora and they're going to be very not optimized per use at that point so I you know on the registry front that's why for skills. I saw the registry being important edson, exactly that. So I'm still interested though if
+20:11 Edson Tirelli: Yes.
+20:13 Peter Double: people have ways in which the catalog would be very valuable for skills, how we would deal with actually showing those in categorizing those because I don't think it will look the same as mcp and models. But yeah, I'm interested to see how we might be able to organize that and make that look good if Are going to go that route and I do believe there would be two RFPs by the way, from the question in there. One for registry. One. For the catalog.
+20:39 Emilio Garcia: I think we have. Kind of a problem where there's like the ambition, and then there's like the the product as it stands right now. Right, we're trying to build this agent builder, that is a nebulous thing that we don't really have. And so we're kind of shooting in the dark on what all of these different pieces of it should be. And I feel like we're kind of at a point where maybe we should put together like a picture of what we want it to look like because I don't know if all of these
+21:10 Edson Tirelli: I,
+21:11 Emilio Garcia: things really make sense in isolation and when we try to go put them together later, I think it's gonna be kind of like a humpty dumpty, you know. So I think
+21:19 Ann Marie Fred: Like what Dash just showed us an hour ago Peter?
+21:20 Emilio Garcia: maybe that would be really helpful. As a starting point because that I think we're I think we have a vision that we
+21:25 Peter Double: Exactly :-)
+21:29 Emilio Garcia: want. And I think if that would get us on the same page because Mlflow as a product, right now at its core is like still a telemetry product. And so like what Mlflow is a product might want, isn't necessarily going to line up with what we need for agent building and the registries and mlflow, the way I always viewed them as someone who has spent a lot of time working in the telemetry product space is right. Like, when you build a telemetry product, like the core of the information that you provide to, the customer isn't just these traces, it's the relationships between your business.
+22:07 Emilio Garcia: This logic and all of the other components that it interacts with. And these are the other entities that you would be registering, right? Like your mgp tools, your skills. These are all pieces of a big picture that defines like the behavior of your application, right? And that's important governance piece that we will eventually need to cover no matter what So like those are like the free wins that we can maybe take in the mlflow space, you know, like How can we differentiate between an agent that you're developing versus the different instances that you've deployed and then all of the different things that it's touched and interact with on a daily basis. But that
+22:40 Edson Tirelli: I,
+22:42 Emilio Garcia: requires a mature customer, which it sounds like, from what you're telling me, we don't have. So we could build these things in parallel, but it sounds like what we want to be focusing on as it is this agent building experience. And so then is there A product that we're targeting or a series of products, like Are we going to aim it at claw? Should we be building skilled registries in isolation, or should we target? plugins for cursor, or for Claude code or for Open claw and have those be things that are in our catalog and say, This is a plug-in that lets you connect Claude code to Openshift right? Or something like that. Like, is that More where we're headed. I don't want to. I don't want to hijack too far here, but I feel like we're kind of like in this space where there's the big idea and then all of these little pieces that we want to be part of it.
+23:41 Peter Double: Adel's. You want to we trying to jump in on that one because I was Yeah.
+23:44 Adel Zaalouk: I got your eyes has her hands up. So let's go ahead and
+23:50 Aakanksha Duggal: no, I have more questions for you, so why don't you go ahead and answer Emilio's and then the last one,
+23:55 Adel Zaalouk: Yeah, yeah. So like let's let's walk through what we've been doing. We You know we started with Asian building and then we pivoted. And what we're doing is focusing on standards protocols and things out, You know, so mcpe it well known protocol skills are well known. There's a skill MD. There's an Asian MD. So and
+24:09 Peter Double: brb, listening still
+24:13 Adel Zaalouk: then like, you know, we have models. So if we break down an Asian, it's gonna turn into like a scale and MCV server model and a connection of all these things. And then let's supply chain of all these things and we have guardrails and other things as well that are coming. But what I'm trying to say is like Safe bets are and things that are less fluctuating because today is cloud code.
+24:33 Adel Zaalouk: Maybe tomorrow like something else open clock tomorrow is could be something else so we don't want to today, please take the strategy till we get our infrastructure, right? My my personal take would be. We should not marry their
+24:46 Adel Zaalouk: run times or marry the protocols. We know our strategy was a genetic today is Let's we want to make sure that our everyone can bring their own agent, their own runtime. The platform provides the APIs standard Wise from again. You know, open the eye messages for making Club Cloud could work or for making comics
+25:04 Aakanksha Duggal: @Ann Marie, could we get access to that please?
+25:05 Adel Zaalouk: codex work and we test and validate was all these things but we don't want to marry Codex or Mary Quad code and like provide different things that might happen the future in the future. We might have validated run times or something like that, which would You know, we know these things work really well. We know customers really want these things and and you know, we have to figure out what Can we generalize? But today, I don't think Two people agree on what can be generalized out of, for example, to take open claw because itself as a workload, as a personal assistant, not many people know if should be like shared across the people because it says, Work a personal assistant how context can be shared is in multi-tenant or not. So There's a lot to be figured out for this harnesses and run times and we don't know, we don't want to Block on that. We want to keep evolving the platform in a way to allow for bring your own agent building on standards and protocol and really do that. Well,
+25:56 Edson Tirelli: What?
+25:58 Adel Zaalouk: And once we do that, well, I think we're gonna have room to innovate in different areas of the stack. So my personal take on your question. Emilio is that we want to figure out things like skills, that pervasive, MCP, servers, and
+26:14 Charlie Doern: I feel like enabling different standard/protocols is a different conversation than an asset registry. Both can exist.
+26:16 Adel Zaalouk: Asians, and how to represent them in a good way. That is reusable. That is deployable, that is manageable for the platform. I love it. And then look happy to chat about this. This is just my take on this.
+26:37 Emilio Garcia: Gaseous.
+26:39 Aakanksha Duggal: Yeah, I can go ahead and ask my question. It's it's on top of what Emilio and Marsha just covered. So my understanding is that there is this go ahead and correct me if I'm wrong here. There is a skills registry that's going to be part of Mlflow. There's going to be a skills catalog which is going to be sort of created by one of one of our teams and then there is an expectation of mcpe
+26:59 Ann Marie Fred: @Aakanksha I asked Dash to share it here: https://redhat-internal.slack.com/archives/C08B8MJJVB9/p1775577520029029
+27:03 Adel Zaalouk: also openai has a skills api :D
+27:04 Aakanksha Duggal: registry and an agent registry. So the all of these things have to come together to a standard platform, there has to be some coordination on who does what which team is contributing to which, which bit and that has to be a larger architecture diagram, which helps us understand What is the flow? How do we plan? I think one takeaway from this meeting that I want for. It was who's doing what and what is on the road map? Because Adela, I know you wanted this skills registry from the agent have came for.
+27:39 Aakanksha Duggal: Five. So if we were to go ahead and do that, we need to have some sort of Plan in place now. So I would love to learn more from what you have to say that.
+27:52 Adel Zaalouk: Yeah. So Peter has had this proposal about plugins and him and I were just discussing that what, what whether we should name, them plug it. So I think, I think that should, I don't think we
+28:01 Charlie Doern: Llama Stack is probably going to add the skills API at some point
+28:04 Adel Zaalouk: We typically we need to marry Emilio flow if we think omflo is not the right
+28:07 Aakanksha Duggal: Hmm.
+28:10 Adel Zaalouk: place. So this is more like a solutioning discussion where what is the right place to reflect what a skill is and then like connected to the rest of the supply chain. Like you know, taking a scale running scams on it. Taking Asian running scams on it. How what's the right stack?
+28:24 Edson Tirelli: I,
+28:26 Adel Zaalouk: Or place to run all these. It could be something custom because at registry at the end of the day is Like an index of things and we can build our own. But typically like we have registries, we have capable of mflow, we have so what what is the right place to represent an artifact like skills or an artifact? Like Asians or artifact like
+28:40 Aakanksha Duggal: I,
+28:45 Adel Zaalouk: MCP servers in a way that is consistent that we don't have to implement it differently or very differently because I think there will be like nuances to each artifact. And connected to the to our evaluation stack because you know, when I evaluate an agent, maybe with an MCP server and so on and so forth. So this is I think We might need a separate a whole separate meeting on like architecture and what's the right place to represent AI assets and then I also mentioned the Opi Skills API because that's another one to take in into the mix but yeah. So we need to figure out.
+29:24 Adam Bellusci: You're killing me. It you're killing me.
+29:26 Francisco Arceo: probably soon
+29:27 Adam Bellusci: December 17th. We made the decision. Mlflow is for registry's. Cube flow is for catalogs. We're done.
+29:32 Francisco Arceo: So, I'm going to implement the Llama stack, skills, API MYSELF and then the containers API And we can choose whether or not we want to downstream it, but I will do that.
+29:45 Adam Bellusci: Yeah. So I
+29:45 Adel Zaalouk: Adam, if you, if we are saying, I'm not saying, we're I'm saying, if we are, we aligning it Great if we're aligned where the assets will live. Awesome. But we need, we like this is This becomes like if it's not Then this is an architecture discussion of like Where is the best place, but if we're aligned already and I think that
+30:03 Adam Bellusci: Help me. Edson, are we aligned?
+30:07 Edson Tirelli: Yeah, that's my understanding. Again, if we are going to consolidate assets in a place where you can version and link them, It can't be a desperate set of you know components. It has to be something that is transparently integrated. And from the discussions that we had previously,
+30:25 Francisco Arceo: fwiw mlflow is being integrated into llama stack
+30:28 Edson Tirelli: the direction must use a mobile flow for that.
+30:32 Adam Bellusci: and in my assumption is, That there may be issue, there may be areas where there's a compelling reason.
+30:33 Francisco Arceo: i think Guangya has that work already
+30:33 Adel Zaalouk: just,
+30:37 Francisco Arceo: for telemetry though
+30:38 Adam Bellusci: Not to go there, but let's make that the exception and and the assumption is things go into Mlflow. For registries things. Go into cube flow for catalogs. Until architecture tells us otherwise. So we're all on the same page.
+30:48 Adel Zaalouk: could connect to the skills API as well Francisco? theortically
+30:53 Ann Marie Fred: I think the struggle is What is the thing? That is an agent skill, Okay? So it's not, it's not an image, it's not a container image so it doesn't fit the same
+30:58 Adam Bellusci: Mmm.
+31:02 Ann Marie Fred: pattern as an MCP server or an agent, which we can force into an image. A skill
+31:05 Francisco Arceo: yeah that's what i'm thinking
+31:08 Ann Marie Fred: is a poetry or as it file. So you know. So is Mlflow are we gonna four skills
+31:11 Francisco Arceo: but i haven't tested building it yet so idk!
+31:17 Ann Marie Fred: into images which is a poor fit? We can do it. We can do the whole supply chain
+31:21 Peter Double: but,
+31:21 Ann Marie Fred: thing on images. You know how to do that but nobody's going to consume it out
+31:23 Adel Zaalouk: its an OCI artifact?
+31:25 Ann Marie Fred: there. It's useless in that format and he's trying to use it.
+31:26 Adam Bellusci: Yeah.
+31:27 Adel Zaalouk: for example
+31:28 Ann Marie Fred: So what what are we linking into Mlflow? Then is it a pointer to a repo like
+31:32 Adel Zaalouk: could be other things
+31:34 Ann Marie Fred: what is it?
+31:34 Peter Double: Yeah. And I think it would be similar to more more similar to a prompt than it would be to the the Mcps. And and so there's already a paradigm for that within MLFLOW within the prompts. But whether it is pointing at a repo that's all the
+31:48 Francisco Arceo: like basically SKILLS.md ?
+31:50 Peter Double: stuff that we really need to get. I mean a skill. It's a skills MD that can have
+31:52 Hunter Gerlach: OCI is heavy for individual skills
+31:54 Peter Double: other pieces attached to that skill.
+31:57 Eder Ignatowicz: Matt let's create a model type skill :D
+31:58 Peter Double: It could have config files and other things attached to the scale, but at the
+31:59 Ann Marie Fred: Even as an OCI artifact it's not consumable
+32:01 Peter Double: same time, they're all generally, just text files and that would be more related to a prompt in my mind, then the other way around with Mcps and and models and
+32:12 Ann Marie Fred: It's a set of files
+32:13 Peter Double: everything else.
+32:15 Adam Bellusci: Yeah, and to dovetail onto that there's, you know, so yes prompts right now are
+32:18 Edson Tirelli: I,
+32:19 Adam Bellusci: handled in Mlflow is models that aren't models so but there's a you know, props can be a, We can look at that paradigm for skills. We're also looking to add the
+32:26 Hunter Gerlach: But it's not JUST a Skill.md... it can be more
+32:28 Eder Ignatowicz: Talking seriously with Ann Marie, my concern is that this space is too new
+32:31 Adam Bellusci: Oci layer as a different storage layer for, for MLFLOW, as well. Because we have
+32:36 Emilio Garcia: its just a file or bundle of files, it can be an install step trough something like npm in your container
+32:38 Adam Bellusci: a whole bunch of governance stories. We're looking to build out from from OCI and so then we could look at maybe Oci art as, you know, stored as an artifact in an OCI layer for skills but that's that's TBD.
+32:52 Edson Tirelli: Yeah, and they and Ann Marie. Typically, what we have been doing with Mlflow is
+32:56 Adel Zaalouk: a scill could have scripts as well
+32:57 Gage Krumbach: ++ like a skills-lock.json
+32:58 Edson Tirelli: MLFLOW is not tied to a specific packaging format for artifacts. And what we do when we need something specific, for instance, for Kubernetes, or for Openshift, then we, we do a plug-in and do this downstream, so I don't think we would be Tired at this point to a specific format for skills.
+33:21 Adel Zaalouk: so scanning skills means also scanning the code/scripts shipping with those
+33:24 Peter Double: I,
+33:25 Peter Double: no axios please ;-)
+33:26 Edson Tirelli: Especially because I don't know, there is one yet that we can rely on Matt.
+33:31 Matt Prahl: Yeah, I mean, based on the prototype that they have the databricks MLFLOW maintainers, it sounds like they're just storing the markdown file in as an artifact essentially. So piggybacking on the existing artifact capabilities of MLFLOW, which is plugin based. Our deployment is S3 or on a PVC. So I I don't see OCI being a good option to replace that because MLFLOW seems
+33:53 Ann Marie Fred: That's the fundamental issue - there is no good portable format for skills across agents yet
+33:56 Matt Prahl: like a file system, like structure, whereas Oci is flat from my understanding. There's, there's discussion about that in the thread that Edson linked at the beginning of the call. But also kind of want to distinguish too. I think, I think it was Hunter. Maybe had mentioned that, you know, there's like user or like customer facing skills. I feel like can be a different solution than an enterprises like skills that
+34:19 Adel Zaalouk: https://clawhub.ai/skills?sort=downloads
+34:22 Gage Krumbach: plugins.json
+34:23 Matt Prahl: they're registering to mlflow for example. So if we need to have that level of
+34:25 Adel Zaalouk: there are many more skill registries
+34:26 Gage Krumbach: from claude
+34:27 Matt Prahl: like signing and that testation like maybe storing them in the OCI registry for the ones that Red Hat. Distributes officially makes more sense. But I think like for within an organization, I think something like Mlflow is a good candidate. So I don't think it has to be the same solution as what I'm saying.
+34:48 Adel Zaalouk: Yeah. Do we think we like I think, I think we need to hash this out properly
+34:50 Aakanksha Duggal: I like https://github.com/zjunlp/SkillNet and it's super easy to download a skill through this tool.
+34:51 Adel Zaalouk: for, like In like a meeting and I know the time is up but like, yeah, probably something soon to discuss this because it seems like there's a lot of opinions about how to do it. But yeah, I've seen a lot of skilled registries, I've shared the claw
+35:02 Peter Double: +1 anne, packaging of the skills is not standardized, but as Adel just showed... they are just zipping them
+35:06 Adel Zaalouk: Cub one because I tried to submit a skill today actually did an antivirus thing
+35:06 Edson Tirelli: If I,
+35:06 Ann Marie Fred: So all we've done here is list 10 ways to distribute skills :-)
+35:09 Adel Zaalouk: on my skill and it turned out. My skill was notorious and
+35:13 Peter Double: yes
+35:13 Aakanksha Duggal: :D
+35:15 Emilio Garcia: :)
+35:15 Adel Zaalouk: It and not Endangerous and I didn't think so. That was I submitted the for
+35:16 Edson Tirelli: :)
+35:21 Adel Zaalouk: Peter. I submitted the The auto research stuff, Peter to as a skill like a, mine was out of workflower, but yeah, auto improve. But yeah, there's there's already. Some means, some folks are consolidating on some some ideas, The reason I suggested OCI again because that's the easiest thing I could think of, but we need to think through that properly and solution around that.
+35:51 Ann Marie Fred: I was suggesting like very tactically. If you just want something they they're just now starting up an odh repo for skills, and the point of that repo is that those skills are tested validated we've run security. Scans on them. So, you
+36:08 Adel Zaalouk: like agent templates
+36:09 Ann Marie Fred: know, we could just say Dev preview. Here's a repo have fun.
+36:11 Adel Zaalouk: I'm not I think we were doing that for Asian templates. And where surfacing or planning to surface agent templates could be like the same case where we have a card per template and just point you to A But then like you need to manage the intake and yeah, but sure I think that
+36:26 Edson Tirelli: +1 Ann Marie, for a catalog
+36:29 Adel Zaalouk: that's a good start, but we need to still figure out that where we want to land eventually and then also maybe the landscape is evolving business for me, but yeah.
+36:37 Ann Marie Fred: All that, all that does is bias a few months for people to figure out how to distribute agent SK.
+36:42 Adel Zaalouk: I like it. I like it. Yeah. Keep it simple.
+36:50 Ann Marie Fred: Ills.
+36:57 Adel Zaalouk: Okay, that's one proposal. Hey folks have other proposals And then that hopefully would connect maybe that scale API in in that Francisco's working on or Charlie could connect to that repo as a provider. No anyways.
+37:12 Ann Marie Fred: Yeah we just haven't figured out like what the end in story would look like that. It's like um so one way to consume skills is as the code itself and then another way is like what Francisco was talking about is within the responses API The server can execute the skill for you and right now those two stories are
+37:28 Adel Zaalouk: Take.
+37:30 Ann Marie Fred: just very just doing, right? So
+37:35 Francisco Arceo: And not be over the club. I do think that like
+37:36 Adam Bellusci: I,
+37:37 Francisco Arceo: In the near term, is the client set of skills that people are mostly adopting, right. I think like, The reliable version to me, feels like it would be the server version where people would have some sort of like governance happening centrally somewhere that that like then you only get that through like a centralized server. So, It's exact true case for future stores for rag, right? When you have our back on files and why essential catalog makes sense. And so all those things right, you need some governing authority centralized somewhere but but people are just yellowing stuff on the client right now. You know, that's the popular one.
+38:20 Francisco Arceo: And the third one become more popular, I think so probably right, that's emergently true with like the responses API. We'll see.
+38:29 Adel Zaalouk: Yeah, I think what we need now is someone taking the first step? What a skill registry could look like. So I I'm looking at Anne-Marie and and maybe that's it to help us but yeah.
+38:43 Adam Bellusci: Well, shouldn't we start with the foundation that Dix's building? Right. Whatever their proposal is, we should. Say okay, this is what it looks like Let's and then you know, Help shape that as as Matt. And that's in her doing already, I think.
+38:57 Edson Tirelli: Yeah, the prototype is available. The code is available. We we can run this
+38:58 Francisco Arceo: think that's a great idea!
+39:02 Edson Tirelli: locally in our machine. We can run in a cluster and go from there.
+39:09 Adam Bellusci: Yeah.
+39:13 Adel Zaalouk: So is the is like do we expect a document for people can bring someone? Or is there like something already that we can point to? And because like folks like a country and other folks from like different teams will want somewhere where like Wasn't Asian registry. So yeah.
+39:31 Aakanksha Duggal: Yeah. Yeah, I'm trying to collect as many resources, I can on this front. Like, I've already seen the prototype that Matt has shared in a different channel. I will also take a look at what dash and demo to all this morning. So I think that will probably help us clarify more things, but I think we probably need more follow-ups. I think I can schedule something else with maybe and maybe and edson's to get more clarity on this.
+40:00 Adel Zaalouk: so,
+40:04 Aakanksha Duggal: But I don't know Adela if I'm feeling very positive about this 435, because Bill would not approve the sorry. If we hunter we have, we have a plan in place.
+40:15 Adel Zaalouk: I think if we start with something like what Ann Marie was saying, and
+40:18 Aakanksha Duggal: Yeah.
+40:20 Adel Zaalouk: That's that sounds to me like a simpler starting point that we can present in
+40:24 Aakanksha Duggal: Yeah.
+40:26 Adel Zaalouk: the implementation and conversion to what Edson and the team are designing was Emilio on the registry and connect that.
+40:30 Aakanksha Duggal: Right.
+40:32 Adel Zaalouk: To what we're doing with llama stack or
+40:33 Ann Marie Fred: Just a repo to start...
+40:36 Adel Zaalouk: Or it's new form name. Whatever, right. So, yeah, I think that could be like a nice phased approach as we mature and defining where we lend eventually and then
+40:42 Francisco Arceo: ogx
+40:48 Adel Zaalouk: also give our customers and everyone the story that Daddy is building a skill
+40:50 Adam Bellusci: I still like AlpacaStack ;-)
+40:52 Francisco Arceo: original gangster x
+40:54 Adel Zaalouk: registry or skill catalog. And here's how we can take a look and Yeah get
+40:54 Eder Ignatowicz: We can even include this repo listing in dev preview in AAE page
+40:57 Ann Marie Fred: Then there's a thread about how to securely package skills
+40:58 Adel Zaalouk: demand. Oh this is not what we expect that we won't listen this thing. Yeah.
+41:01 Francisco Arceo: yeah that's also okay Adaam
+41:05 Peter Double: Chris.
+41:07 Aakanksha Duggal: because,
+41:08 Chris Hambridge: Yeah, I just had a quick question on the prototype around what databricks is
+41:10 Emilio Garcia: it has to be AlpacaStacka
+41:10 Ann Marie Fred: Then once we have the secure packages we can get them into a proper catalog
+41:12 Chris Hambridge: doing like, typically they deliver these pieces in like a feature flag, where you can turn it on or off kind of thing because My takeaway from this is what they're doing. We're working on delivering targeting end of April, is going to be in the product. So either we work with them to find a way to not include in the product. If we don't, like the way that they're going about it, we work with them to improve how it, you know, it actually comes into the product, which is, I think we're a lot of people are suggesting. We're going, Or we don't really have another way around it. If it's, you know, unless we have
+41:45 Ann Marie Fred: And then we need a way for Llama Stack to consume the secure packages
+41:48 Chris Hambridge: like, Hey, we need a feature flag because not everybody wants this thing in there. So it's it's part of me saying What is the way they typically do stuff
+41:53 Adel Zaalouk: >We can even include this repo listing in dev preview in AAE page
+ Like that.
+41:56 Chris Hambridge: and if they don't typically introduce stuff. Something with the feature flag, we need to just be cognizant of the fact that either we need to introduce that idea if we don't like what they have or it's gonna be in the product. So we need to,
+42:05 Adel Zaalouk: need to drop, thank you all for the discussion
+42:07 Chris Hambridge: you know, consider that fact.
+42:10 Matt Prahl: Yeah, they don't typically have feature flags. I mean, it's occasionally, they will. But what we've done is our in our downstream, as we add them explicitly to disable certain functionality. So it's doable for sure. But yeah, so, Maybe I can get some people in the private slack channel, in upstream with the Mlflow, maintainers from databricks that want to like chime in. And the discussion that way, I don't have to keep copying back and forth from their slack to our slack.
+42:43 Peter Double: A conceptual feel free to pull me into those conversations as well. Just so I
+42:43 Matt Prahl: I don't know who would be best for that, but you can reach out to me. And try to add you.
+42:56 Aakanksha Duggal: Oh yeah.
+42:57 Peter Double: can have some visibility to it. I can be a fly on the wall at least here. I'll talk about
+43:00 Aakanksha Duggal: Yeah.
+43:00 Adam Bellusci: Yeah. Yeah, you can grab Peter and I and and idle money when it makes sense.
+43:02 Aakanksha Duggal: Sounds good. Okay. Sounds good. I know we're 15 minutes over. But I'll come up with some action items and a fall of meeting if needed, but I'll try to keep it as asynchronous as possible or not. Take up too much time. All right, then thank you folks. I hope this was useful for all of us it was for me. So see y'all next time
+43:28 Peter Double: Thanks auction. Bye.
+43:29 Aakanksha Duggal: Thank you.
+43:29 Matt Prahl: Thanks. Bye.
+43:30 Chris Hambridge: Thank you.
+  
