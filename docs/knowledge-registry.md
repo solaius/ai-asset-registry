@@ -153,7 +153,7 @@ Two primary ingestion lanes identified for getting MCPs into the platform:
 - For partners with basic/stdio/unsecured MCPs: Gen MCP runtime can wrap with auth, TLS, observability
 - Goal: Eventually manage partner MCPs **off-cycle** from product releases; continuous updates, new partner onboarding
 - Current state (3.4): Jose Gonzalez manually adapted partner containers — rebasing to UBI, adding labels, handling licenses; CVE scanning via Quay; partner dependencies mostly untouched to avoid breaking their apps
-- Key tools: Quay (CVE scanning), Conflux (pipeline orchestration, suggested), Dependabot (repo-level), Snyk (AI-specific agent scanning — Ann Murray pushing; needs further research)
+- Key tools: Quay (CVE scanning), Konflux (pipeline orchestration, suggested), Dependabot (repo-level), Snyk (AI-specific agent scanning — Ann Murray pushing; needs further research)
 
 **Lane 2: Client/Customer MCP Generation**
 - Platform engineers create MCPs from existing APIs/repos
@@ -383,7 +383,7 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 13. How should MCP Lifecycle Operator interact with registry entries — read-only "discovered/managed" entries vs. full governance? (from Data Model Proposal comments - Chris Hambridge, Matt Prahl)
 14. What does Snyk's AI/agent scanning actually check? Is it needed beyond standard CVE scanning? (Ann Murray recommendation — needs research)
 15. What should the standardized MCP container metadata schema look like for Kubernetes? (No upstream standard exists; all 4 partner MCPs in 3.4 had different metadata)
-16. How should the partner ingestion pipeline be orchestrated? (Conflux suggested; needs investigation)
+16. How should the partner ingestion pipeline be orchestrated? (Konflux suggested; needs investigation)
 17. How does MCP Checker evaluation integrate with MLflow's evaluation capabilities? (MLflow becoming main eval tool for AI assets)
 18. What is the partnership ecosystem team's existing pipeline work? (Follow up with Serob and Matt Dorn)
 

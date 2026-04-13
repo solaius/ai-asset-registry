@@ -53,7 +53,7 @@ Initial hypothesis was that Gen MCP could handle the entire ingestion pipeline (
 | **Containerization** | Only for Gen MCP-generated servers | Opinionated; uses KO build. For partner MCPs that are already containerized, use podman/docker |
 | **Runtime Wrapping** | Useful for basic MCPs | Add auth, TLS, observability to stdio/unsecured HTTP servers that lack production features |
 | **Evaluation** | Extracted to MCP Checker | Separate org (`mcpchecker`); works with any MCP, not just Gen MCP-generated |
-| **CVE Scanning** | Not in scope | Handled by Quay, Conflux, or Snyk |
+| **CVE Scanning** | Not in scope | Handled by Quay, Konflux, or Snyk |
 
 **Key decision**: Gen MCP is not being expanded to be a universal containerization/pipeline tool. It excels at generation and runtime wrapping; scanning and pipeline orchestration belong to other tools.
 
@@ -74,7 +74,7 @@ Initial hypothesis was that Gen MCP could handle the entire ingestion pipeline (
 | **Quay** | CVE scanning of container images | Currently used by Jose for partner MCPs |
 | **Dependabot** | Repo-level dependency security (GitHub) | Available for partner repos |
 | **Snyk** | AI/agent-specific scanning | Ann Murray recommending; Peter needs to research what it specifically scans |
-| **Conflux** | Pipeline orchestration for productization | Matthias suggested; needs investigation |
+| **Konflux** | Pipeline orchestration for productization | Matthias suggested; needs investigation |
 
 Current approach (3.4): Jose relied on Quay scanning. Partner dependencies were mostly left untouched to avoid breaking their applications — only UBI base image updates were applied. One or two images required Python version changes.
 
@@ -126,7 +126,7 @@ Jose shared the hands-on experience of onboarding partner MCPs for 3.4:
 | 4 | Create Jira ticket for MCP ingestion pipeline work | Peter Double | Open |
 | 5 | Build the management story/case for Gen MCP and pipeline to secure dedicated engineering time | Peter Double | Open |
 | 6 | Define standardized MCP container metadata schema | Peter Double / Chris Hambridge / Matthias | Open |
-| 7 | Investigate Conflux as pipeline orchestration tool | TBD | Open |
+| 7 | Investigate Konflux as pipeline orchestration tool | TBD | Open |
 | 8 | Determine how MCP Checker evaluations integrate with MLflow evaluation capabilities | Peter Double / Calum Murray | Open |
 
 ---
