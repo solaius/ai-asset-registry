@@ -2,8 +2,6 @@ image: alpine:latest
 
 pages:
   stage: deploy
-  tags:
-    - gitlab-runner
   script:
     - mkdir -p public
     - cp index.html public/
