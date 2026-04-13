@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture Diagram v11 — Cytoscape.js Preset</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700;900&family=Red+Hat+Text:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Red Hat Text', -apple-system, sans-serif;
+    background: #151515;
+    color: #d2d2d2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  h1 {
+    font-family: 'Red Hat Display', sans-serif;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-family: 'Red Hat Mono', monospace;
+    font-size: 0.8rem;
+    color: #6a6a6a;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 2rem;
+  }
+
+  #cy-container {
+    width: 100%;
+    max-width: 1200px;
+    background: #1a1a1a;
+    border: 1px solid #2d2d2d;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #cy-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #EE0000, #A30000, #EE0000);
+    z-index: 10;
+  }
+
+  #cy {
+    width: 100%;
+    height: 920px;
+  }
+
+  .layer-labels {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 920px;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .layer-label {
+    position: absolute;
+    left: 18px;
+    font-family: 'Red Hat Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #999;
+  }
+  .layer-label.governance { color: rgba(238, 0, 0, 0.65); }
+
+  .legend {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-top: 1px solid #2d2d2d;
+    background: #252525;
+    font-family: 'Red Hat Mono', monospace;
+    font-size: 0.85rem;
+    color: #8a8a8a;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; }
+  .legend-line { width: 28px; height: 3px; border-radius: 1px; }
+  .legend-line.data-flow { background: #EE0000; }
+  .legend-line.feedback { background: repeating-linear-gradient(90deg, #e8a020 0px, #e8a020 4px, transparent 4px, transparent 7px); }
+  .legend-line.governed { background: #777; }
+  .legend-box { width: 14px; height: 14px; border-radius: 3px; border: 1.5px dashed #666; opacity: 0.6; }
+
+  .info {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: #6a6a6a;
+    text-align: center;
+    max-width: 700px;
+  }
+  .info strong { color: #b8bbbe; }
+</style>
+</head>
+<body>
+
+<h1>AI Asset Registry — System Architecture</h1>
+<p class="subtitle">v11 — readable validation, taxi everywhere, centered layout</p>
+
+<div id="cy-container">
+  <div id="cy"></div>
+  <div class="layer-labels" id="layer-labels"></div>
+  <div class="legend">
+    <span style="letter-spacing: 0.1em; font-weight: 600; color: #555;">LEGEND:</span>
+    <div class="legend-item"><div class="legend-line data-flow"></div><span>Data flow</span></div>
+    <div class="legend-item"><div class="legend-line feedback"></div><span>Feedback loop</span></div>
+    <div class="legend-item"><div class="legend-line governed"></div><span>Governed access</span></div>
+    <div class="legend-item"><div class="legend-box"></div><span>Phase 2+ (not MVP)</span></div>
+  </div>
+</div>
+
+<p class="info">
+  <strong>v11</strong> — all edges use taxi (right-angle routing), validation centered and readable (0.55 opacity),
+  governed labels fixed, feedback arcs wider, source edges as taxi.
+</p>
+
+<script>
+const CX = 500;
+const SPREAD_PLATFORM = 260;
+const SPREAD_CONSUME = 220;
+
+const Y_SOURCES = 55;
+const Y_MERGE = 120;
+const Y_VALIDATION = 185;
+const Y_GOVERNANCE = 320;
+const Y_PLATFORM = 510;
+const Y_CONSUMPTION = 670;
+
+const nodes = [
+  // SOURCES — evenly spaced, perfectly centered on CX
+  { data: { id: 'src-internal',  label: 'Internal Dev\nR&D teams',                nodeType: 'source' }, position: { x: CX - 285, y: Y_SOURCES } },
+  { data: { id: 'src-products',  label: 'Red Hat Products\nOCP · AAP · Lightspeed', nodeType: 'source' }, position: { x: CX - 95, y: Y_SOURCES } },
+  { data: { id: 'src-isv',       label: 'ISV Partners\nMicrosoft, others',          nodeType: 'source' }, position: { x: CX + 95, y: Y_SOURCES } },
+  { data: { id: 'src-community', label: 'Community\nOpen source',                   nodeType: 'source' }, position: { x: CX + 285, y: Y_SOURCES } },
+
+  // MERGE POINT — centered under first 3 sources
+  { data: { id: 'merge-trusted', label: '', nodeType: 'merge' }, position: { x: CX - 95, y: Y_MERGE } },
+
+  // VALIDATION — centered on CX, Quarantine symmetrically right
+  { data: { id: 'val-pipeline',   label: 'Security Pipeline\nSBOM, CVE, Provenance, Attestation', nodeType: 'phase2' }, position: { x: CX - 20, y: Y_VALIDATION } },
+  { data: { id: 'val-quarantine', label: 'Quarantine\nReview queue',                                nodeType: 'phase2' }, position: { x: CX + 260, y: Y_VALIDATION } },
+
+  // GOVERNANCE — centered
+  { data: { id: 'registry', label: 'AI Asset Registry\nMLflow · Plugin Architecture\nMCP Servers · Agents · Skills', nodeType: 'registry' }, position: { x: CX, y: Y_GOVERNANCE } },
+
+  // PLATFORM — perfectly symmetric
+  { data: { id: 'catalog',      label: 'Catalog\nKubeflow Hub\nDiscovery',          nodeType: 'blue' },   position: { x: CX - SPREAD_PLATFORM, y: Y_PLATFORM } },
+  { data: { id: 'lifecycle-op', label: 'Lifecycle Operator\nk8s-sigs\nDeployment',  nodeType: 'purple' }, position: { x: CX, y: Y_PLATFORM } },
+  { data: { id: 'gateway',      label: 'MCP Gateway\nKuadrant\nRuntime',            nodeType: 'teal' },   position: { x: CX + SPREAD_PLATFORM, y: Y_PLATFORM } },
+
+  // CONSUMPTION — symmetric
+  { data: { id: 'studio',  label: 'Gen AI Studio\nPrompt mgmt · Agents · Eval', nodeType: 'green' }, position: { x: CX - SPREAD_CONSUME, y: Y_CONSUMPTION } },
+  { data: { id: 'api-sdk', label: 'API / SDK\nAI Available Assets',              nodeType: 'green' }, position: { x: CX + SPREAD_CONSUME, y: Y_CONSUMPTION } },
+];
+
+const edges = [
+  // Sources -> Merge point
+  { data: { source: 'src-internal',  target: 'merge-trusted', edgeType: 'source-flow' } },
+  { data: { source: 'src-products',  target: 'merge-trusted', edgeType: 'source-flow' } },
+  { data: { source: 'src-isv',       target: 'merge-trusted', edgeType: 'source-flow' } },
+
+  // Merge -> Validation
+  { data: { id: 'sf-merge-val', source: 'merge-trusted', target: 'val-pipeline', edgeType: 'source-flow', label: 'asset submission' } },
+
+  // Community -> Quarantine
+  { data: { source: 'src-community', target: 'val-quarantine', edgeType: 'source-flow' } },
+
+  // Validation -> Registry
+  { data: { source: 'val-pipeline',   target: 'registry', edgeType: 'source-flow' } },
+  { data: { source: 'val-quarantine', target: 'registry', edgeType: 'source-flow' } },
+
+  // Registry -> Platform (RED taxi)
+  { data: { id: 'df-catalog',   source: 'registry', target: 'catalog',      edgeType: 'data-flow', label: 'metadata sync' } },
+  { data: { id: 'df-lifecycle', source: 'registry', target: 'lifecycle-op', edgeType: 'data-flow', label: 'deploy CRD' } },
+  { data: { id: 'df-gateway',   source: 'registry', target: 'gateway',      edgeType: 'data-flow', label: 'policy enforcement' } },
+
+  // Feedback loops
+  { data: { id: 'fb-catalog',   source: 'catalog',      target: 'registry', edgeType: 'feedback', label: 'status' } },
+  { data: { id: 'fb-lifecycle', source: 'lifecycle-op', target: 'registry', edgeType: 'feedback', label: 'telemetry' } },
+  { data: { id: 'fb-gateway',   source: 'gateway',      target: 'registry', edgeType: 'feedback', label: 'status' } },
+
+  // Platform -> Consumption (no duplicate labels — only "governed access" on direct edges)
+  { data: { id: 'gov-cat-studio', source: 'catalog',      target: 'studio',  edgeType: 'governed', label: 'governed access' } },
+  { data: { id: 'gov-lc-studio',  source: 'lifecycle-op', target: 'studio',  edgeType: 'governed' } },
+  { data: { id: 'gov-gw-sdk',     source: 'gateway',      target: 'api-sdk', edgeType: 'governed', label: 'governed access' } },
+  { data: { id: 'gov-lc-sdk',     source: 'lifecycle-op', target: 'api-sdk', edgeType: 'governed' } },
+];
+
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  userZoomingEnabled: true,
+  userPanningEnabled: true,
+  boxSelectionEnabled: false,
+  autounselectify: true,
+  wheelSensitivity: 0.3,
+
+  elements: { nodes, edges },
+
+  layout: {
+    name: 'preset',
+    padding: 50,
+    animate: true,
+    animationDuration: 600,
+    animationEasing: 'ease-out',
+    fit: true,
+  },
+
+  style: [
+    // ═══ BASE NODE ═══
+    {
+      selector: 'node',
+      style: {
+        'shape': 'round-rectangle',
+        'corner-radius': 10,
+        'width': 195,
+        'height': 70,
+        'background-color': '#1e1e1e',
+        'border-width': 1.5,
+        'border-color': '#383838',
+        'label': 'data(label)',
+        'text-valign': 'center',
+        'text-halign': 'center',
+        'font-family': '"Red Hat Text", sans-serif',
+        'font-size': 12,
+        'font-weight': 500,
+        'color': '#bbb',
+        'text-wrap': 'wrap',
+        'text-max-width': 180,
+        'line-height': 1.35,
+      }
+    },
+
+    // ═══ INVISIBLE MERGE NODE ═══
+    {
+      selector: 'node[nodeType="merge"]',
+      style: {
+        'width': 6,
+        'height': 6,
+        'background-color': '#606060',
+        'border-width': 0,
+        'shape': 'ellipse',
+      }
+    },
+
+    // ═══ SOURCE NODES ═══
+    {
+      selector: 'node[nodeType="source"]',
+      style: {
+        'width': 185,
+        'height': 50,
+        'font-size': 12,
+        'text-max-width': 170,
+        'color': '#d0d0d0',
+        'border-color': '#555',
+      }
+    },
+
+    // ═══ PHASE 2+ — readable! Opacity 0.55, brighter text ═══
+    {
+      selector: 'node[nodeType="phase2"]',
+      style: {
+        'width': 240,
+        'height': 55,
+        'border-style': 'dashed',
+        'border-color': 'rgba(103, 83, 172, 0.40)',
+        'background-color': 'rgba(103, 83, 172, 0.06)',
+        'color': '#9990cc',
+        'opacity': 0.55,
+        'font-size': 11,
+        'text-max-width': 225,
+      }
+    },
+    {
+      selector: 'node[id="val-pipeline"]',
+      style: { 'width': 340, 'text-max-width': 320 }
+    },
+
+    // ═══ REGISTRY ═══
+    {
+      selector: 'node[nodeType="registry"]',
+      style: {
+        'width': 460,
+        'height': 85,
+        'background-color': '#2a0808',
+        'border-color': '#cc0000',
+        'border-width': 2,
+        'font-family': '"Red Hat Display", sans-serif',
+        'font-size': 15,
+        'font-weight': 700,
+        'color': '#fff',
+        'text-max-width': 440,
+        'line-height': 1.45,
+      }
+    },
+
+    // ═══ CATALOG ═══
+    {
+      selector: 'node[nodeType="blue"]',
+      style: {
+        'background-color': '#0a1a2e',
+        'border-color': 'rgba(0, 102, 204, 0.5)',
+        'color': '#4394e5',
+        'border-width': 2,
+      }
+    },
+
+    // ═══ LIFECYCLE OPERATOR ═══
+    {
+      selector: 'node[nodeType="purple"]',
+      style: {
+        'width': 195,
+        'background-color': '#1a1530',
+        'border-color': 'rgba(103, 83, 172, 0.5)',
+        'color': '#9a86d6',
+        'border-width': 2,
+      }
+    },
+
+    // ═══ MCP GATEWAY ═══
+    {
+      selector: 'node[nodeType="teal"]',
+      style: {
+        'background-color': '#0a2222',
+        'border-color': 'rgba(0, 149, 150, 0.5)',
+        'color': '#2ec4c4',
+        'border-width': 2,
+      }
+    },
+
+    // ═══ CONSUMPTION ═══
+    {
+      selector: 'node[nodeType="green"]',
+      style: {
+        'background-color': '#0e1e0c',
+        'border-color': 'rgba(62, 134, 53, 0.5)',
+        'color': '#6abf62',
+        'border-width': 2,
+      }
+    },
+    {
+      selector: 'node[id="studio"]',
+      style: { 'width': 260, 'text-max-width': 245 }
+    },
+
+    // ═══ BASE EDGE ═══
+    {
+      selector: 'edge',
+      style: {
+        'width': 1.5,
+        'line-color': '#555',
+        'target-arrow-color': '#555',
+        'target-arrow-shape': 'triangle',
+        'arrow-scale': 0.8,
+        'curve-style': 'taxi',
+        'taxi-direction': 'downward',
+        'taxi-turn': 20,
+        'taxi-turn-min-distance': 10,
+      }
+    },
+
+    // ═══ SOURCE FLOW (taxi — right angles like everything else) ═══
+    {
+      selector: 'edge[edgeType="source-flow"]',
+      style: {
+        'width': 1.5,
+        'line-color': '#606060',
+        'target-arrow-color': '#606060',
+        'arrow-scale': 0.7,
+        'curve-style': 'taxi',
+        'taxi-direction': 'downward',
+        'taxi-turn': 20,
+        'taxi-turn-min-distance': 8,
+        'label': 'data(label)',
+        'font-family': '"Red Hat Mono", monospace',
+        'font-size': 10,
+        'color': '#999',
+        'text-background-color': '#1a1a1a',
+        'text-background-opacity': 0.95,
+        'text-background-padding': '3px',
+        'text-margin-y': -10,
+        'edge-text-rotation': 'none',
+      }
+    },
+
+    // ═══ DATA FLOW (RED taxi — trident) ═══
+    {
+      selector: 'edge[edgeType="data-flow"]',
+      style: {
+        'width': 2.5,
+        'line-color': '#cc0000',
+        'target-arrow-color': '#cc0000',
+        'arrow-scale': 0.9,
+        'curve-style': 'taxi',
+        'taxi-direction': 'downward',
+        'taxi-turn': 40,
+        'taxi-turn-min-distance': 20,
+        'target-label': 'data(label)',
+        'target-text-margin-y': -20,
+        'target-text-offset': 1,
+        'font-family': '"Red Hat Mono", monospace',
+        'font-size': 12,
+        'color': '#ddd',
+        'text-background-color': '#1a1a1a',
+        'text-background-opacity': 0.95,
+        'text-background-padding': '5px',
+        'text-border-opacity': 0,
+        'edge-text-rotation': 'none',
+      }
+    },
+    {
+      selector: 'edge[id="df-catalog"]',
+      style: { 'taxi-turn': 25 }
+    },
+    {
+      selector: 'edge[id="df-lifecycle"]',
+      style: { 'taxi-turn': 55 }
+    },
+    {
+      selector: 'edge[id="df-gateway"]',
+      style: { 'taxi-turn': 25 }
+    },
+
+    // ═══ FEEDBACK (amber dashed — wide arcs, all visible) ═══
+    {
+      selector: 'edge[edgeType="feedback"]',
+      style: {
+        'width': 1.5,
+        'line-color': '#daa520',
+        'line-style': 'dashed',
+        'line-dash-pattern': [7, 4],
+        'target-arrow-color': '#daa520',
+        'target-arrow-shape': 'triangle',
+        'arrow-scale': 0.7,
+        'curve-style': 'unbundled-bezier',
+        'label': 'data(label)',
+        'font-family': '"Red Hat Mono", monospace',
+        'font-size': 10,
+        'color': '#daa520',
+        'text-background-color': '#1a1a1a',
+        'text-background-opacity': 0.95,
+        'text-background-padding': '4px',
+        'edge-text-rotation': 'none',
+      }
+    },
+    // Catalog feedback: wide left arc
+    {
+      selector: 'edge[id="fb-catalog"]',
+      style: {
+        'control-point-distances': [-140],
+        'control-point-weights': [0.5],
+        'text-margin-x': -50,
+      }
+    },
+    // Lifecycle feedback: LEFT arc, very wide gap from deploy CRD
+    {
+      selector: 'edge[id="fb-lifecycle"]',
+      style: {
+        'control-point-distances': [-100],
+        'control-point-weights': [0.5],
+        'text-margin-x': -40,
+      }
+    },
+    // Gateway feedback: wide right arc
+    {
+      selector: 'edge[id="fb-gateway"]',
+      style: {
+        'control-point-distances': [140],
+        'control-point-weights': [0.5],
+        'text-margin-x': 50,
+      }
+    },
+
+    // ═══ GOVERNED (taxi, bright, no duplicate labels) ═══
+    {
+      selector: 'edge[edgeType="governed"]',
+      style: {
+        'width': 2,
+        'line-color': '#777',
+        'target-arrow-color': '#777',
+        'curve-style': 'taxi',
+        'taxi-direction': 'downward',
+        'taxi-turn': 25,
+        'taxi-turn-min-distance': 15,
+        'target-label': 'data(label)',
+        'target-text-margin-y': -16,
+        'target-text-offset': 1,
+        'font-family': '"Red Hat Mono", monospace',
+        'font-size': 10,
+        'color': '#aaa',
+        'text-background-color': '#1a1a1a',
+        'text-background-opacity': 0.95,
+        'text-background-padding': '3px',
+        'edge-text-rotation': 'none',
+      }
+    },
+    {
+      selector: 'edge[id="gov-lc-studio"]',
+      style: { 'taxi-turn': 16 }
+    },
+    {
+      selector: 'edge[id="gov-lc-sdk"]',
+      style: { 'taxi-turn': 16 }
+    },
+  ],
+});
+
+// Position layer labels
+cy.on('layoutstop', function() {
+  const labelsEl = document.getElementById('layer-labels');
+  labelsEl.innerHTML = '';
+
+  const layers = [
+    { nodeId: 'src-internal',  text: 'SOURCES' },
+    { nodeId: 'val-pipeline',  text: 'VALIDATION' },
+    { nodeId: 'registry',      text: 'GOVERNANCE', cls: 'governance' },
+    { nodeId: 'catalog',       text: 'PLATFORM' },
+    { nodeId: 'studio',        text: 'CONSUMPTION' },
+  ];
+
+  layers.forEach(({ nodeId, text, cls }) => {
+    const node = cy.getElementById(nodeId);
+    const pos = node.renderedPosition();
+    const label = document.createElement('div');
+    label.className = 'layer-label' + (cls ? ' ' + cls : '');
+    label.textContent = text;
+    label.style.top = (pos.y - 6) + 'px';
+    labelsEl.appendChild(label);
+  });
+});
+</script>
+
+</body>
+</html>

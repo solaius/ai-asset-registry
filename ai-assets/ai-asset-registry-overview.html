@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Asset Registry - Red Hat OpenShift AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700;900&family=Red+Hat+Text:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+<style>
+  :root {
+    --rh-red: #EE0000;
+    --rh-red-dark: #A30000;
+    --rh-red-darker: #7D0000;
+    --rh-black: #151515;
+    --rh-gray-900: #1a1a1a;
+    --rh-gray-800: #252525;
+    --rh-gray-700: #2d2d2d;
+    --rh-gray-600: #3c3c3c;
+    --rh-gray-500: #6a6a6a;
+    --rh-gray-400: #8a8a8a;
+    --rh-gray-300: #b8bbbe;
+    --rh-gray-200: #d2d2d2;
+    --rh-gray-100: #e0e0e0;
+    --rh-gray-50: #f0f0f0;
+    --rh-white: #ffffff;
+    --rh-blue: #0066CC;
+    --rh-blue-light: #4394e5;
+    --rh-teal: #009596;
+    --rh-green: #3E8635;
+    --rh-orange: #F4B400;
+    --rh-purple: #6753AC;
+    --rh-amber: #e8a020;
+    --glow-red: rgba(238, 0, 0, 0.25);
+    --glow-red-soft: rgba(238, 0, 0, 0.12);
+  }
+
+  @property --counter-a {
+    syntax: '<integer>';
+    initial-value: 0;
+    inherits: false;
+  }
+  @property --counter-b {
+    syntax: '<integer>';
+    initial-value: 0;
+    inherits: false;
+  }
+  @property --counter-c {
+    syntax: '<integer>';
+    initial-value: 0;
+    inherits: false;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Red Hat Text', -apple-system, sans-serif;
+    background: var(--rh-black);
+    color: var(--rh-gray-200);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Red Hat Display', sans-serif;
+    color: var(--rh-white);
+    line-height: 1.2;
+  }
+
+  code, .mono {
+    font-family: 'Red Hat Mono', monospace;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes dashFlow {
+    from { stroke-dashoffset: 24; }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  @keyframes countA {
+    from { --counter-a: 0; }
+    to { --counter-a: 5; }
+  }
+  @keyframes countB {
+    from { --counter-b: 0; }
+    to { --counter-b: 7; }
+  }
+  @keyframes countC {
+    from { --counter-c: 0; }
+    to { --counter-c: 11; }
+  }
+  @keyframes hubRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes spokeAppear {
+    from { opacity: 0; stroke-dashoffset: 100; }
+    to { opacity: 1; stroke-dashoffset: 0; }
+  }
+  @keyframes scrollHint {
+    0%, 100% { opacity: 0.4; transform: translateY(0); }
+    50% { opacity: 0.9; transform: translateY(6px); }
+  }
+
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Navigation ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(21, 21, 21, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--rh-gray-700);
+    padding: 0 2rem;
+  }
+  nav .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  nav .logo {
+    font-family: 'Red Hat Display', sans-serif; font-weight: 700; font-size: 0.95rem;
+    color: var(--rh-white); display: flex; align-items: center; gap: 0.6rem;
+  }
+  nav .logo .hat {
+    width: 28px; height: 28px; background: var(--rh-red); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 900; color: white;
+  }
+  nav .nav-links { display: flex; gap: 0.25rem; }
+  nav .nav-links a {
+    color: var(--rh-gray-300); text-decoration: none; font-size: 0.82rem; font-weight: 500;
+    padding: 0.4rem 0.75rem; border-radius: 6px; transition: all 0.2s;
+  }
+  nav .nav-links a:hover { color: var(--rh-white); background: var(--rh-gray-700); }
+
+  /* ── Sections ── */
+  section {
+    max-width: 1200px; margin: 0 auto; padding: 6rem 2rem;
+    scroll-margin-top: 72px;
+  }
+  .section-label {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.15em; color: var(--rh-red); margin-bottom: 0.75rem;
+  }
+  .section-title { font-size: 2.25rem; font-weight: 700; margin-bottom: 1rem; }
+  .section-subtitle { font-size: 1.15rem; color: var(--rh-gray-300); max-width: 700px; margin-bottom: 3rem; }
+
+  /* ── Section Dividers — quieter ── */
+  .section-divider {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(238, 0, 0, 0.18), rgba(238, 0, 0, 0.35), rgba(238, 0, 0, 0.18), transparent);
+    margin: 0;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 90vh; display: flex; align-items: center;
+    padding-top: 56px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -200px; right: -200px; width: 800px; height: 800px;
+    background: radial-gradient(circle, var(--glow-red) 0%, transparent 70%); pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -100px; left: -100px; width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--glow-red-soft) 0%, transparent 70%); pointer-events: none;
+  }
+  .hero-inner {
+    position: relative; z-index: 1; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+  }
+  .hero-content { }
+  .hero-content > * {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  .hero-content > *:nth-child(1) { animation-delay: 0s; }
+  .hero-content > *:nth-child(2) { animation-delay: 0.15s; }
+  .hero-content > *:nth-child(3) { animation-delay: 0.3s; }
+  .hero-content > *:nth-child(4) { animation-delay: 0.45s; }
+  .hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 1.5rem; }
+  .hero h1 .accent {
+    background: linear-gradient(135deg, var(--rh-red), #ff4444);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero .tagline { font-size: 1.15rem; color: var(--rh-gray-400); max-width: 580px; margin-bottom: 2.5rem; line-height: 1.7; }
+  .hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+  .hero-stat { display: flex; flex-direction: column; }
+  .hero-stat .number {
+    font-family: 'Red Hat Display', sans-serif; font-size: 2.5rem; font-weight: 900; color: var(--rh-white);
+    line-height: 1.1;
+  }
+  .hero-stat .number .from-num { color: var(--rh-gray-500); }
+  .hero-stat .number .arrow-to { color: var(--rh-red); font-size: 1.5rem; vertical-align: middle; margin: 0 0.15rem; }
+  .hero-stat .label { font-size: 0.82rem; color: var(--rh-gray-500); font-weight: 500; max-width: 140px; }
+  .hero-visual {
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    animation: fadeIn 1.2s ease-out 0.5s forwards;
+  }
+  .hero-visual svg { width: 100%; max-width: 420px; height: auto; }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    opacity: 0; animation: fadeIn 1s ease-out 1.2s forwards;
+  }
+  .scroll-indicator span {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.65rem; color: var(--rh-gray-500);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .scroll-indicator svg {
+    animation: scrollHint 2s ease-in-out infinite;
+  }
+
+  /* ── Principle Banner — distinct background ── */
+  .principle-banner-wrapper {
+    background: var(--rh-gray-800);
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(238, 0, 0, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 50%, rgba(67, 148, 229, 0.03) 0%, transparent 50%);
+    position: relative;
+    overflow: hidden;
+  }
+  .principle-banner-wrapper::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+  .principle-banner { border-top: 1px solid var(--rh-gray-700); }
+  .banner-box {
+    background: linear-gradient(135deg, rgba(238, 0, 0, 0.08), rgba(163, 0, 0, 0.04));
+    border: 1px solid var(--rh-gray-600); border-radius: 16px; padding: 3rem; text-align: center;
+  }
+  .banner-box .principle {
+    font-family: 'Red Hat Display', sans-serif; font-size: 1.8rem; font-weight: 700;
+    color: var(--rh-white); margin-bottom: 0.75rem;
+  }
+  .banner-box .principle .registry-word { color: var(--rh-red); }
+  .banner-box .principle .catalog-word { color: var(--rh-blue-light); }
+  .banner-box .sub { font-size: 1rem; color: var(--rh-gray-400); max-width: 600px; margin: 0 auto; }
+  .divider-cols { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; margin-top: 2.5rem; text-align: center; }
+  .divider-col h4 { font-size: 1rem; margin-bottom: 0.4rem; }
+  .divider-col p { font-size: 0.85rem; color: var(--rh-gray-400); }
+  .divider-vs {
+    display: flex; align-items: center; font-family: 'Red Hat Mono', monospace;
+    font-size: 0.8rem; color: var(--rh-gray-600); font-weight: 700;
+  }
+
+  /* ── Why Now ── */
+  .why-now { border-top: 1px solid var(--rh-gray-700); }
+  .why-now-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
+  }
+  .why-now-narrative {
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .why-now-narrative h3 {
+    font-size: 1.5rem; margin-bottom: 1rem; color: var(--rh-white);
+  }
+  .why-now-narrative p {
+    font-size: 1rem; color: var(--rh-gray-300); line-height: 1.8; margin-bottom: 1.5rem;
+  }
+  .why-now-narrative .urgency-callout {
+    background: rgba(238, 0, 0, 0.06);
+    border-left: 3px solid var(--rh-red);
+    padding: 1rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.92rem;
+    color: var(--rh-gray-200);
+  }
+  .momentum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .momentum-card {
+    background: var(--rh-gray-900); border: 1px solid var(--rh-gray-700); border-radius: 12px;
+    padding: 1.5rem; transition: border-color 0.3s;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .momentum-card:hover { border-color: var(--rh-gray-500); }
+  .momentum-card .momentum-icon {
+    flex-shrink: 0; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  }
+  .momentum-card .momentum-icon svg { width: 24px; height: 24px; }
+  .momentum-card .momentum-body { flex: 1; }
+  .momentum-card h4 { font-size: 0.92rem; margin-bottom: 0.3rem; }
+  .momentum-card p { font-size: 0.82rem; color: var(--rh-gray-400); line-height: 1.5; }
+  .momentum-card .highlight { color: var(--rh-red); font-weight: 600; }
+
+  /* ── Problem ── */
+  .problem { border-top: 1px solid var(--rh-gray-700); }
+  .problem-scenario {
+    background: linear-gradient(135deg, rgba(238, 0, 0, 0.06), rgba(238, 0, 0, 0.02));
+    border: 1px solid rgba(238, 0, 0, 0.2);
+    border-radius: 12px; padding: 2rem 2.5rem; margin-bottom: 3rem;
+    position: relative;
+  }
+  .problem-scenario::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--rh-red), #ff4444, var(--rh-red));
+    border-radius: 12px 12px 0 0;
+  }
+  .problem-scenario .scenario-label {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.7rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em; color: var(--rh-red);
+    margin-bottom: 0.75rem;
+  }
+  .problem-scenario p {
+    font-size: 1.05rem; color: var(--rh-gray-200); line-height: 1.8;
+  }
+  .problem-scenario strong { color: var(--rh-white); font-weight: 700; }
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+  .problem-card {
+    background: var(--rh-gray-800); border: 1px solid var(--rh-gray-700);
+    border-radius: 12px; padding: 2rem; transition: border-color 0.3s;
+    display: flex; gap: 1.25rem; align-items: flex-start;
+  }
+  .problem-card:hover { border-color: var(--rh-gray-500); }
+  .problem-card .icon {
+    width: 40px; height: 40px; min-width: 40px; border-radius: 8px; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0;
+  }
+  .problem-card .icon svg { width: 22px; height: 22px; }
+  .problem-card .problem-body { flex: 1; }
+  .problem-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .problem-card p { font-size: 0.9rem; color: var(--rh-gray-400); }
+
+  /* ── Three Parts ── */
+  .three-parts { border-top: 1px solid var(--rh-gray-700); }
+  .plugin-callout {
+    background: var(--rh-gray-900);
+    border: 1px solid var(--rh-gray-600);
+    border-radius: 12px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 2.5rem;
+    display: flex; gap: 1.25rem; align-items: flex-start;
+  }
+  .plugin-callout .callout-icon {
+    flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px;
+    background: rgba(238, 0, 0, 0.1);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .plugin-callout .callout-icon svg { width: 22px; height: 22px; }
+  .plugin-callout .callout-label {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.7rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em; color: var(--rh-red);
+    margin-bottom: 0.3rem;
+  }
+  .plugin-callout p {
+    font-size: 0.95rem; color: var(--rh-gray-300); line-height: 1.7;
+  }
+  .parts-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+  .part-card {
+    background: var(--rh-gray-900); border: 1px solid var(--rh-gray-700); border-radius: 16px;
+    padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s;
+  }
+  .part-card:hover { transform: translateY(-2px); border-color: var(--rh-gray-500); }
+  .part-card.mvp {
+    border-color: var(--rh-red);
+    background: linear-gradient(135deg, var(--rh-gray-900), rgba(238, 0, 0, 0.06));
+  }
+  .part-card.mvp::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--rh-red), #ff4444);
+  }
+  .part-card.shipping {
+    border-color: var(--rh-green);
+    background: linear-gradient(135deg, var(--rh-gray-900), rgba(62, 134, 53, 0.05));
+  }
+  .part-card.shipping::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--rh-green);
+  }
+  .part-number {
+    font-family: 'Red Hat Display', sans-serif; font-size: 2.5rem; font-weight: 900;
+    color: var(--rh-gray-700); line-height: 1; margin-bottom: 1rem; opacity: 0.3;
+  }
+  .part-card.mvp .part-number { color: var(--rh-red-dark); opacity: 0.35; }
+  .part-card.shipping .part-number { color: rgba(62, 134, 53, 0.5); opacity: 0.4; }
+  .part-badge {
+    display: inline-block; font-family: 'Red Hat Mono', monospace; font-size: 0.65rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em; padding: 0.25rem 0.6rem; border-radius: 4px; margin-bottom: 1rem;
+  }
+  .badge-mvp { background: var(--rh-red); color: white; }
+  .badge-shipping { background: var(--rh-green); color: white; }
+  .badge-future { background: var(--rh-gray-700); color: var(--rh-gray-400); }
+  .part-card h3 { font-size: 1.25rem; margin-bottom: 0.4rem; }
+  .part-card .part-desc { font-size: 0.92rem; color: var(--rh-gray-400); margin-bottom: 1.25rem; }
+  .part-card .part-backend {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.78rem; color: var(--rh-teal);
+    background: rgba(0, 149, 150, 0.1); padding: 0.3rem 0.6rem; border-radius: 4px;
+    display: inline-block; margin-bottom: 1rem;
+  }
+  .part-card ul { list-style: none; padding: 0; }
+  .part-card li { font-size: 0.85rem; color: var(--rh-gray-300); padding: 0.3rem 0; padding-left: 1.2rem; position: relative; }
+  .part-card li::before {
+    content: ''; position: absolute; left: 0; top: 0.65rem; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--rh-gray-600);
+  }
+  .part-card.mvp li::before { background: var(--rh-red); }
+  .part-card.shipping li::before { background: var(--rh-green); }
+  .part-card li .planned-tag {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.62rem; color: var(--rh-gray-500);
+    background: var(--rh-gray-800); padding: 0.1rem 0.35rem; border-radius: 3px;
+    margin-left: 0.35rem; vertical-align: middle;
+  }
+
+  /* ── Architecture ── */
+  .architecture { border-top: 1px solid var(--rh-gray-700); }
+
+  /* Cytoscape diagram container */
+  #cy-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--rh-gray-900);
+    border: 1px solid var(--rh-gray-700);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  #cy-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rh-red), var(--rh-red-dark), var(--rh-red));
+    z-index: 10;
+  }
+  #cy {
+    width: calc(100% - 140px);
+    height: 788px;
+    margin-left: 140px;
+  }
+  .layer-labels {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 788px;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .layer-label {
+    position: absolute;
+    left: 18px;
+    font-family: 'Red Hat Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ccc;
+  }
+  .layer-label.governance { color: #ee5555; }
+  .swim-band {
+    position: absolute;
+    left: 0; right: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .swim-band.even {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .arch-legend {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    padding: 1.4rem 2rem;
+    border-top: 1px solid var(--rh-gray-700);
+    background: var(--rh-gray-800);
+    font-family: 'Red Hat Mono', monospace;
+    font-size: 14px;
+    color: #bbb;
+  }
+  .arch-legend-item { display: flex; align-items: center; gap: 0.6rem; }
+  .arch-legend-line { width: 44px; height: 3px; border-radius: 1px; }
+  .arch-legend-line.data-flow { background: var(--rh-red); }
+  .arch-legend-line.feedback { background: repeating-linear-gradient(90deg, #D4954A 0px, #D4954A 6px, transparent 6px, transparent 10px); height: 2px; }
+  .arch-legend-line.governed { background: #aaa; }
+  .arch-legend-box { width: 20px; height: 20px; border-radius: 3px; border: 1.5px dashed #777; opacity: 0.7; }
+
+  /* ── Flow ── */
+  .flow-section { border-top: 1px solid var(--rh-gray-700); }
+  .flow-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .flow-panel { background: var(--rh-gray-900); border: 1px solid var(--rh-gray-700); border-radius: 16px; padding: 2rem; }
+  .flow-panel.target { border-color: var(--rh-green); background: linear-gradient(135deg, var(--rh-gray-900), rgba(62, 134, 53, 0.05)); }
+  .flow-panel h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
+  .flow-panel .flow-version { font-family: 'Red Hat Mono', monospace; font-size: 0.75rem; color: var(--rh-gray-500); margin-bottom: 1rem; }
+  .flow-svg-container { margin-bottom: 1.25rem; }
+  .flow-svg-container svg { width: 100%; height: auto; display: block; }
+  .flow-steps { display: flex; flex-direction: column; gap: 0; }
+  .flow-step { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 0; position: relative; }
+  .flow-step:not(:last-child)::after {
+    content: ''; position: absolute; left: 13px; top: 2.1rem; bottom: -0.1rem; width: 2px; background: var(--rh-gray-700);
+  }
+  .flow-dot {
+    width: 28px; height: 28px; min-width: 28px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-family: 'Red Hat Mono', monospace; font-size: 0.7rem; font-weight: 700;
+    background: var(--rh-gray-700); color: var(--rh-gray-300); z-index: 1;
+  }
+  .flow-panel.target .flow-dot { background: var(--rh-green); color: white; }
+  .flow-step .manual-tag {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.65rem; color: var(--rh-orange);
+    background: rgba(244, 180, 0, 0.1); padding: 0.1rem 0.4rem; border-radius: 3px; margin-left: 0.5rem;
+  }
+  .flow-step .auto-tag {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.65rem; color: var(--rh-green);
+    background: rgba(62, 134, 53, 0.1); padding: 0.1rem 0.4rem; border-radius: 3px; margin-left: 0.5rem;
+  }
+  .flow-step-text { padding-top: 0.2rem; }
+  .flow-step-text .step-title { font-size: 0.9rem; font-weight: 600; color: var(--rh-gray-200); }
+  .flow-step-text .step-detail { font-size: 0.8rem; color: var(--rh-gray-500); }
+
+  /* ── Assets ── */
+  .assets-section { border-top: 1px solid var(--rh-gray-700); }
+  .assets-intro { font-size: 0.95rem; color: var(--rh-gray-300); margin-bottom: 2rem; max-width: 800px; }
+  .assets-intro strong { color: var(--rh-white); }
+  .assets-group-label {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.7rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em; padding: 0.6rem 1.25rem;
+    background: var(--rh-gray-800); color: var(--rh-gray-400);
+  }
+  .assets-group-label.primary { color: var(--rh-red); background: rgba(238, 0, 0, 0.08); }
+  .assets-table-wrapper { overflow-x: auto; }
+  .assets-table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    background: var(--rh-gray-900); border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--rh-gray-700); margin-bottom: 2rem;
+    min-width: 700px;
+  }
+  .assets-table th {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--rh-gray-400);
+    padding: 1rem 1.25rem; text-align: left; background: var(--rh-gray-800);
+    border-bottom: 1px solid var(--rh-gray-700);
+  }
+  .assets-table td {
+    padding: 0.85rem 1.25rem; font-size: 0.88rem;
+    border-bottom: 1px solid var(--rh-gray-800); color: var(--rh-gray-300);
+  }
+  .assets-table tr:last-child td { border-bottom: none; }
+  .assets-table tr:hover td { background: var(--rh-gray-800); }
+  .asset-name { font-weight: 600; color: var(--rh-white); }
+  .priority-tag {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.68rem; font-weight: 600;
+    padding: 0.2rem 0.5rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .priority-highest { background: rgba(238, 0, 0, 0.2); color: #ff6666; }
+  .priority-high { background: rgba(238, 0, 0, 0.1); color: #ff8888; }
+  .priority-med { background: rgba(0, 102, 204, 0.15); color: var(--rh-blue-light); }
+  .priority-low { background: var(--rh-gray-700); color: var(--rh-gray-400); }
+  .backend-tag { font-family: 'Red Hat Mono', monospace; font-size: 0.75rem; color: var(--rh-teal); }
+
+  /* ── Roadmap ── */
+  .roadmap { border-top: 1px solid var(--rh-gray-700); }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, var(--rh-red), var(--rh-red-dark), var(--rh-gray-600));
+  }
+  .timeline-item { position: relative; padding-bottom: 2.5rem; padding-left: 2rem; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -2rem; top: 0.3rem; width: 18px; height: 18px;
+    border-radius: 50%; border: 3px solid; background: var(--rh-black); z-index: 1;
+  }
+  .timeline-item:nth-child(1)::before { border-color: var(--rh-red); }
+  .timeline-item:nth-child(2)::before { border-color: var(--rh-red); }
+  .timeline-item:nth-child(3)::before { border-color: var(--rh-red-dark); }
+  .timeline-item:nth-child(4)::before { border-color: var(--rh-gray-500); }
+  .timeline-item.active::before { background: var(--rh-red); box-shadow: 0 0 12px rgba(238, 0, 0, 0.4); }
+  .timeline-date { font-family: 'Red Hat Mono', monospace; font-size: 0.75rem; color: var(--rh-gray-500); margin-bottom: 0.25rem; }
+  .timeline-title { font-size: 1.15rem; font-weight: 700; color: var(--rh-white); margin-bottom: 0.25rem; }
+  .timeline-desc { font-size: 0.88rem; color: var(--rh-gray-400); }
+  .timeline-chips { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+  .chip {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.7rem; padding: 0.2rem 0.5rem;
+    border-radius: 4px; background: var(--rh-gray-800); color: var(--rh-gray-300); border: 1px solid var(--rh-gray-700);
+  }
+  .chip-red { border-color: rgba(238, 0, 0, 0.4); color: #ff6666; }
+
+  /* ── The Ask / CTA ── */
+  .the-ask { border-top: 1px solid var(--rh-gray-700); }
+  .ask-card {
+    background: linear-gradient(135deg, rgba(238, 0, 0, 0.06), rgba(238, 0, 0, 0.02));
+    border: 2px solid var(--rh-red);
+    border-radius: 16px; padding: 3rem; position: relative; overflow: hidden;
+  }
+  .ask-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--rh-red), #ff4444, var(--rh-red));
+  }
+  .ask-card::after {
+    content: ''; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(238, 0, 0, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .ask-card .ask-header {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;
+  }
+  .ask-card .ask-header svg { flex-shrink: 0; }
+  .ask-card h2 {
+    font-size: 2rem; font-weight: 900; color: var(--rh-white); margin-bottom: 0.5rem;
+  }
+  .ask-card .ask-subtitle {
+    font-size: 1.1rem; color: var(--rh-gray-300); margin-bottom: 2rem; max-width: 700px;
+  }
+  .ask-items {
+    display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 2.5rem;
+  }
+  .ask-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .ask-item-number {
+    flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%;
+    background: var(--rh-red); color: white; display: flex; align-items: center; justify-content: center;
+    font-family: 'Red Hat Display', sans-serif; font-weight: 900; font-size: 1rem;
+  }
+  .ask-item-text {
+    padding-top: 0.4rem;
+  }
+  .ask-item-text strong { color: var(--rh-white); font-size: 1rem; }
+  .ask-item-text p { font-size: 0.92rem; color: var(--rh-gray-400); margin-top: 0.2rem; }
+  .ask-item-text .jira-ref {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.75rem; color: var(--rh-teal);
+    background: rgba(0, 149, 150, 0.1); padding: 0.15rem 0.4rem; border-radius: 3px;
+  }
+  .risk-box {
+    background: rgba(238, 0, 0, 0.08); border: 1px solid rgba(238, 0, 0, 0.25);
+    border-radius: 10px; padding: 1.5rem 1.75rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .risk-box svg { flex-shrink: 0; margin-top: 0.15rem; }
+  .risk-box .risk-label {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.7rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em; color: var(--rh-red);
+    margin-bottom: 0.3rem;
+  }
+  .risk-box p { font-size: 0.92rem; color: var(--rh-gray-300); line-height: 1.7; }
+
+  /* ── Footer ── */
+  footer { border-top: 1px solid var(--rh-gray-700); padding: 3rem 2rem; text-align: center; }
+  footer .footer-inner { max-width: 1200px; margin: 0 auto; }
+  footer p { font-size: 0.82rem; color: var(--rh-gray-500); }
+  footer a { color: var(--rh-red); text-decoration: none; }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual svg { max-width: 260px; }
+    .parts-grid { grid-template-columns: 1fr; }
+    .why-now-layout { grid-template-columns: 1fr; }
+    .momentum-grid { grid-template-columns: 1fr; }
+    .flow-comparison, .problem-grid { grid-template-columns: 1fr; }
+    .divider-cols { grid-template-columns: 1fr; gap: 1rem; }
+    .divider-vs { justify-content: center; }
+    nav .nav-links { display: none; }
+    .hero-stats { gap: 2rem; }
+    .scroll-indicator { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 4rem 1.25rem; }
+    .hero { min-height: auto; padding-top: 80px; padding-bottom: 3rem; }
+    .hero h1 { font-size: 1.8rem; }
+    .hero .tagline { font-size: 1rem; }
+    .hero-stats { gap: 1.5rem; }
+    .hero-stat .number { font-size: 2rem; }
+    .hero-visual svg { max-width: 200px; }
+    .section-title { font-size: 1.6rem; }
+    .section-subtitle { font-size: 1rem; }
+    .banner-box { padding: 2rem 1.25rem; }
+    .banner-box .principle { font-size: 1.3rem; }
+    .problem-scenario { padding: 1.5rem; }
+    .problem-grid { gap: 1rem; }
+    .problem-card { padding: 1.25rem; }
+    .ask-card { padding: 2rem 1.5rem; }
+    .ask-card h2 { font-size: 1.5rem; }
+    .flow-svg-container svg { min-width: 280px; }
+    .arch-svg-container svg { min-width: 600px; }
+    .part-number { font-size: 2rem; }
+    .momentum-card { padding: 1rem; }
+    .risk-box { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <div class="hat">RH</div>
+      AI Asset Registry
+    </div>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#why-now">Why Now</a>
+      <a href="#three-parts">Solution</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#flow">Flow</a>
+      <a href="#assets">Assets</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#the-ask">The Ask</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="section-label">Red Hat OpenShift AI</div>
+      <h1>A Plugin Architecture for<br><span class="accent">AI Asset Registries.</span></h1>
+      <p class="tagline">
+        Build the plugin framework in MLflow that enables MCP Server, Agent, and Skills registries
+        for RHOAI 3.5 &mdash; then rapidly extend it to every AI asset type without building
+        bespoke registries one at a time.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="number"><span class="from-num">2</span><span class="arrow-to">&rarr;</span>0</span>
+          <span class="label">Manual hand-offs eliminated</span>
+        </div>
+        <div class="hero-stat">
+          <span class="number">7+</span>
+          <span class="label">Asset types governed by one framework</span>
+        </div>
+        <div class="hero-stat">
+          <span class="number">9+</span>
+          <span class="label">Competing registries already launched</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <!-- Hub-and-spoke SVG illustration -->
+      <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#EE0000" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#EE0000" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Glow background -->
+        <circle cx="210" cy="210" r="180" fill="url(#hubGlow)"/>
+        <!-- Spoke lines with animation -->
+        <g stroke="#EE0000" stroke-width="1.5" opacity="0.5">
+          <line x1="210" y1="210" x2="210" y2="55" stroke-dasharray="4 4" class="arch-flow-line-slow"/>
+          <line x1="210" y1="210" x2="358" y2="125" stroke-dasharray="4 4" class="arch-flow-line-slow"/>
+          <line x1="210" y1="210" x2="358" y2="295" stroke-dasharray="4 4" class="arch-flow-line-slow"/>
+          <line x1="210" y1="210" x2="210" y2="365" stroke-dasharray="4 4" class="arch-flow-line-slow"/>
+          <line x1="210" y1="210" x2="62" y2="295" stroke-dasharray="4 4" class="arch-flow-line-slow"/>
+          <line x1="210" y1="210" x2="62" y2="125" stroke-dasharray="4 4" class="arch-flow-line-slow"/>
+          <line x1="210" y1="210" x2="115" y2="65" stroke-dasharray="4 4" class="arch-flow-line-slow"/>
+          <line x1="210" y1="210" x2="305" y2="65" stroke-dasharray="4 4" class="arch-flow-line-slow"/>
+        </g>
+        <!-- Outer nodes -->
+        <g font-family="Red Hat Display, sans-serif" font-size="11" font-weight="600" text-anchor="middle">
+          <!-- MCP Servers -->
+          <circle cx="210" cy="48" r="28" fill="#1a1a1a" stroke="#EE0000" stroke-width="2"/>
+          <text x="210" y="44" fill="#ff6666" font-size="9">MCP</text>
+          <text x="210" y="56" fill="#ff6666" font-size="8">Servers</text>
+          <!-- Agents -->
+          <circle cx="358" cy="118" r="28" fill="#1a1a1a" stroke="#EE0000" stroke-width="2"/>
+          <text x="358" y="122" fill="#ff6666" font-size="10">Agents</text>
+          <!-- Skills -->
+          <circle cx="358" cy="295" r="28" fill="#1a1a1a" stroke="#EE0000" stroke-width="2"/>
+          <text x="358" y="299" fill="#ff6666" font-size="10">Skills</text>
+          <!-- Models -->
+          <circle cx="210" cy="365" r="28" fill="#1a1a1a" stroke="#6a6a6a" stroke-width="1.5"/>
+          <text x="210" y="369" fill="#8a8a8a" font-size="10">Models</text>
+          <!-- Guardrails -->
+          <circle cx="62" cy="295" r="28" fill="#1a1a1a" stroke="#6a6a6a" stroke-width="1.5"/>
+          <text x="62" y="291" fill="#8a8a8a" font-size="8">Guard-</text>
+          <text x="62" y="303" fill="#8a8a8a" font-size="8">rails</text>
+          <!-- Prompts -->
+          <circle cx="62" cy="125" r="28" fill="#1a1a1a" stroke="#6a6a6a" stroke-width="1.5"/>
+          <text x="62" y="129" fill="#8a8a8a" font-size="10">Prompts</text>
+          <!-- Data Sources -->
+          <circle cx="115" cy="58" r="22" fill="#1a1a1a" stroke="#3c3c3c" stroke-width="1"/>
+          <text x="115" y="55" fill="#6a6a6a" font-size="7">Data</text>
+          <text x="115" y="64" fill="#6a6a6a" font-size="7">Sources</text>
+          <!-- Plugins -->
+          <circle cx="305" cy="58" r="22" fill="#1a1a1a" stroke="#3c3c3c" stroke-width="1"/>
+          <text x="305" y="62" fill="#6a6a6a" font-size="8">Plugins</text>
+        </g>
+        <!-- Center hub -->
+        <circle cx="210" cy="210" r="62" fill="#1a1a1a" stroke="#EE0000" stroke-width="3" filter="url(#glow)"/>
+        <circle cx="210" cy="210" r="52" fill="rgba(238, 0, 0, 0.08)" stroke="none"/>
+        <text x="210" y="198" font-family="Red Hat Mono, monospace" font-size="8" font-weight="600" fill="#EE0000" text-anchor="middle" letter-spacing="0.1em">1 PLUGIN</text>
+        <text x="210" y="214" font-family="Red Hat Display, sans-serif" font-size="13" font-weight="700" fill="white" text-anchor="middle">Architecture</text>
+        <text x="210" y="230" font-family="Red Hat Mono, monospace" font-size="8" fill="#8a8a8a" text-anchor="middle">MLflow</text>
+      </svg>
+    </div>
+  </div>
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M4 6l4 4 4-4" stroke="#6a6a6a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- Section Divider -->
+<div class="section-divider"></div>
+
+<!-- Problem (MOVED BEFORE Why Now) -->
+<section class="problem" id="problem">
+  <div class="section-label">The Problem</div>
+  <h2 class="section-title">AI is Expanding Beyond Models</h2>
+  <p class="section-subtitle">
+    Organizations need to govern agents, MCP servers, prompts, skills, and more.
+    The current model registry was not purpose-built for this &mdash; it was built for models and extended.
+    Building a bespoke registry for each new asset type does not scale.
+  </p>
+
+  <!-- Concrete scenario callout -->
+  <div class="problem-scenario">
+    <div class="scenario-label">The Reality Today</div>
+    <p>
+      In RHOAI 3.4, an MCP server goes from catalog to consumption through <strong>5 steps across 4 disconnected
+      systems</strong>, with <strong>2 manual hand-offs</strong> and <strong>zero governance checkpoints</strong>. No system
+      records who approved it, what version is deployed, or whether it passed security scanning.
+      Now imagine doing this for agents, skills, prompts, guardrails, and every future AI asset type.
+    </p>
+  </div>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="icon" style="background: rgba(238,0,0,0.14);">
+        <!-- Warning triangle SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ff6666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <div class="problem-body">
+        <h3>Fragmented Governance</h3>
+        <p>Each new AI asset type would need its own registry effort. Duplicated work, inconsistent UX, slower time-to-market for new asset support.</p>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="icon" style="background: rgba(0,102,204,0.14);">
+        <!-- Chain link SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4394e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+        </svg>
+      </div>
+      <div class="problem-body">
+        <h3>Manual Stitching</h3>
+        <p>Today, connecting catalog &rarr; deployment &rarr; gateway &rarr; Studio requires manual steps at every stage. Fragile and ungoverned.</p>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="icon" style="background: rgba(244,180,0,0.14);">
+        <!-- Magnifying glass SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F4B400" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </div>
+      <div class="problem-body">
+        <h3>No Source of Truth</h3>
+        <p>No single system knows which assets are approved, deployed, consumable, or how they relate to each other.</p>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="icon" style="background: rgba(103,83,172,0.14);">
+        <!-- Circular arrows SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#9a86d6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+          <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+        </svg>
+      </div>
+      <div class="problem-body">
+        <h3>Agent Sprawl</h3>
+        <p>Enterprises face uncontrolled proliferation of agents, models, and tools. Uncoordinated proliferation creates risk, not value.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section Divider -->
+<div class="section-divider"></div>
+
+<!-- Why Now -->
+<section class="why-now" id="why-now">
+  <div class="section-label">Momentum</div>
+  <h2 class="section-title">Why Now</h2>
+  <p class="section-subtitle">
+    Internal products, upstream partners, and enterprise customers are converging on this requirement simultaneously.
+  </p>
+  <div class="why-now-layout">
+    <div class="why-now-narrative">
+      <h3>The window is narrowing</h3>
+      <p>
+        Databricks is building the skills registry prototype by end of April 2026 &mdash; approximately
+        <strong style="color: var(--rh-white);">3 weeks from today</strong>. The upstream design approval cycle takes
+        approximately <strong style="color: var(--rh-white);">4 weeks</strong>. That means we are already
+        behind on the timeline to influence the plugin architecture direction in MLflow.
+        Every release without a registry framework means another bespoke integration per asset type.
+      </p>
+      <div class="urgency-callout">
+        Starting the upstream proposal now is not early &mdash; it is the minimum lead time required.
+        If the design is not submitted by mid-April, the Databricks prototype will proceed without
+        Red Hat's input on the plugin model.
+      </div>
+    </div>
+    <div>
+      <div class="momentum-grid">
+        <div class="momentum-card">
+          <div class="momentum-icon">
+            <!-- Factory / Building icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ff6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21h18M3 21V7l6 4V7l6 4V3h6v18"/>
+            </svg>
+          </div>
+          <div class="momentum-body">
+            <h4>Products Building Agents</h4>
+            <p>OCP, AAP, and Lightspeed are each building agents, MCPs, and skills. <span class="highlight">4 MCP servers ship in the 3.4 catalog.</span></p>
+          </div>
+        </div>
+        <div class="momentum-card">
+          <div class="momentum-icon">
+            <!-- Handshake icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ff6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.5 11.5L17 8l-5 3-4-3-5 4M2 17l3.5-1 3 3 4-2 3 2 3-1 3.5 1"/>
+              <path d="M8.5 14l2 2M13.5 13l2 1.5"/>
+            </svg>
+          </div>
+          <div class="momentum-body">
+            <h4>Partners Asking</h4>
+            <p><span class="highlight">Microsoft asked about plugin support</span> in April 2026. Partners need to know how we package and distribute integrations.</p>
+          </div>
+        </div>
+        <div class="momentum-card">
+          <div class="momentum-icon">
+            <!-- Bar chart icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ff6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/>
+            </svg>
+          </div>
+          <div class="momentum-body">
+            <h4>Enterprise Customers</h4>
+            <p><span class="highlight">State Farm, Citibank, Dell, Prudential, Florida Blue</span> are actively asking how RHOAI will govern MCP servers and agents in production.</p>
+          </div>
+        </div>
+        <div class="momentum-card">
+          <div class="momentum-icon">
+            <!-- Rocket icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ff6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2C12 2 7 7 7 13c0 3 2 5 5 5s5-2 5-5c0-6-5-11-5-11z"/>
+              <path d="M12 18v4M8 22h8M9 13h6"/>
+            </svg>
+          </div>
+          <div class="momentum-body">
+            <h4>Upstream Alignment</h4>
+            <p>MLflow is expanding GenAI capabilities. <span class="highlight">Databricks targets end of April 2026</span> for the skills registry prototype.</p>
+          </div>
+        </div>
+        <div class="momentum-card">
+          <div class="momentum-icon">
+            <!-- Globe icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ff6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10A15 15 0 0 1 12 2z"/>
+            </svg>
+          </div>
+          <div class="momentum-body">
+            <h4>Ecosystem Exploding</h4>
+            <p>Smithery, Docker, GitHub, and <span class="highlight">9+ MCP catalogs/registries</span> have launched. The market is forming now.</p>
+          </div>
+        </div>
+        <div class="momentum-card">
+          <div class="momentum-icon">
+            <!-- Shield icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ff6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <div class="momentum-body">
+            <h4>Governance Gap</h4>
+            <p>Most competitors do <em>discovery only</em>. <span class="highlight">Nobody does enterprise governance.</span> That is Red Hat's lane.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section Divider -->
+<div class="section-divider"></div>
+
+<!-- Core Principle — wrapped for distinct background -->
+<div class="principle-banner-wrapper">
+<section class="principle-banner" id="principle">
+  <div class="banner-box">
+    <div class="principle">
+      <span class="registry-word">Registry</span> = Governance &nbsp;&bull;&nbsp;
+      <span class="catalog-word">Catalog</span> = Discovery
+    </div>
+    <p class="sub">
+      Registries manage identity, lifecycle, policy, and trust.
+      Catalogs help users browse, search, and select.
+      Separate concerns. Unified experience.
+    </p>
+    <div class="divider-cols">
+      <div class="divider-col">
+        <h4 style="color: var(--rh-red)">MLflow</h4>
+        <p>Registry backend<br>Storage, versioning, governance</p>
+      </div>
+      <div class="divider-vs">&harr;</div>
+      <div class="divider-col">
+        <h4 style="color: var(--rh-blue-light)">Kubeflow Hub</h4>
+        <p>Catalog backend<br>Discovery, browsing, selection</p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- Section Divider -->
+<div class="section-divider"></div>
+
+<!-- Three Parts -->
+<section class="three-parts" id="three-parts">
+  <div class="section-label">The Solution</div>
+  <h2 class="section-title">Three Parts, One Framework</h2>
+  <p class="section-subtitle">
+    The AI Asset Registry spans three distinct areas. The plugin architecture is what we are proposing now.
+    Gen AI Studio already ships in RHOAI 3.4. The ecosystem is what comes next.
+  </p>
+
+  <!-- Plugin Architecture definition callout -->
+  <div class="plugin-callout">
+    <div class="callout-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#ff6666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/>
+      </svg>
+    </div>
+    <div>
+      <div class="callout-label">What "Plugin Architecture" Means Concretely</div>
+      <p>The plugin model extends MLflow's artifact type system so each AI asset type registers as a <strong style="color: var(--rh-white);">typed plugin</strong> with its own metadata schema, lifecycle states, and governance rules &mdash; without forking or rebuilding the core registry. One framework, many asset types, zero bespoke registries.</p>
+    </div>
+  </div>
+
+  <div class="parts-grid">
+    <div class="part-card mvp">
+      <div class="part-number">01</div>
+      <div class="part-badge badge-mvp">MVP &mdash; RHOAI 3.5 DP</div>
+      <h3>The Plugin Architecture &amp; Priority Registries</h3>
+      <p class="part-desc">A plugin-based registry framework in MLflow that enables MCP Server, Agent, and Skills registries &mdash; and unlocks rapid addition of future asset types.</p>
+      <div class="part-backend">Backend: MLflow + Databricks upstream</div>
+      <ul>
+        <li>MCP Server Registry (Dev Preview)</li>
+        <li>Agent Registry (Dev Preview)</li>
+        <li>Skills Registry (Dev Preview)</li>
+        <li>Metadata-first governance</li>
+        <li>Lifecycle state &amp; certification tracking</li>
+        <li>RBAC-aware visibility</li>
+        <li>Plugin model for future asset types</li>
+      </ul>
+    </div>
+    <div class="part-card shipping">
+      <div class="part-number">02</div>
+      <div class="part-badge badge-shipping">Shipping &mdash; RHOAI 3.4</div>
+      <h3>Gen AI Studio</h3>
+      <p class="part-desc">Already shipping in OpenShift AI. Prompt management is GA in 3.4. Will integrate with registry-governed assets for a unified consumption experience.</p>
+      <div class="part-backend">Existing in RHOAI</div>
+      <ul>
+        <li>Prompt management (GA in 3.4)</li>
+        <li>Agent workspace &amp; testing <span class="planned-tag">planned</span></li>
+        <li>Evaluation &amp; iteration UI <span class="planned-tag">planned</span></li>
+        <li>Registry-governed asset consumption <span class="planned-tag">planned</span></li>
+        <li>Inner-loop &rarr; outer-loop workflows <span class="planned-tag">planned</span></li>
+      </ul>
+    </div>
+    <div class="part-card">
+      <div class="part-number">03</div>
+      <div class="part-badge badge-future">Future</div>
+      <h3>The Ecosystem</h3>
+      <p class="part-desc">Marketplace, packaging, distribution, and partner plugin model. The hard, new problem that the registry foundation enables.</p>
+      <div class="part-backend">Backend: Federation Layer</div>
+      <ul>
+        <li>Skill &amp; plugin packaging format</li>
+        <li>Partner onboarding &amp; distribution</li>
+        <li>Federation with external registries</li>
+        <li>Marketplace for governed assets</li>
+        <li>Cross-catalog discovery</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Section Divider -->
+<div class="section-divider"></div>
+
+<!-- Architecture -->
+<section class="architecture" id="architecture">
+  <div class="section-label">Architecture</div>
+  <h2 class="section-title">System Overview</h2>
+  <p class="section-subtitle">
+    How the registry connects discovery, deployment, runtime enforcement, and consumption
+    into one governed lifecycle.
+  </p>
+  <div id="cy-container">
+    <div id="cy"></div>
+    <div class="layer-labels" id="layer-labels"></div>
+    <div class="arch-legend">
+      <span style="letter-spacing: 0.1em; font-weight: 600; color: #999;">LEGEND:</span>
+      <div class="arch-legend-item"><div class="arch-legend-line data-flow"></div><span>Data flow</span></div>
+      <div class="arch-legend-item"><div class="arch-legend-line feedback"></div><span>Feedback loop</span></div>
+      <div class="arch-legend-item"><div class="arch-legend-line governed"></div><span>Governed access</span></div>
+      <div class="arch-legend-item"><div class="arch-legend-box"></div><span>Phase 2+</span></div>
+      <span style="margin-left: auto; font-size: 13px; color: #999;">Peter Double &mdash; April 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- Section Divider -->
+<div class="section-divider"></div>
+
+<!-- Flow Comparison -->
+<section class="flow-section" id="flow">
+  <div class="section-label">Lifecycle</div>
+  <h2 class="section-title">From Manual to Governed</h2>
+  <p class="section-subtitle">
+    The registry eliminates manual hand-offs between platform components, creating one governed lifecycle.
+  </p>
+  <div class="flow-comparison">
+    <div class="flow-panel">
+      <h3>Today (RHOAI 3.4)</h3>
+      <div class="flow-version">Fragmented &amp; Manual</div>
+
+      <!-- Visual flow SVG for Today -->
+      <div class="flow-svg-container">
+        <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg" font-family="Red Hat Text, sans-serif">
+          <!-- Nodes -->
+          <rect x="10" y="10" width="80" height="32" rx="6" fill="#252525" stroke="#3c3c3c" stroke-width="1"/>
+          <text x="50" y="30" text-anchor="middle" fill="#b8bbbe" font-size="8" font-weight="500">Catalog</text>
+
+          <rect x="130" y="10" width="80" height="32" rx="6" fill="#252525" stroke="#3c3c3c" stroke-width="1"/>
+          <text x="170" y="30" text-anchor="middle" fill="#b8bbbe" font-size="8" font-weight="500">Operator</text>
+
+          <rect x="250" y="10" width="80" height="32" rx="6" fill="#252525" stroke="#EE0000" stroke-width="1.5" stroke-dasharray="4 2"/>
+          <text x="290" y="30" text-anchor="middle" fill="#ff8888" font-size="8" font-weight="500">Gateway</text>
+
+          <rect x="70" y="90" width="80" height="32" rx="6" fill="#252525" stroke="#EE0000" stroke-width="1.5" stroke-dasharray="4 2"/>
+          <text x="110" y="110" text-anchor="middle" fill="#ff8888" font-size="8" font-weight="500">ConfigMap</text>
+
+          <rect x="200" y="90" width="80" height="32" rx="6" fill="#252525" stroke="#3c3c3c" stroke-width="1"/>
+          <text x="240" y="110" text-anchor="middle" fill="#b8bbbe" font-size="8" font-weight="500">Studio</text>
+
+          <!-- Arrows with breaks/manual markers -->
+          <line x1="90" y1="26" x2="128" y2="26" stroke="#6a6a6a" stroke-width="1.5"/>
+          <polygon points="126,22 134,26 126,30" fill="#6a6a6a"/>
+
+          <line x1="210" y1="26" x2="248" y2="26" stroke="#6a6a6a" stroke-width="1.5"/>
+          <polygon points="246,22 254,26 246,30" fill="#6a6a6a"/>
+
+          <path d="M 290 42 L 290 60 L 110 60 L 110 88" stroke="#6a6a6a" stroke-width="1.5" fill="none"/>
+          <polygon points="106,86 110,94 114,86" fill="#6a6a6a"/>
+
+          <line x1="150" y1="106" x2="198" y2="106" stroke="#6a6a6a" stroke-width="1.5"/>
+          <polygon points="196,102 204,106 196,110" fill="#6a6a6a"/>
+
+          <!-- MANUAL badges -->
+          <rect x="254" y="42" width="52" height="16" rx="3" fill="rgba(238, 0, 0, 0.15)" stroke="#EE0000" stroke-width="0.75"/>
+          <text x="280" y="53" text-anchor="middle" fill="#ff6666" font-family="Red Hat Mono, monospace" font-size="6.5" font-weight="700" letter-spacing="0.05em">MANUAL</text>
+
+          <rect x="84" y="124" width="52" height="16" rx="3" fill="rgba(238, 0, 0, 0.15)" stroke="#EE0000" stroke-width="0.75"/>
+          <text x="110" y="135" text-anchor="middle" fill="#ff6666" font-family="Red Hat Mono, monospace" font-size="6.5" font-weight="700" letter-spacing="0.05em">MANUAL</text>
+
+          <!-- X marks on the manual steps -->
+          <g stroke="#EE0000" stroke-width="1.5" stroke-linecap="round" opacity="0.6">
+            <line x1="326" y1="42" x2="332" y2="52"/>
+            <line x1="332" y1="42" x2="326" y2="52"/>
+          </g>
+          <g stroke="#EE0000" stroke-width="1.5" stroke-linecap="round" opacity="0.6">
+            <line x1="56" y1="124" x2="62" y2="134"/>
+            <line x1="62" y1="124" x2="56" y2="134"/>
+          </g>
+
+          <!-- "No governance" label -->
+          <text x="170" y="175" text-anchor="middle" fill="#6a6a6a" font-family="Red Hat Mono, monospace" font-size="7" letter-spacing="0.05em">2 MANUAL HAND-OFFS &bull; 0 GOVERNANCE</text>
+
+          <!-- Disconnection indicators: dashed breaks -->
+          <line x1="10" y1="185" x2="330" y2="185" stroke="#3c3c3c" stroke-width="1" stroke-dasharray="3 6"/>
+        </svg>
+      </div>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-dot">1</div>
+          <div class="flow-step-text">
+            <span class="step-title">Discover in Catalog</span>
+            <div class="step-detail">Browse available MCP servers</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">2</div>
+          <div class="flow-step-text">
+            <span class="step-title">Deploy via Operator</span>
+            <div class="step-detail">MCPServer CRD &rarr; Deployment + Service</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">3</div>
+          <div class="flow-step-text">
+            <span class="step-title">Register in Gateway</span>
+            <span class="manual-tag">manual</span>
+            <div class="step-detail">Manually create MCPServer CR for gateway</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">4</div>
+          <div class="flow-step-text">
+            <span class="step-title">Update ConfigMap</span>
+            <span class="manual-tag">manual</span>
+            <div class="step-detail">Manually configure Studio access</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">5</div>
+          <div class="flow-step-text">
+            <span class="step-title">Consume in Studio</span>
+            <div class="step-detail">Available in Gen AI Studio</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flow-panel target">
+      <h3>Target (RHOAI 3.5+)</h3>
+      <div class="flow-version" style="color: var(--rh-green)">Registry-Governed</div>
+
+      <!-- Visual flow SVG for Target -->
+      <div class="flow-svg-container">
+        <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg" font-family="Red Hat Text, sans-serif">
+          <!-- Central Registry Hub -->
+          <rect x="110" y="60" width="120" height="40" rx="10" fill="rgba(62, 134, 53, 0.18)" stroke="#3E8635" stroke-width="2"/>
+          <text x="170" y="76" text-anchor="middle" fill="#6abf62" font-family="Red Hat Mono, monospace" font-size="7" font-weight="600" letter-spacing="0.08em">REGISTRY</text>
+          <text x="170" y="90" text-anchor="middle" fill="#6abf62" font-size="9" font-weight="600">System of Record</text>
+
+          <!-- Surrounding nodes -->
+          <rect x="10" y="6" width="72" height="28" rx="5" fill="#252525" stroke="#3E8635" stroke-width="1"/>
+          <text x="46" y="24" text-anchor="middle" fill="#b8bbbe" font-size="7.5" font-weight="500">Sources</text>
+
+          <rect x="258" y="6" width="72" height="28" rx="5" fill="#252525" stroke="#3E8635" stroke-width="1"/>
+          <text x="294" y="24" text-anchor="middle" fill="#b8bbbe" font-size="7.5" font-weight="500">Catalog</text>
+
+          <rect x="10" y="126" width="72" height="28" rx="5" fill="#252525" stroke="#3E8635" stroke-width="1"/>
+          <text x="46" y="144" text-anchor="middle" fill="#b8bbbe" font-size="7.5" font-weight="500">Gateway</text>
+
+          <rect x="258" y="126" width="72" height="28" rx="5" fill="#252525" stroke="#3E8635" stroke-width="1"/>
+          <text x="294" y="144" text-anchor="middle" fill="#b8bbbe" font-size="7.5" font-weight="500">Studio</text>
+
+          <rect x="134" y="150" width="72" height="28" rx="5" fill="#252525" stroke="#3E8635" stroke-width="1"/>
+          <text x="170" y="168" text-anchor="middle" fill="#b8bbbe" font-size="7.5" font-weight="500">Operator</text>
+
+          <!-- Connecting lines — all solid green -->
+          <line x1="82" y1="20" x2="130" y2="65" stroke="#3E8635" stroke-width="1.5"/>
+          <line x1="258" y1="20" x2="210" y2="65" stroke="#3E8635" stroke-width="1.5"/>
+          <line x1="82" y1="140" x2="130" y2="95" stroke="#3E8635" stroke-width="1.5"/>
+          <line x1="258" y1="140" x2="210" y2="95" stroke="#3E8635" stroke-width="1.5"/>
+          <line x1="170" y1="100" x2="170" y2="148" stroke="#3E8635" stroke-width="1.5"/>
+
+          <!-- GOVERNED badge -->
+          <rect x="120" y="115" width="100" height="16" rx="3" fill="rgba(62, 134, 53, 0.15)" stroke="#3E8635" stroke-width="0.75"/>
+          <text x="170" y="126" text-anchor="middle" fill="#6abf62" font-family="Red Hat Mono, monospace" font-size="6.5" font-weight="700" letter-spacing="0.05em">ALL GOVERNED</text>
+
+          <!-- Check marks on connections -->
+          <g fill="#3E8635" font-size="12" font-weight="700" text-anchor="middle">
+            <text x="98" y="46">&#10003;</text>
+            <text x="242" y="46">&#10003;</text>
+            <text x="98" y="122">&#10003;</text>
+            <text x="242" y="122">&#10003;</text>
+          </g>
+
+          <!-- Bottom label -->
+          <text x="170" y="192" text-anchor="middle" fill="#6a6a6a" font-family="Red Hat Mono, monospace" font-size="7" letter-spacing="0.05em">0 MANUAL HAND-OFFS &bull; FULL GOVERNANCE</text>
+        </svg>
+      </div>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-dot">1</div>
+          <div class="flow-step-text">
+            <span class="step-title">Discover &amp; Evaluate</span>
+            <div class="step-detail">Sources evaluated via security pipeline</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">2</div>
+          <div class="flow-step-text">
+            <span class="step-title">Govern in Registry</span>
+            <span class="auto-tag">system of record</span>
+            <div class="step-detail">Metadata, lifecycle, certification, trust</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">3</div>
+          <div class="flow-step-text">
+            <span class="step-title">Surface in Catalog</span>
+            <span class="auto-tag">automatic</span>
+            <div class="step-detail">Approved assets appear for discovery</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">4</div>
+          <div class="flow-step-text">
+            <span class="step-title">Deploy &amp; Register</span>
+            <span class="auto-tag">automatic</span>
+            <div class="step-detail">Registry-informed gateway configuration</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">5</div>
+          <div class="flow-step-text">
+            <span class="step-title">Consume via Studio</span>
+            <span class="auto-tag">governed</span>
+            <div class="step-detail">RBAC-scoped access through governed paths</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section Divider -->
+<div class="section-divider"></div>
+
+<!-- Assets -->
+<section class="assets-section" id="assets">
+  <div class="section-label">Coverage</div>
+  <h2 class="section-title">AI Asset Types</h2>
+  <p class="section-subtitle">
+    The plugin architecture enables rapid addition of new asset types.
+    Three priority registries drive the initial implementation; the rest follow via the same plugin model.
+  </p>
+  <p class="assets-intro">
+    <strong>The proposal:</strong> Build the plugin architecture for these 3 priority registries.
+    Once the plugin framework exists, secondary asset types can be added rapidly without bespoke registry efforts.
+  </p>
+  <div class="assets-table-wrapper">
+  <table class="assets-table">
+    <thead>
+      <tr>
+        <th>Asset Type</th>
+        <th>Priority</th>
+        <th>Registry Backend</th>
+        <th>Status</th>
+        <th>Key Challenge</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="5" class="assets-group-label primary">Priority Registries &mdash; 3.5 Dev Preview (Plugin Architecture MVP)</td></tr>
+      <tr>
+        <td><span class="asset-name">MCP Servers</span></td>
+        <td><span class="priority-tag priority-highest">Highest</span></td>
+        <td><span class="backend-tag">MLflow</span></td>
+        <td>3.5 Dev Preview</td>
+        <td style="font-size: 0.82rem; color: var(--rh-gray-400);">Defining transport + security metadata schema</td>
+      </tr>
+      <tr>
+        <td><span class="asset-name">Agents</span></td>
+        <td><span class="priority-tag priority-highest">Highest</span></td>
+        <td><span class="backend-tag">MLflow</span></td>
+        <td>3.5 Dev Preview</td>
+        <td style="font-size: 0.82rem; color: var(--rh-gray-400);">Multi-agent composition &amp; dependency tracking</td>
+      </tr>
+      <tr>
+        <td><span class="asset-name">Skills</span></td>
+        <td><span class="priority-tag priority-highest">Highest</span></td>
+        <td><span class="backend-tag">MLflow</span></td>
+        <td>3.5 Dev Preview</td>
+        <td style="font-size: 0.82rem; color: var(--rh-gray-400);">Upstream: Databricks prototype alignment</td>
+      </tr>
+      <tr><td colspan="5" class="assets-group-label">Secondary Assets &mdash; Enabled by Plugin Architecture</td></tr>
+      <tr>
+        <td><span class="asset-name">Models</span></td>
+        <td><span class="priority-tag priority-high">High</span></td>
+        <td><span class="backend-tag">Kubeflow Hub &rarr; MLflow</span></td>
+        <td>Existing capability</td>
+        <td style="font-size: 0.82rem; color: var(--rh-gray-400);">Migration from current Kubeflow model registry</td>
+      </tr>
+      <tr>
+        <td><span class="asset-name">Guardrails</span></td>
+        <td><span class="priority-tag priority-med">Medium</span></td>
+        <td><span class="backend-tag">TBD</span></td>
+        <td>MCP guardrail DP in 3.4</td>
+        <td style="font-size: 0.82rem; color: var(--rh-gray-400);">Policy-as-code enforcement model</td>
+      </tr>
+      <tr>
+        <td><span class="asset-name">Prompts</span></td>
+        <td><span class="priority-tag priority-med">Medium</span></td>
+        <td><span class="backend-tag">MLflow Prompt Registry</span></td>
+        <td>Migrating from MLflow's current solution</td>
+        <td style="font-size: 0.82rem; color: var(--rh-gray-400);">Versioning &amp; A/B eval workflows</td>
+      </tr>
+      <tr>
+        <td><span class="asset-name">Data Sources</span></td>
+        <td><span class="priority-tag priority-low">Future</span></td>
+        <td><span class="backend-tag">TBD</span></td>
+        <td>Planned</td>
+        <td style="font-size: 0.82rem; color: var(--rh-gray-400);">Data lineage &amp; provenance tracking</td>
+      </tr>
+      <tr>
+        <td><span class="asset-name">Notebooks</span></td>
+        <td><span class="priority-tag priority-low">Future</span></td>
+        <td><span class="backend-tag">TBD</span></td>
+        <td>Planned</td>
+        <td style="font-size: 0.82rem; color: var(--rh-gray-400);">Reproducibility &amp; environment capture</td>
+      </tr>
+      <tr>
+        <td><span class="asset-name">Plugins</span></td>
+        <td><span class="priority-tag priority-low">Future</span></td>
+        <td><span class="backend-tag">TBD</span></td>
+        <td>Skill/MCP/CLI/Template packaging</td>
+        <td style="font-size: 0.82rem; color: var(--rh-gray-400);">Packaging format &amp; distribution model</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- Section Divider -->
+<div class="section-divider"></div>
+
+<!-- Roadmap -->
+<section class="roadmap" id="roadmap">
+  <div class="section-label">Roadmap</div>
+  <h2 class="section-title">Phased Delivery</h2>
+  <p class="section-subtitle">
+    Build the plugin architecture and three priority registries for 3.5.
+    Extend to secondary assets. Then build the ecosystem.
+  </p>
+  <div class="timeline">
+    <div class="timeline-item active">
+      <div class="timeline-date">April 2026</div>
+      <div class="timeline-title">RHOAI 3.4 &mdash; Foundation</div>
+      <div class="timeline-desc">MCP Catalog with 4 servers, MCP Guardrail Dev Preview, Gen AI Studio with prompt management, Summit demo.</div>
+      <div class="timeline-chips">
+        <span class="chip">MCP Catalog</span>
+        <span class="chip">Guardrails DP</span>
+        <span class="chip">Prompt Mgmt</span>
+        <span class="chip">Summit Demo</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Target: RHOAI 3.5</div>
+      <div class="timeline-title">Plugin Architecture + 3 Priority Registries (MVP)</div>
+      <div class="timeline-desc">Plugin-based registry framework in MLflow. MCP Server, Agent, and Skills registries as Dev Preview. MCP Gateway + Lifecycle Operator in RHOAI.</div>
+      <div class="timeline-chips">
+        <span class="chip chip-red">MCP Registry DP</span>
+        <span class="chip chip-red">Agent Registry DP</span>
+        <span class="chip chip-red">Skills Registry DP</span>
+        <span class="chip">Plugin Architecture</span>
+        <span class="chip">Gateway in RHOAI</span>
+        <span class="chip">Lifecycle Op</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Target: H2 2026</div>
+      <div class="timeline-title">Phase 2 &mdash; Secondary Asset Types via Plugins</div>
+      <div class="timeline-desc">Models, guardrails, and prompts onboarded via plugin architecture. Relationship modeling across asset types. Lifecycle automation and security pipeline.</div>
+      <div class="timeline-chips">
+        <span class="chip">Models (High)</span>
+        <span class="chip">Guardrails (Med)</span>
+        <span class="chip">Prompts Migration (Med)</span>
+        <span class="chip">Supply Chain</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Target: 2027</div>
+      <div class="timeline-title">Phase 3 &mdash; Ecosystem &amp; Marketplace</div>
+      <div class="timeline-desc">Plugin packaging format, partner distribution, federation across registries, cross-catalog discovery, marketplace for governed assets.</div>
+      <div class="timeline-chips">
+        <span class="chip">Plugin Packaging</span>
+        <span class="chip">Federation</span>
+        <span class="chip">Partner Distribution</span>
+        <span class="chip">Marketplace</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section Divider -->
+<div class="section-divider"></div>
+
+<!-- The Ask / CTA -->
+<section class="the-ask" id="the-ask">
+  <div class="ask-card">
+    <div class="ask-header">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="rgba(238,0,0,0.15)"/>
+        <path d="M20 10l8 14H12l8-14z" fill="none" stroke="#EE0000" stroke-width="2" stroke-linejoin="round"/>
+        <line x1="20" y1="17" x2="20" y2="21" stroke="#EE0000" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="20" cy="24" r="1" fill="#EE0000"/>
+      </svg>
+    </div>
+    <h2>The Ask</h2>
+    <p class="ask-subtitle">Approve the AI Asset Registry plugin architecture for RHOAI 3.5 Dev Preview:</p>
+
+    <div class="ask-items">
+      <div class="ask-item">
+        <div class="ask-item-number">1</div>
+        <div class="ask-item-text">
+          <strong>Submit upstream design proposal to Databricks/MLflow</strong>
+          <p>The ~4 week approval cycle means we must start immediately to influence the skills registry prototype direction. The Databricks prototype is ~3 weeks away.</p>
+        </div>
+      </div>
+      <div class="ask-item">
+        <div class="ask-item-number">2</div>
+        <div class="ask-item-text">
+          <strong>Staff 3 priority registries (MCP Servers, Agents, Skills) as Dev Preview targets for RHOAI 3.5</strong>
+          <p>These are the three highest-demand asset types. The plugin architecture means subsequent registries will not require comparable staffing.</p>
+        </div>
+      </div>
+      <div class="ask-item">
+        <div class="ask-item-number">3</div>
+        <div class="ask-item-text">
+          <strong>Include MCP Gateway + Lifecycle Operator in RHOAI 3.5</strong>
+          <p>These components are upstream-ready and complete the governed lifecycle. <span class="jira-ref">RHAIRFE-1457</span> <span class="jira-ref">RHAIRFE-1456</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="risk-box" style="margin-bottom: 1rem;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EE0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <div>
+        <div class="risk-label">Risk of Inaction &mdash; Upstream Influence</div>
+        <p>Databricks is building the skills registry prototype by end of April 2026. If the design proposal is not submitted by mid-April, the prototype will proceed without Red Hat's input on the plugin architecture that will underpin all future asset registries.</p>
+      </div>
+    </div>
+    <div class="risk-box">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EE0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <div>
+        <div class="risk-label">Risk of Inaction &mdash; Platform Debt</div>
+        <p>Without a registry framework, each new AI asset type requires a bespoke integration effort, compounding platform debt. Agents, skills, guardrails, and prompts will each need separate governance solutions &mdash; duplicated engineering with inconsistent experiences.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <p>
+      AI Asset Registry Proposal &mdash; Red Hat OpenShift AI &mdash;
+      <a href="https://redhat.atlassian.net/browse/RHAIRFE-1370">RHAIRFE-1370</a>
+      &mdash; Peter Double, Principal PM &mdash; April 2026
+    </p>
+  </div>
+</footer>
+
+<script>
+// ═══ Architecture Diagram — Cytoscape.js ═══
+const CX = 500;
+const COL_SPACING = 190;
+const COL1 = CX - 1.5 * COL_SPACING;
+const COL2 = CX - 0.5 * COL_SPACING;
+const COL3 = CX + 0.5 * COL_SPACING;
+const COL4 = CX + 1.5 * COL_SPACING;
+
+const SPREAD_PLATFORM = 250;
+const SPREAD_CONSUME = SPREAD_PLATFORM;
+
+const Y_SOURCES = 55;
+const Y_MERGE = 120;
+const Y_VALIDATION = 195;
+const Y_GOVERNANCE = 340;
+const Y_PLATFORM = 620;
+const Y_CONSUMPTION = 790;
+
+const archNodes = [
+  { data: { id: 'src-internal',  label: 'Internal Dev\nR&D teams',                nodeType: 'source' }, position: { x: COL1, y: Y_SOURCES } },
+  { data: { id: 'src-products',  label: 'Red Hat Products\nOCP · AAP · Lightspeed', nodeType: 'source' }, position: { x: COL2, y: Y_SOURCES } },
+  { data: { id: 'src-isv',       label: 'ISV Partners\nMicrosoft, others',          nodeType: 'source' }, position: { x: COL3, y: Y_SOURCES } },
+  { data: { id: 'src-community', label: 'Community\nOpen source',                   nodeType: 'source' }, position: { x: COL4, y: Y_SOURCES } },
+  { data: { id: 'merge-trusted', label: '', nodeType: 'merge' }, position: { x: CX, y: Y_MERGE } },
+  { data: { id: 'val-pipeline',   label: 'Security Pipeline\nSBOM · CVE · Provenance · Attestation', nodeType: 'phase2' }, position: { x: CX - 130, y: Y_VALIDATION } },
+  { data: { id: 'val-quarantine', label: 'Quarantine\nReview queue',                                   nodeType: 'phase2' }, position: { x: CX + 180, y: Y_VALIDATION } },
+  { data: { id: 'registry', label: 'AI Asset Registry\nMLflow · Plugin Architecture\nMCP Servers · Agents · Skills', nodeType: 'registry' }, position: { x: CX, y: Y_GOVERNANCE } },
+  { data: { id: 'catalog',      label: 'Catalog\nKubeflow Hub\nDiscovery',          nodeType: 'blue' },   position: { x: CX - SPREAD_PLATFORM, y: Y_PLATFORM } },
+  { data: { id: 'lifecycle-op', label: 'Lifecycle Operator\nk8s-sigs\nDeployment',  nodeType: 'purple' }, position: { x: CX, y: Y_PLATFORM } },
+  { data: { id: 'gateway',      label: 'MCP Gateway\nKuadrant\nRuntime',            nodeType: 'teal' },   position: { x: CX + SPREAD_PLATFORM, y: Y_PLATFORM } },
+  { data: { id: 'studio',  label: 'Gen AI Studio\nPrompt mgmt · Agents · Eval', nodeType: 'green' }, position: { x: CX - SPREAD_CONSUME, y: Y_CONSUMPTION } },
+  { data: { id: 'api-sdk', label: 'API / SDK\nAI Available Assets',              nodeType: 'green' }, position: { x: CX + SPREAD_CONSUME, y: Y_CONSUMPTION } },
+];
+
+const archEdges = [
+  { data: { source: 'src-internal',  target: 'merge-trusted', edgeType: 'source-flow' } },
+  { data: { source: 'src-products',  target: 'merge-trusted', edgeType: 'source-flow' } },
+  { data: { source: 'src-isv',       target: 'merge-trusted', edgeType: 'source-flow' } },
+  { data: { id: 'sf-merge-val', source: 'merge-trusted', target: 'val-pipeline', edgeType: 'source-flow', label: 'asset submission' } },
+  { data: { id: 'sf-community', source: 'src-community', target: 'val-quarantine', edgeType: 'source-flow', label: 'manual review' } },
+  { data: { id: 'sf-val-reg',  source: 'val-pipeline',   target: 'registry', edgeType: 'source-flow', label: 'validated asset' } },
+  { data: { source: 'val-quarantine', target: 'registry', edgeType: 'source-flow' } },
+  { data: { id: 'df-catalog',   source: 'registry', target: 'catalog',      edgeType: 'data-flow', label: 'metadata sync' } },
+  { data: { id: 'df-lifecycle', source: 'registry', target: 'lifecycle-op', edgeType: 'data-flow', label: 'deploy CRD' } },
+  { data: { id: 'df-gateway',   source: 'registry', target: 'gateway',      edgeType: 'data-flow', label: 'policy enforcement' } },
+  { data: { id: 'fb-catalog',   source: 'catalog',      target: 'registry', edgeType: 'feedback', label: 'catalog status' } },
+  { data: { id: 'fb-lifecycle', source: 'lifecycle-op', target: 'registry', edgeType: 'feedback', label: 'telemetry' } },
+  { data: { id: 'fb-gateway',   source: 'gateway',      target: 'registry', edgeType: 'feedback', label: 'gateway status' } },
+  { data: { id: 'gov-cat-studio', source: 'catalog',      target: 'studio',  edgeType: 'governed', label: 'governed access' } },
+  { data: { id: 'gov-lc-studio',  source: 'lifecycle-op', target: 'studio',  edgeType: 'governed' } },
+  { data: { id: 'gov-gw-sdk',     source: 'gateway',      target: 'api-sdk', edgeType: 'governed', label: 'governed access' } },
+  { data: { id: 'gov-lc-sdk',     source: 'lifecycle-op', target: 'api-sdk', edgeType: 'governed' } },
+];
+
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  userZoomingEnabled: false,
+  userPanningEnabled: false,
+  boxSelectionEnabled: false,
+  autounselectify: true,
+  elements: { nodes: archNodes, edges: archEdges },
+  layout: {
+    name: 'preset',
+    padding: 40,
+    animate: true,
+    animationDuration: 600,
+    animationEasing: 'ease-out',
+    fit: true,
+  },
+  style: [
+    {
+      selector: 'node',
+      style: {
+        'shape': 'round-rectangle', 'corner-radius': 10,
+        'width': 200, 'height': 75,
+        'background-color': '#2d2d2d', 'border-width': 1.5, 'border-color': '#4a4a4a',
+        'label': 'data(label)', 'text-valign': 'center', 'text-halign': 'center',
+        'font-family': '"Red Hat Text", sans-serif', 'font-size': 15, 'font-weight': 500,
+        'color': '#e8e8e8', 'text-wrap': 'wrap', 'text-max-width': 185, 'line-height': 1.35,
+      }
+    },
+    { selector: 'node[nodeType="merge"]',  style: { 'width': 10, 'height': 10, 'background-color': '#999', 'border-width': 0, 'shape': 'ellipse' } },
+    { selector: 'node[nodeType="source"]', style: { 'width': 190, 'height': 55, 'font-size': 15, 'text-max-width': 175, 'color': '#f5f5f5', 'border-color': '#555', 'border-width': 1 } },
+    {
+      selector: 'node[nodeType="phase2"]',
+      style: {
+        'width': 220, 'height': 55, 'border-style': 'dashed',
+        'border-color': 'rgba(103, 83, 172, 0.70)', 'background-color': 'rgba(103, 83, 172, 0.15)',
+        'color': '#d0c8f8', 'opacity': 0.85, 'font-size': 14, 'text-max-width': 205,
+      }
+    },
+    { selector: 'node[id="val-pipeline"]', style: { 'width': 320, 'text-max-width': 300 } },
+    {
+      selector: 'node[nodeType="registry"]',
+      style: {
+        'width': 460, 'height': 85, 'background-color': '#401515',
+        'border-color': '#cc0000', 'border-width': 2.5,
+        'font-family': '"Red Hat Display", sans-serif', 'font-size': 18, 'font-weight': 700,
+        'color': '#fff', 'text-max-width': 440, 'line-height': 1.4,
+      }
+    },
+    { selector: 'node[nodeType="blue"]',   style: { 'background-color': '#152f4c', 'border-color': 'rgba(0,102,204,0.7)', 'color': '#8ac4ff', 'border-width': 2 } },
+    { selector: 'node[nodeType="purple"]', style: { 'width': 195, 'background-color': '#2c2750', 'border-color': 'rgba(103,83,172,0.7)', 'color': '#ccb8ff', 'border-width': 2 } },
+    { selector: 'node[nodeType="teal"]',   style: { 'background-color': '#183a3a', 'border-color': 'rgba(0,149,150,0.7)', 'color': '#70f0f0', 'border-width': 2 } },
+    { selector: 'node[nodeType="green"]',  style: { 'background-color': '#1a3218', 'border-color': 'rgba(62,134,53,0.7)', 'color': '#90e088', 'border-width': 2 } },
+    { selector: 'node[id="studio"]',       style: { 'width': 260, 'text-max-width': 245 } },
+    { selector: 'node[id="api-sdk"]',      style: { 'width': 245, 'text-max-width': 230 } },
+    {
+      selector: 'edge',
+      style: {
+        'width': 1.5, 'line-color': '#555', 'target-arrow-color': '#555',
+        'target-arrow-shape': 'triangle', 'arrow-scale': 1.0,
+        'curve-style': 'taxi', 'taxi-direction': 'downward', 'taxi-turn': 20, 'taxi-turn-min-distance': 10,
+      }
+    },
+    {
+      selector: 'edge[edgeType="source-flow"]',
+      style: {
+        'width': 1.5, 'line-color': '#707070', 'target-arrow-color': '#707070', 'arrow-scale': 0.8,
+        'curve-style': 'taxi', 'taxi-direction': 'downward', 'taxi-turn': 20, 'taxi-turn-min-distance': 8,
+        'label': 'data(label)', 'font-family': '"Red Hat Text", sans-serif', 'font-size': 15, 'font-weight': 600, 'color': '#fff',
+        'text-margin-y': -12, 'edge-text-rotation': 'none',
+      }
+    },
+    {
+      selector: 'edge[edgeType="data-flow"]',
+      style: {
+        'width': 3.5, 'line-color': '#cc0000', 'target-arrow-color': '#cc0000', 'arrow-scale': 1.3,
+        'curve-style': 'taxi', 'taxi-direction': 'downward', 'taxi-turn': 50, 'taxi-turn-min-distance': 20,
+        'target-label': 'data(label)', 'target-text-margin-y': -32, 'target-text-offset': 1,
+        'font-family': '"Red Hat Text", sans-serif', 'font-size': 16, 'font-weight': 700, 'color': '#fff',
+        'text-border-opacity': 0, 'edge-text-rotation': 'none',
+      }
+    },
+    { selector: 'edge[id="df-catalog"]',   style: { 'taxi-turn': 40 } },
+    { selector: 'edge[id="df-lifecycle"]', style: { 'taxi-turn': 50 } },
+    { selector: 'edge[id="df-gateway"]',   style: { 'taxi-turn': 40 } },
+    {
+      selector: 'edge[edgeType="feedback"]',
+      style: {
+        'width': 1.5, 'line-color': '#D4954A', 'line-style': 'dashed', 'line-dash-pattern': [8, 5],
+        'target-arrow-color': '#D4954A', 'target-arrow-shape': 'triangle', 'arrow-scale': 0.8,
+        'opacity': 0.6,
+        'curve-style': 'taxi', 'taxi-direction': 'upward', 'taxi-turn': 80, 'taxi-turn-min-distance': 15,
+        'label': 'data(label)', 'font-family': '"Red Hat Text", sans-serif', 'font-size': 14, 'font-weight': 600,
+        'color': '#D4954A',
+        'text-opacity': 1,
+        'edge-text-rotation': 'none',
+        'text-margin-x': 0, 'text-margin-y': -12,
+      }
+    },
+    { selector: 'edge[id="fb-catalog"]',   style: { 'taxi-turn': -100 } },
+    { selector: 'edge[id="fb-lifecycle"]', style: { 'taxi-turn': -70, 'text-margin-y': 12 } },
+    { selector: 'edge[id="fb-gateway"]',   style: { 'taxi-turn': -100 } },
+    {
+      selector: 'edge[edgeType="governed"]',
+      style: {
+        'width': 2, 'line-color': '#aaa', 'target-arrow-color': '#aaa', 'arrow-scale': 1.0,
+        'curve-style': 'taxi', 'taxi-direction': 'downward', 'taxi-turn': 25, 'taxi-turn-min-distance': 15,
+        'target-label': 'data(label)', 'target-text-margin-y': -22, 'target-text-offset': 1,
+        'font-family': '"Red Hat Text", sans-serif', 'font-size': 15, 'font-weight': 600, 'color': '#fff',
+        'edge-text-rotation': 'none',
+      }
+    },
+    { selector: 'edge[id="gov-lc-studio"]', style: { 'taxi-turn': 20, 'width': 1.5, 'opacity': 0.7 } },
+    { selector: 'edge[id="gov-lc-sdk"]',    style: { 'taxi-turn': 20, 'width': 1.5, 'opacity': 0.7 } },
+  ],
+});
+
+cy.on('layoutstop', function() {
+  const labelsEl = document.getElementById('layer-labels');
+  labelsEl.innerHTML = '';
+
+  const layers = [
+    { nodeId: 'src-internal',  text: 'SOURCES' },
+    { nodeId: 'val-pipeline',  text: 'VALIDATION' },
+    { nodeId: 'registry',      text: 'GOVERNANCE', cls: 'governance' },
+    { nodeId: 'catalog',       text: 'PLATFORM' },
+    { nodeId: 'studio',        text: 'CONSUMPTION' },
+  ];
+
+  const positions = [];
+  layers.forEach(({ nodeId, text, cls }) => {
+    const node = cy.getElementById(nodeId);
+    const pos = node.renderedPosition();
+    positions.push(pos.y);
+    const label = document.createElement('div');
+    label.className = 'layer-label' + (cls ? ' ' + cls : '');
+    label.textContent = text;
+    label.style.top = (pos.y - 6) + 'px';
+    labelsEl.appendChild(label);
+  });
+
+  const cyContainer = document.getElementById('cy');
+  const containerH = cyContainer.offsetHeight;
+  const bandTops = [0];
+  for (let i = 0; i < positions.length - 1; i++) {
+    bandTops.push((positions[i] + positions[i + 1]) / 2);
+  }
+  bandTops.push(containerH);
+
+  for (let i = 0; i < bandTops.length - 1; i++) {
+    const band = document.createElement('div');
+    band.className = 'swim-band' + (i % 2 === 0 ? ' even' : '');
+    band.style.top = bandTops[i] + 'px';
+    band.style.height = (bandTops[i + 1] - bandTops[i]) + 'px';
+    labelsEl.appendChild(band);
+  }
+});
+</script>
+
+</body>
+</html>

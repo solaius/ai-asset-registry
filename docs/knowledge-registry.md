@@ -2,7 +2,7 @@
 
 This file tracks key information, decisions, concepts, and references gathered from all source materials for the AI Asset Registry proposal. It serves as a living document to support continued proposal development, prototyping, and documentation.
 
-Last updated: 2026-04-08
+Last updated: 2026-04-13
 
 ---
 
@@ -70,6 +70,27 @@ Notebooks, Pipelines, Evaluators, Skill Packs, Code Snippets, Workflows
 - **Conceptual integrations**: Catalog (surfacing), Lifecycle Operator (deployment), Gateway (runtime), AAA/Studio (consumption)
 - **NOT**: a replacement for catalog, lifecycle operator, gateway, or Studio
 
+#### Proposed Data Model (from MLflow MCP Registry Data Model Proposal - brain dump, not finalized)
+- **MCPServer**: Logical governed asset scoped to a workspace. Carries name, description, status (Active/Deprecated/Retired), tags, aliases, and audit fields
+- **MCPServerVersion**: Immutable MCP payload (`server_json`) plus mutable governance metadata. Each version tracks lifecycle_state, approval_status, verification_status, certification_status independently
+- **Design principles**: `server_json` is the canonical immutable MCP payload on the version; governance metadata is first-class and separate from tags; workspace is the visibility boundary for MVP; deployment visibility is minimal (`is_deployed` boolean only)
+- **Governance invariants (proposed)**: `lifecycle_state=PUBLISHED` implies `approval_status=APPROVED`; `REJECTED`/`REVOKED` approval cannot coexist with `PUBLISHED` lifecycle state
+- **Key distinction from current doc**: Separates governance into four independent status tracks rather than a single linear lifecycle (see Lifecycle States below)
+
+### Gen MCP
+- **Role**: MCP server generation, containerization, and runtime wrapping tool
+- **Capabilities**: Generate MCP servers from API definitions (OpenAPI), CLI interfaces, or HTTP backends; containerize using KO build tool; add security/auth/TLS/observability wrappers for production readiness
+- **Team**: Calum Murray, Matthias Weßendorf, Nader Ziada (engineering)
+- **Key detail**: Evaluations have been extracted into a separate project (**MCP Checker** / `mcpchecker` — now in its own org) so they can be used against any MCP server, not just Gen MCP-generated ones
+- **Ingestion pipeline role**: Can wrap stdio/unsecured HTTP MCPs with auth, TLS, observability for OpenShift readiness; useful for partners who don't provide production-ready containers
+- **Limitation**: Opinionated containerization based on its own generated servers; for fully production-ready partner MCPs, standard podman/docker containerization is more appropriate
+
+### MCP Checker (mcpchecker)
+- **Role**: Generic MCP server evaluation framework (extracted from Gen MCP)
+- **Capabilities**: Run evals against any MCP server with configurable agents; produces eval scores per tool; supports multiple agent backends (not just one)
+- **Usage**: Ingestion pipeline evaluation step; customer-side re-evaluation with their own agents; pre-release quality gate (e.g., OpenShift MCP Server evals before release)
+- **Key insight**: Customers may want to re-evaluate catalog MCPs with their own agent (e.g., tested with Claude Code/Gemini but customer uses Amazon Q)
+
 ### Model Registry / Kubeflow Hub (kubeflow/model-registry -> kubeflow/hub)
 - **Role**: Existing model registry in Kubeflow/OpenShift AI, evolving into broader AI asset hub
 - **Renaming**: KEP-0003 renames project to "Kubeflow Hub" with images moving to `ghcr.io/kubeflow/hub/*`
@@ -91,9 +112,19 @@ Notebooks, Pipelines, Evaluators, Skill Packs, Code Snippets, Workflows
 Sources -> Quarantine -> Registry -> Catalog -> Deployments -> Consumable
 
 ### Lifecycle States
+
+**Current documented flow (7 states, linear)**:
 Draft -> Candidate -> Verified -> Approved -> Published -> Deprecated -> Retired
 
-MLflow native states: None, Staging, Production, Archived (may need expansion - Dan Kuc comment)
+**Proposed model (from MLflow Data Model Proposal - not finalized)**: Separates governance into four independent status tracks:
+- **Lifecycle State** (5 states): Draft -> Candidate -> Published -> Deprecated -> Retired
+- **Approval Status** (5 states): Draft -> Pending -> Approved -> Rejected -> Revoked
+- **Verification Status** (2 states): Unverified -> Verified
+- **Certification Status** (5 states): None -> Candidate -> Certified -> Expired -> Revoked
+
+This separation allows independent progression — e.g., a version can be verified but not yet approved, or approved but not yet certified. The invariant is that `PUBLISHED` lifecycle requires `APPROVED` approval status.
+
+**MLflow native states**: None, Staging, Production, Archived (may need expansion - Dan Kuc comment)
 
 ### Current Flow (3.4 - fragmented/manual)
 1. Discover in catalog
@@ -111,6 +142,37 @@ MLflow native states: None, Staging, Production, Archived (may need expansion - 
 
 ### Asset Flow (8 stages)
 Ingress -> Validation -> Registration -> Governance -> Promotion -> Deployment -> Runtime -> Consumption
+
+### MCP Ingestion Pipeline (from 2026-04-10 Gen MCP meeting)
+
+Two primary ingestion lanes identified for getting MCPs into the platform:
+
+**Lane 1: Partner MCP Ingestion (Partnership Ecosystem Team)**
+- Partners provide MCP server repos (expected ready-to-go, meeting a checklist)
+- Pipeline: Validate repo -> Scan for CVEs/vulnerabilities -> Evaluate MCP -> Containerize (podman/docker for production-ready MCPs) -> Registry
+- For partners with basic/stdio/unsecured MCPs: Gen MCP runtime can wrap with auth, TLS, observability
+- Goal: Eventually manage partner MCPs **off-cycle** from product releases; continuous updates, new partner onboarding
+- Current state (3.4): Jose Gonzalez manually adapted partner containers — rebasing to UBI, adding labels, handling licenses; CVE scanning via Quay; partner dependencies mostly untouched to avoid breaking their apps
+- Key tools: Quay (CVE scanning), Conflux (pipeline orchestration, suggested), Dependabot (repo-level), Snyk (AI-specific agent scanning — Ann Murray pushing; needs further research)
+
+**Lane 2: Client/Customer MCP Generation**
+- Platform engineers create MCPs from existing APIs/repos
+- Flow: API definition (OpenAPI) or HTTP backend -> Gen MCP generation -> Containerization -> Validation -> Registry/Catalog
+- Sales/field teams requesting this capability as part of the product
+- Lower-code approach for platform engineers to quickly build MCPs
+
+**Shared Pipeline Components (reusable across lanes)**
+- **Validate**: Repo integrity, provenance, supply chain checks
+- **Scan**: CVE scanning (Quay), AI-specific scanning (Snyk — under investigation), dependency checking
+- **Evaluate**: MCP Checker for functional evaluation with configurable agents
+- **Containerize**: Standardized metadata schema (no current standard — all 4 partner MCPs in 3.4 had different metadata formats)
+- **Metadata standardization**: Critical gap — no upstream Kubernetes MCP container metadata standard exists; Red Hat opportunity to lead this upstream
+
+**Key Decisions from Meeting**
+- Gen MCP containerization is **not** the right fit for already-containerized partner MCPs (use podman/docker instead)
+- Gen MCP runtime wrapping **is** useful for partners with basic stdio/HTTP MCPs lacking auth/TLS/observability
+- Evaluations are generic (MCP Checker) and reusable across all lanes, including post-catalog customer re-evaluation
+- MLflow will be the main evaluation tool for AI assets; MCP evaluation integration with MLflow TBD
 
 ---
 
@@ -255,7 +317,15 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 | Mrunal Patel | MCP Server deployment/OCP integration |
 | Alessio | Kubeflow plugin architecture |
 | Hunter Gerlach | Consulting use cases |
+| Matt Prahl | MLflow/Registry engineering (data model) |
 | Shane Utt | Guardrails |
+| Calum Murray | Gen MCP / MCP Checker engineering |
+| Matthias Weßendorf | Gen MCP engineering |
+| Nader Ziada | Gen MCP engineering (ex-Knative Serverless) |
+| Jose Gonzalez | Partnership Ecosystem team (under Matt Dorn); partner MCP containerization |
+| Matt Dorn | Partnership Ecosystem team lead |
+| Ann Murray | Pushing Snyk for AI/agent scanning |
+| Serob | Partnership Engineering team; working on ingestion pipeline pieces |
 
 ---
 
@@ -271,6 +341,7 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 | Agentic AI Strategy 2026 (PDF) | docs/starting-artifacts/agentic-artifacts/ | Four pillars, customer insights, competitive analysis |
 | Registry Proposal Discussion (transcript) | docs/starting-artifacts/meeting-transcriptions/ | 2026-03-19 meeting; Databricks process, plugin architecture |
 | AI Asset Registries Sync (transcript) | docs/starting-artifacts/meeting-transcriptions/ | 2026-04-07 sync; skills registry, registry vs catalog debate |
+| MCP Pipeline w/ Gen MCP (transcript) | docs/starting-artifacts/meeting-transcriptions/ | 2026-04-10 meeting; ingestion pipeline, Gen MCP role, partner containerization, scanning/evaluation |
 
 ### Google Documents
 | Document | Doc ID | Key Content |
@@ -281,6 +352,7 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 | MCP Gateway Delivery | 1asuSND63alcJGIExLH-VvBzevtKleuuWge39lO5Su7Q | SKU model, entitlements, deployment scenarios |
 | MCP Catalog | 1L3yVBHKJLwVJ2SzF5NunzXc8gFJNZKbMU6OWfPyB_fE | Catalog PM write-up, requirements, competitor comparison |
 | MCP Registry MVP | 11mJpJ-Py8FxRDYdw41mMWEBvlahENS4rHqnpDNpqa8Y | 3.5 Dev Preview requirements, scope, integration expectations |
+| MLflow MCP Registry Data Model Proposal | 1KOLTSMVjdUhb06rQLSx4G5MVSQLXePToGAQ4wNn31m8 | **PROPOSAL**: MCPServer/MCPServerVersion data model, governance enums (lifecycle, approval, verification, certification), invariants |
 
 ### GitHub Repositories
 | Repository | Purpose |
@@ -304,6 +376,16 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 6. Skills packaging format - OCI artifacts? Markdown? Zip bundles?
 7. Agent identity model - SPIFFE/SPIRE or alternative?
 8. How to handle OLM 1.0 dependency removal in OCP 5.0?
+9. Whether certification programs should be backed by an admin-managed allowlist (from Data Model Proposal)
+10. Whether lifecycle history should be added in MVP or deferred (from Data Model Proposal)
+11. Whether approval, verification, and certification transitions need distinct permissions beyond general update permissions (from Data Model Proposal)
+12. Whether MCP registry entities need `EntityAssociationType` support in MVP or later (from Data Model Proposal)
+13. How should MCP Lifecycle Operator interact with registry entries — read-only "discovered/managed" entries vs. full governance? (from Data Model Proposal comments - Chris Hambridge, Matt Prahl)
+14. What does Snyk's AI/agent scanning actually check? Is it needed beyond standard CVE scanning? (Ann Murray recommendation — needs research)
+15. What should the standardized MCP container metadata schema look like for Kubernetes? (No upstream standard exists; all 4 partner MCPs in 3.4 had different metadata)
+16. How should the partner ingestion pipeline be orchestrated? (Conflux suggested; needs investigation)
+17. How does MCP Checker evaluation integrate with MLflow's evaluation capabilities? (MLflow becoming main eval tool for AI assets)
+18. What is the partnership ecosystem team's existing pipeline work? (Follow up with Serob and Matt Dorn)
 
 ### Risks
 1. **Databricks upstream process**: ~1 month for design approval; PRs must be small/focused
@@ -317,3 +399,5 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 - Dan Kuc: MCP flow seems opposite to model registry flow (registry-first vs catalog-first)
 - Andrew Mackenzie: OCP 5.0 deployment plan urgently needs nailing down
 - Mrunal Patel: MCP servers registered post-Gateway installation; ideally Gateway installation is part of RHOAI
+- Chris Hambridge / Matt Prahl (Data Model Proposal): Should MCP Lifecycle Operator create read-only "discovered/managed" registry entries with restricted mutation? (related to RHAIRFE-294)
+- Jon Burdo (Data Model Proposal): Certification allowlist question may connect to RHAIRFE-294

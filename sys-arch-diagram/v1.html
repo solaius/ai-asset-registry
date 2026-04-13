@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture Diagram — Cytoscape.js + Dagre Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700;900&family=Red+Hat+Text:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Cytoscape.js + Dagre layout -->
+<script src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dagre@0.8.5/dist/dagre.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+
+<style>
+  :root {
+    --rh-red: #EE0000;
+    --rh-red-dark: #A30000;
+    --rh-black: #151515;
+    --rh-gray-900: #1a1a1a;
+    --rh-gray-800: #252525;
+    --rh-gray-700: #2d2d2d;
+    --rh-gray-600: #3c3c3c;
+    --rh-gray-500: #6a6a6a;
+    --rh-gray-400: #8a8a8a;
+    --rh-gray-300: #b8bbbe;
+    --rh-gray-200: #d2d2d2;
+    --rh-white: #ffffff;
+    --rh-blue: #0066CC;
+    --rh-blue-light: #4394e5;
+    --rh-teal: #009596;
+    --rh-green: #3E8635;
+    --rh-purple: #6753AC;
+    --rh-amber: #e8a020;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Red Hat Text', -apple-system, sans-serif;
+    background: var(--rh-black);
+    color: var(--rh-gray-200);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  h1 {
+    font-family: 'Red Hat Display', sans-serif;
+    color: var(--rh-white);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-family: 'Red Hat Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--rh-gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 2rem;
+  }
+
+  #cy-container {
+    width: 100%;
+    max-width: 1100px;
+    background: var(--rh-gray-900);
+    border: 1px solid var(--rh-gray-700);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #cy-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rh-red), var(--rh-red-dark), var(--rh-red));
+    z-index: 10;
+  }
+
+  #cy {
+    width: 100%;
+    height: 750px;
+  }
+
+  .legend {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-top: 1px solid var(--rh-gray-700);
+    background: var(--rh-gray-800);
+    font-family: 'Red Hat Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--rh-gray-400);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .legend-line {
+    width: 28px;
+    height: 3px;
+    border-radius: 1px;
+  }
+
+  .legend-line.data-flow { background: var(--rh-red); }
+  .legend-line.feedback { background: repeating-linear-gradient(90deg, var(--rh-amber) 0px, var(--rh-amber) 4px, transparent 4px, transparent 7px); }
+
+  .legend-box {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1.5px dashed var(--rh-gray-500);
+    opacity: 0.6;
+  }
+
+  .info {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--rh-gray-500);
+    text-align: center;
+    max-width: 700px;
+  }
+  .info strong { color: var(--rh-gray-300); }
+</style>
+</head>
+<body>
+
+<h1>AI Asset Registry — System Architecture</h1>
+<p class="subtitle">Cytoscape.js + Dagre diagram test</p>
+
+<div id="cy-container">
+  <div id="cy"></div>
+  <div class="legend">
+    <span style="letter-spacing: 0.1em; font-weight: 600; color: #6a6a6a;">LEGEND:</span>
+    <div class="legend-item">
+      <div class="legend-line data-flow"></div>
+      <span>Data flow</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-line feedback"></div>
+      <span>Feedback loop</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-box"></div>
+      <span>Phase 2+ (not MVP scope)</span>
+    </div>
+  </div>
+</div>
+
+<p class="info">
+  <strong>Cytoscape.js + Dagre</strong> — automatic hierarchical layout with proper edge routing.
+  Nodes positioned by the Dagre (Sugiyama) algorithm. Edges route cleanly between layers.
+  Interactive: zoom and pan.
+</p>
+
+<script>
+cytoscape.use(cytoscapeDagre);
+
+// Use shorter, pre-formatted labels to avoid overflow.
+// Cytoscape treats \n as line breaks when text-wrap is 'wrap'.
+const nodes = [
+  // SOURCES
+  { data: { id: 'src-internal',  label: 'Internal Dev\nR&D teams',                layer: 'sources', nodeType: 'source' } },
+  { data: { id: 'src-products',  label: 'Red Hat Products\nOCP, AAP, Lightspeed',  layer: 'sources', nodeType: 'source' } },
+  { data: { id: 'src-isv',       label: 'ISV Partners\nMicrosoft, others',          layer: 'sources', nodeType: 'source' } },
+  { data: { id: 'src-community', label: 'Community\nOpen source',                   layer: 'sources', nodeType: 'source' } },
+
+  // VALIDATION (Phase 2+)
+  { data: { id: 'val-pipeline',   label: 'Security Pipeline\nSBOM · CVE · Provenance', layer: 'validation', nodeType: 'phase2' } },
+  { data: { id: 'val-quarantine', label: 'Quarantine\nReview queue',                    layer: 'validation', nodeType: 'phase2' } },
+
+  // GOVERNANCE (central, dominant)
+  { data: { id: 'registry', label: 'AI Asset Registry\nMLflow · Plugin Architecture\nMCP · Agents · Skills', layer: 'governance', nodeType: 'registry' } },
+
+  // PLATFORM
+  { data: { id: 'catalog',      label: 'Catalog\nKubeflow Hub · Discovery',     layer: 'platform', nodeType: 'blue' } },
+  { data: { id: 'lifecycle-op', label: 'Lifecycle Operator\nk8s-sigs · Deployment', layer: 'platform', nodeType: 'purple' } },
+  { data: { id: 'gateway',      label: 'MCP Gateway\nKuadrant · Runtime',         layer: 'platform', nodeType: 'teal' } },
+
+  // CONSUMPTION
+  { data: { id: 'studio',  label: 'Gen AI Studio\nPrompt mgmt · Agents · Eval', layer: 'consumption', nodeType: 'green' } },
+  { data: { id: 'api-sdk', label: 'API / SDK\nAI Available Assets',              layer: 'consumption', nodeType: 'green' } },
+];
+
+const edges = [
+  // Sources -> Validation
+  { data: { source: 'src-internal',  target: 'val-pipeline',   edgeType: 'source-flow' } },
+  { data: { source: 'src-products',  target: 'val-pipeline',   edgeType: 'source-flow' } },
+  { data: { source: 'src-isv',       target: 'val-pipeline',   edgeType: 'source-flow' } },
+  { data: { source: 'src-community', target: 'val-quarantine', edgeType: 'source-flow' } },
+
+  // Validation -> Registry
+  { data: { source: 'val-pipeline',   target: 'registry', edgeType: 'source-flow' } },
+  { data: { source: 'val-quarantine', target: 'registry', edgeType: 'source-flow' } },
+
+  // Registry -> Platform (data flow, labeled)
+  { data: { source: 'registry', target: 'catalog',      edgeType: 'data-flow', label: 'metadata sync' } },
+  { data: { source: 'registry', target: 'lifecycle-op', edgeType: 'data-flow', label: 'deploy CRD' } },
+  { data: { source: 'registry', target: 'gateway',      edgeType: 'data-flow', label: 'policy enforcement' } },
+
+  // Feedback loops (Platform -> Registry)
+  { data: { source: 'catalog',      target: 'registry', edgeType: 'feedback', label: 'status' } },
+  { data: { source: 'lifecycle-op', target: 'registry', edgeType: 'feedback', label: 'telemetry' } },
+  { data: { source: 'gateway',      target: 'registry', edgeType: 'feedback', label: 'status' } },
+
+  // Platform -> Consumption
+  { data: { source: 'catalog',      target: 'studio',  edgeType: 'governed', label: 'governed access' } },
+  { data: { source: 'lifecycle-op', target: 'studio',  edgeType: 'governed' } },
+  { data: { source: 'gateway',      target: 'api-sdk', edgeType: 'governed', label: 'governed access' } },
+  { data: { source: 'lifecycle-op', target: 'api-sdk', edgeType: 'governed' } },
+];
+
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  userZoomingEnabled: true,
+  userPanningEnabled: true,
+  boxSelectionEnabled: false,
+  autounselectify: true,
+  wheelSensitivity: 0.3,
+
+  elements: { nodes, edges },
+
+  layout: {
+    name: 'dagre',
+    rankDir: 'TB',
+    nodeSep: 50,
+    rankSep: 80,
+    edgeSep: 20,
+    ranker: 'network-simplex',
+    padding: 50,
+    animate: true,
+    animationDuration: 800,
+    animationEasing: 'ease-out',
+  },
+
+  style: [
+
+    // ═══ BASE NODE ═══
+    {
+      selector: 'node',
+      style: {
+        'shape': 'round-rectangle',
+        'corner-radius': 8,
+        'width': 190,
+        'height': 58,
+        'background-color': '#252525',
+        'border-width': 1.5,
+        'border-color': '#3c3c3c',
+        'label': 'data(label)',
+        'text-valign': 'center',
+        'text-halign': 'center',
+        'font-family': '"Red Hat Text", sans-serif',
+        'font-size': 12,
+        'font-weight': 500,
+        'color': '#b8bbbe',
+        'text-wrap': 'wrap',
+        'text-max-width': 175,
+        'line-height': 1.4,
+      }
+    },
+
+    // ═══ SOURCE NODES ═══
+    {
+      selector: 'node[nodeType="source"]',
+      style: {
+        'width': 175,
+        'height': 52,
+        'font-size': 12,
+        'text-max-width': 160,
+      }
+    },
+
+    // ═══ PHASE 2+ NODES (dimmed, dashed) ═══
+    {
+      selector: 'node[nodeType="phase2"]',
+      style: {
+        'width': 220,
+        'height': 55,
+        'border-style': 'dashed',
+        'border-color': 'rgba(103, 83, 172, 0.4)',
+        'background-color': 'rgba(103, 83, 172, 0.08)',
+        'color': '#9a86d6',
+        'opacity': 0.55,
+        'font-size': 11,
+        'text-max-width': 200,
+      }
+    },
+    {
+      selector: 'node[id="val-pipeline"]',
+      style: { 'width': 280 }
+    },
+
+    // ═══ REGISTRY — dominant, large, red ═══
+    {
+      selector: 'node[nodeType="registry"]',
+      style: {
+        'width': 420,
+        'height': 80,
+        'background-color': 'rgba(238, 0, 0, 0.14)',
+        'border-color': '#EE0000',
+        'border-width': 2.5,
+        'font-family': '"Red Hat Display", sans-serif',
+        'font-size': 16,
+        'font-weight': 700,
+        'color': '#ffffff',
+        'text-max-width': 400,
+        'line-height': 1.5,
+      }
+    },
+
+    // ═══ CATALOG — blue ═══
+    {
+      selector: 'node[nodeType="blue"]',
+      style: {
+        'background-color': 'rgba(0, 102, 204, 0.14)',
+        'border-color': 'rgba(0, 102, 204, 0.5)',
+        'color': '#4394e5',
+      }
+    },
+
+    // ═══ LIFECYCLE OPERATOR — purple ═══
+    {
+      selector: 'node[nodeType="purple"]',
+      style: {
+        'width': 210,
+        'background-color': 'rgba(103, 83, 172, 0.14)',
+        'border-color': 'rgba(103, 83, 172, 0.5)',
+        'color': '#9a86d6',
+      }
+    },
+
+    // ═══ MCP GATEWAY — teal ═══
+    {
+      selector: 'node[nodeType="teal"]',
+      style: {
+        'background-color': 'rgba(0, 149, 150, 0.14)',
+        'border-color': 'rgba(0, 149, 150, 0.5)',
+        'color': '#2ec4c4',
+      }
+    },
+
+    // ═══ CONSUMPTION — green ═══
+    {
+      selector: 'node[nodeType="green"]',
+      style: {
+        'background-color': 'rgba(62, 134, 53, 0.14)',
+        'border-color': 'rgba(62, 134, 53, 0.5)',
+        'color': '#6abf62',
+      }
+    },
+    {
+      selector: 'node[id="studio"]',
+      style: { 'width': 250 }
+    },
+
+    // ═══ BASE EDGE ═══
+    {
+      selector: 'edge',
+      style: {
+        'width': 1.5,
+        'line-color': '#4a4a4a',
+        'target-arrow-color': '#4a4a4a',
+        'target-arrow-shape': 'triangle',
+        'arrow-scale': 0.8,
+        'curve-style': 'taxi',
+        'taxi-direction': 'downward',
+        'taxi-turn': 20,
+        'taxi-turn-min-distance': 5,
+      }
+    },
+
+    // ═══ SOURCE -> VALIDATION (subtle) ═══
+    {
+      selector: 'edge[edgeType="source-flow"]',
+      style: {
+        'width': 1,
+        'line-color': '#3c3c3c',
+        'target-arrow-color': '#3c3c3c',
+        'arrow-scale': 0.7,
+      }
+    },
+
+    // ═══ DATA FLOW — Registry -> Platform (red, labeled) ═══
+    {
+      selector: 'edge[edgeType="data-flow"]',
+      style: {
+        'width': 2,
+        'line-color': '#EE0000',
+        'target-arrow-color': '#EE0000',
+        'arrow-scale': 0.9,
+        'label': 'data(label)',
+        'font-family': '"Red Hat Mono", monospace',
+        'font-size': 9,
+        'color': '#d2d2d2',
+        'text-background-color': '#1a1a1a',
+        'text-background-opacity': 0.95,
+        'text-background-padding': '4px',
+        'text-border-opacity': 0,
+        'text-margin-y': -10,
+        'edge-text-rotation': 'none',
+      }
+    },
+
+    // ═══ FEEDBACK — Platform -> Registry (amber dashed, labeled) ═══
+    {
+      selector: 'edge[edgeType="feedback"]',
+      style: {
+        'width': 1.5,
+        'line-color': '#e8a020',
+        'line-style': 'dashed',
+        'line-dash-pattern': [6, 4],
+        'target-arrow-color': '#e8a020',
+        'target-arrow-shape': 'triangle',
+        'arrow-scale': 0.8,
+        'curve-style': 'taxi',
+        'taxi-direction': 'upward',
+        'taxi-turn': 30,
+        'taxi-turn-min-distance': 8,
+        'label': 'data(label)',
+        'font-family': '"Red Hat Mono", monospace',
+        'font-size': 8,
+        'color': '#e8a020',
+        'text-background-color': '#1a1a1a',
+        'text-background-opacity': 0.95,
+        'text-background-padding': '3px',
+        'text-margin-y': 10,
+        'edge-text-rotation': 'none',
+      }
+    },
+
+    // ═══ GOVERNED — Platform -> Consumption (gray, labeled) ═══
+    {
+      selector: 'edge[edgeType="governed"]',
+      style: {
+        'width': 1.5,
+        'line-color': '#3c3c3c',
+        'target-arrow-color': '#3c3c3c',
+        'label': 'data(label)',
+        'font-family': '"Red Hat Mono", monospace',
+        'font-size': 8,
+        'color': '#6a6a6a',
+        'text-background-color': '#1a1a1a',
+        'text-background-opacity': 0.95,
+        'text-background-padding': '3px',
+        'text-margin-y': -8,
+        'edge-text-rotation': 'none',
+      }
+    },
+  ],
+});
+
+// Fit after layout completes
+cy.on('layoutstop', function() {
+  cy.fit(undefined, 40);
+});
+</script>
+
+</body>
+</html>
