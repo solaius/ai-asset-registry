@@ -115,8 +115,11 @@ Generate v1 based on:
 - `docs/knowledge-registry.md` for project grounding
 - Fresh web research (use Playwright for Red Hat blogs — they are JS-rendered and WebFetch cannot parse them)
 
+### Target word count
+Reference the word count guidelines from `docs/blogs/blog-creation-guide.md` and aim for the appropriate range based on blog type and topic depth. Typical ranges: 500-600 words for announcements, 800-1300 for tutorials, 1300-2000 for deep dives. If the topic needs more than 2000 words, propose a series split during qualifying.
+
 ### From existing content
-User-provided draft or notes become v1 raw material. Copy the user's content as-is to `drafts/v1.md` — do not restructure yet (the review loop handles improvement).
+User-provided draft or notes become v1 raw material. Copy the user's content as-is to `drafts/v1.md` — do not restructure yet (the review loop handles improvement). Note: the first review cycle will likely produce low formatting scores because the raw content hasn't been adapted to Red Hat editorial conventions yet. This is expected — the review loop is designed to improve iteratively.
 
 ### Image placeholders
 Include image placeholders where visuals would aid understanding. Each placeholder follows this format:
@@ -164,20 +167,25 @@ For each iteration:
    - Blog creation guide (`docs/blogs/blog-creation-guide.md`)
    - Their specific rubric (one of `references/reviewer-architect.md`, `references/reviewer-content.md`, `references/reviewer-formatting.md`, `references/reviewer-image.md`)
    - The qualifying summary (embedded in abstract)
+   - **Content reviewer only**: also receives `docs/knowledge-registry.md` for fact-checking
 
-   **Sub-agent prompt template** (adapt per reviewer):
+   **Sub-agent prompt template** (adapt per reviewer — replace all `<PLACEHOLDERS>`):
+
    ```
    You are the [Architect/Content/Formatting/Image] reviewer for a Red Hat blog post.
 
    Review the draft against your rubric and the blog creation guide. Score each dimension 1-10, multiply by its weight, and provide specific line-level feedback with corrections.
 
-   Inputs:
-   - Draft: [read drafts/vN.md]
-   - Abstract: [read abstract.md]
-   - Blog creation guide: [read docs/blogs/blog-creation-guide.md]
-   - Your rubric: [read references/reviewer-<type>.md]
+   Read these files:
+   - Draft: docs/blogs/<domain>/<topic-short>/drafts/v<N>.md
+   - Abstract: docs/blogs/<domain>/<topic-short>/abstract.md
+   - Blog creation guide: docs/blogs/blog-creation-guide.md
+   - Your rubric: .claude/skills/create-blog/references/reviewer-<type>.md
+   [Content reviewer only: - Knowledge registry: docs/knowledge-registry.md]
 
-   Output format: Write your review to drafts/reviews/vN-<type>.md following the format specified in your rubric.
+   Write your review to: docs/blogs/<domain>/<topic-short>/drafts/reviews/v<N>-<type>.md
+
+   Follow the output format specified in your rubric exactly.
    ```
 
 2. **Collect all four reviews** from `drafts/reviews/vN-*.md`
@@ -190,6 +198,7 @@ For each iteration:
 4. **If passed**: Present to user for approval. Skip to Phase 5 on approval.
 
 5. **If not passed**: Revise the draft:
+   - First, read all four review files from the current iteration (`drafts/reviews/vN-architect.md`, `vN-content.md`, `vN-formatting.md`, `vN-image.md`) to understand the full picture
    - Fix any dimension below 6.0 first (blockers)
    - Address lowest-scoring dimension across all agents
    - Resolve conflicting feedback using blog type as tiebreaker

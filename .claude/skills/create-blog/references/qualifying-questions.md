@@ -115,6 +115,12 @@ Remind: "The primary CTA should link to something on redhat.com — GitHub repos
 | Yes | "Which event/release? What's the target publication date? Any embargo considerations?" |
 | No | Skip — qualifying complete |
 
+## Brief Mode
+
+If the user provides a dense one-paragraph brief that already covers most qualifying answers (e.g., "Red Hat Blog about MCP Gateway security for platform engineers, thesis is how to enforce tool-level auth without rewriting agent code, products are MCP Gateway and OpenShift AI, standalone, no demo, CTA is try RHOAI"), extract all answers from the brief and present the qualifying summary for confirmation. Only ask about genuinely missing information — don't re-ask questions the brief already answered.
+
+This respects experienced users who know what they want and don't need to be walked through 9 sequential questions.
+
 ## Shortcut Path
 
 When the user provides a Google Doc link or substantial content upfront:
