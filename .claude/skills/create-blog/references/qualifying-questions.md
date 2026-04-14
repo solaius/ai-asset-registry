@@ -1,0 +1,162 @@
+# Qualifying Questions Framework
+
+This reference defines the question flow for Phase 1 (Qualify). Questions are asked one at a time, adapting based on prior answers. The goal is to gather enough context to write a strong abstract — no more, no less.
+
+## Question Flow
+
+Ask these questions conversationally, one per message. Adapt based on answers — skip questions that have already been answered by prior context or source material.
+
+### Q1: Blog Type
+
+**Ask**: "Is this for the Red Hat Blog or the Red Hat Developer Blog? Or not sure?"
+
+| Answer | Next action |
+|---|---|
+| Red Hat Blog | Note: thought leadership tone, IT decision-maker audience |
+| Developer Blog | Note: hands-on tutorial tone, practitioner audience |
+| Not sure | Ask them to describe the content briefly; recommend based on: if it explains *why* → Red Hat Blog; if it shows *how* with code → Developer Blog |
+
+### Q2: Core Thesis
+
+**Ask**: "What single problem does this post solve for the reader? Try to say it in one sentence."
+
+**Why this matters**: This becomes the first paragraph's anchor. If the user can't state it in one sentence, the blog probably covers too much ground — help them narrow it down or consider a series.
+
+**If they struggle**: Offer framing prompts:
+- "After reading this post, the reader will be able to..."
+- "The problem this post addresses is..."
+- "If I had to tweet the value of this post, I'd say..."
+
+### Q3: Target Audience
+
+**Ask**: "Who is the primary reader?" Offer choices:
+- IT decision makers / architects
+- Platform engineers / SREs
+- Application developers
+- Data scientists / ML engineers
+- Security/compliance teams
+- Other (describe)
+
+**Adaptive follow-ups**:
+- If Developer Blog: "What prerequisites should the reader have? What runtime environment will they need?"
+- If Red Hat Blog: "What business context or strategic framing should we set up? Are there market trends or competitive pressures to reference?"
+
+### Q4: Products and Projects
+
+**Ask**: "Which Red Hat products or open source projects are involved?"
+
+**Validation**: Cross-reference against the [Official Product Names List](https://docs.google.com/spreadsheets/d/1DLS_lS3VKidgZIvcLmLp9BoiqptkvqHWfe1D5FD2kfk/edit?gid=1987148185#gid=1987148185) and `docs/knowledge-registry.md`. Use official names only.
+
+**Domain folder proposal**: Based on products/topics, propose a domain path:
+
+| Products/Topics | Suggested Domain |
+|---|---|
+| MCP Gateway, MCP servers, tool calling | `mcps/` or `mcps/mcp-gateway-openclaw/` |
+| MCP ingestion, partner onboarding | `mcps/ingestion-pipeline/` |
+| MCP Catalog, discovery, search | `mcps/mcp-catalog/` |
+| Agent registry, agent lifecycle | `agents/` |
+| Skills, prompts, guardrails | `skills/` |
+| Cross-cutting registry, governance, multiple asset types | `ai-assets/` |
+| Strategy, vision, industry perspective | `cross-cutting/` |
+
+Present the proposed path and topic-short name for user confirmation: "I'd suggest organizing this under `docs/blogs/mcps/mcp-gateway-openclaw/`. Does that work, or would you prefer a different path?"
+
+### Q5: Source Material
+
+**Ask**: "What source material do you have?"
+
+| Answer | Action |
+|---|---|
+| "I have a draft/notes" | Ask for content or Google Doc link. Fetch via Google Workspace MCP or read from provided path. |
+| "I have reference docs" | Ask for links/IDs. Fetch each. |
+| "Start from scratch" | Note: will rely on knowledge registry + domain folder docs + web research. |
+
+**In all cases**: Offer to scan related domain docs automatically: "I can also scan the `docs/` folder for related material on [topic]. Want me to do that?"
+
+**For Google Doc links**: Extract the Doc ID from the URL and use `mcp__google-workspace__get_doc_as_markdown`.
+
+### Q6: Demo or Code Component
+
+**Ask**: "Does this post include a demo, code walkthrough, or hands-on component?"
+
+| Answer | Follow-up |
+|---|---|
+| Yes | "What language/framework? What environment does the reader need? Any prerequisites to install?" |
+| No | Skip — move to Q7 |
+
+### Q7: Series Context
+
+**Ask**: "Is this a standalone post or part of a series?"
+
+| Answer | Follow-up |
+|---|---|
+| Part of a series | "Which part? Are there links to prior posts? What does each part cover?" |
+| Standalone | Skip — move to Q8 |
+
+### Q8: Call to Action
+
+**Ask**: "What should the reader do after reading? What's the primary CTA?"
+
+**Suggest options** based on products mentioned:
+- Try [Product] (link to trial page)
+- Explore the [GitHub repo]
+- Read the [related doc/guide]
+- Watch the [webinar/demo]
+- Join the [community/Slack]
+
+Remind: "The primary CTA should link to something on redhat.com — GitHub repos and upstream projects work great as secondary CTAs."
+
+### Q9: Timing and Events
+
+**Ask**: "Is this tied to a specific event, release, or date?"
+
+| Answer | Follow-up |
+|---|---|
+| Yes | "Which event/release? What's the target publication date? Any embargo considerations?" |
+| No | Skip — qualifying complete |
+
+## Shortcut Path
+
+When the user provides a Google Doc link or substantial content upfront:
+
+1. **Fetch and analyze** the content
+2. **Auto-fill** extractable answers:
+   - Thesis: infer from intro/abstract
+   - Products: extract product mentions
+   - Audience: infer from tone and depth
+   - Blog type: infer from format (tutorial vs thought leadership)
+   - CTA: check for existing calls to action
+   - Series: check for series references
+3. **Present findings**: "Based on your doc, here's what I've gathered..."
+4. **Only ask about gaps** — skip questions that have clear answers from the source
+
+## Existing Draft Review Mode
+
+When reviewing an existing draft (not creating from scratch):
+
+1. Read the draft in full
+2. Infer: blog type, thesis, audience, products, structure
+3. Present inferences to user for confirmation
+4. Ask only about: CTA (if not clear), series context (if not clear), domain path
+5. Proceed with shortened qualifying summary
+
+## Exit Condition
+
+Present the qualifying summary for user confirmation:
+
+```markdown
+## Blog Qualifying Summary
+
+- **Blog type**: [Red Hat Blog / Red Hat Developer Blog]
+- **Thesis**: [one sentence]
+- **Audience**: [target readers]
+- **Products**: [list]
+- **Domain path**: docs/blogs/[domain]/[topic-short]/
+- **Source material**: [list of sources]
+- **Demo**: [Yes/No — details if yes]
+- **Series**: [Standalone / Part N of series name]
+- **CTA**: [target action]
+- **Timing**: [event/release or none]
+```
+
+User must confirm before proceeding to Phase 2 (Abstract).
