@@ -236,6 +236,7 @@ Four reviewers spawned in parallel, each with a focused evaluation lens:
 | SEO readiness | 1x | Keywords in title and first paragraph, appropriate title length |
 | Link strategy | 1x | Product pages linked on first mention, internal links present |
 | Editorial compliance | 2x | No Oxford commas, official product names, no jargon/hyperbole |
+| Brand standards | 1x | Typography references use Red Hat font families (Display/Text/Mono), color references use official palette, any visual/HTML elements align with brand guidelines per `docs/blogs/blog-creation-guide.md` Brand Standards Quick Reference |
 | Word count | 1x | Appropriate for type, flags for series split if over 2000 |
 
 #### Image (Visual Communication)
@@ -243,7 +244,7 @@ Four reviewers spawned in parallel, each with a focused evaluation lens:
 |---|---|---|
 | Placement rationale | 2x | Each image aids comprehension, no decorative filler |
 | Prompt specificity | 2x | Detailed enough to generate correct image on first try |
-| Brand compliance | 2x | Red Hat palette, clean modern style, not overloaded |
+| Brand compliance | 2x | Prompts reference official Red Hat brand standards: full color palette (primary reds, neutrals, extended families), Red Hat font families, illustration/photography style guidelines. References `docs/blogs/blog-creation-guide.md` Brand Standards Quick Reference for palette details. Clean, modern style — not overloaded |
 | Aspect ratio & sizing | 1x | Ratios specified per placement context |
 | Alt text quality | 1x | Descriptive, accessible, conveys purpose |
 | Image count | 1x | 10 or fewer, each earns its place |
@@ -252,7 +253,7 @@ Four reviewers spawned in parallel, each with a focused evaluation lens:
 
 - Current draft (`drafts/vN.md`)
 - Abstract (`abstract.md`)
-- Blog creation guide (`docs/blogs/blog-creation-guide.md`)
+- Blog creation guide (`docs/blogs/blog-creation-guide.md`) — includes Red Hat Brand Standards Quick Reference (color palette, typography, icon/illustration guidelines)
 - Qualifying summary (embedded in abstract)
 - Their specific rubric from `references/reviewer-*.md`
 
