@@ -1,0 +1,298 @@
+---
+name: create-blog
+description: Create Red Hat blog posts or review existing drafts through a multi-agent pipeline with iterative quality improvement. Use this skill whenever the user wants to write a blog post, create blog content, draft a Red Hat blog, review a blog draft, improve a blog post, or says things like "write a blog about X", "I need a blog post", "review my blog draft", "help me with a blog", "create a developer blog", or "blog about [topic]". Also use when the user shares a Google Doc or draft and wants it turned into a polished Red Hat blog post.
+---
+
+# create-blog
+
+A multi-agent blog creation and review skill for Red Hat blog posts (redhat.com/blog and developers.redhat.com/blog). Handles two modes — creating blogs from scratch and reviewing existing drafts — through a unified pipeline with iterative quality improvement via four specialized sub-agent reviewers.
+
+## Why This Skill Exists
+
+Writing a strong Red Hat blog post requires balancing technical depth, editorial compliance, brand voice, visual communication, and narrative structure. No single pass catches everything. This skill uses four independent reviewers — each with a focused lens — to iteratively improve drafts until they meet a quality bar. The human stays in the loop at defined checkpoints, and all artifacts are versioned so nothing is lost.
+
+## Before You Start
+
+Load these two documents into context — they ground the entire workflow:
+
+1. **`docs/knowledge-registry.md`** — Current project state, stakeholders, decisions, open questions
+2. **`docs/blogs/blog-creation-guide.md`** — Red Hat editorial process, writing patterns, formatting rules, brand standards, examples
+
+These are living documents. Read them fresh every time — don't rely on cached knowledge.
+
+## Workflow Overview
+
+```
+Phase 1: Qualify → Phase 2: Abstract → Phase 3: Draft → Phase 4: Review Loop → Phase 5: Finalize
+```
+
+Each phase has a clear exit condition. Do not advance to the next phase until the current phase's exit condition is met.
+
+## Phase 1: Qualify
+
+**Purpose**: Gather requirements through conversational questions to establish the blog's goal, audience, structure, and source material.
+
+**How**: Read `references/qualifying-questions.md` for the full question framework and adaptive logic.
+
+**Inputs to gather**:
+- Blog type (Red Hat Blog vs Developer Blog)
+- Core thesis (what single problem does this post solve?)
+- Target audience
+- Products/projects involved
+- Source material (drafts, docs, links, or start from scratch)
+- Demo/code component (yes/no)
+- Series context (standalone or part of series)
+- CTA target
+- Timing/event tie-in
+
+**Shortcut path**: If the user provides a Google Doc link or substantial notes upfront, fetch and analyze the content, auto-fill extractable answers, present findings, and only ask about gaps.
+
+**Existing draft review mode**: If the user provides an existing draft to review (not create from scratch), use the shortened qualifying flow — read the draft, infer blog type/audience/thesis, confirm with user, and only ask about gaps.
+
+**Domain folder**: Based on products/topics discussed, determine the domain folder path under `docs/blogs/`. Present to user for confirmation:
+
+```
+docs/blogs/<domain>/<topic-short>/
+```
+
+Domain options: `mcps/`, `agents/`, `skills/`, `ai-assets/`, `cross-cutting/`, or nested paths like `mcps/ingestion-pipeline/`, `mcps/mcp-catalog/`.
+
+**Exit condition**: User confirms the qualifying summary.
+
+Output format for qualifying summary:
+
+```markdown
+## Blog Qualifying Summary
+
+- **Blog type**: [Red Hat Blog / Red Hat Developer Blog]
+- **Thesis**: [one sentence]
+- **Audience**: [target readers]
+- **Products**: [list]
+- **Domain path**: docs/blogs/[domain]/[topic-short]/
+- **Source material**: [list of sources]
+- **Demo**: [Yes/No — details if yes]
+- **Series**: [Standalone / Part N of series name]
+- **CTA**: [target action]
+- **Timing**: [event/release or none]
+```
+
+## Phase 2: Abstract
+
+**Purpose**: Create a written contract for what the blog will contain, ensuring alignment before drafting begins.
+
+Create the output directory structure:
+
+```bash
+# Create the blog folder and subfolders
+mkdir -p docs/blogs/<domain>/<topic-short>/drafts/reviews
+```
+
+Write `docs/blogs/<domain>/<topic-short>/abstract.md` containing:
+
+- Thesis statement
+- Target audience
+- Blog type
+- Key points (3 maximum)
+- Products/projects involved
+- CTA
+- Source materials referenced
+- Proposed section outline (H2 headings that tell the story)
+- Series context (if applicable)
+- Qualifying summary (embedded at the bottom)
+
+**For existing draft review mode**: Generate the abstract FROM the existing draft rather than before it. The abstract describes what the draft contains and what it should become.
+
+**Exit condition**: User approves the abstract.
+
+## Phase 3: Draft
+
+**Purpose**: Produce the first version of the blog post.
+
+### From scratch
+Generate v1 based on:
+- The approved abstract
+- Source materials (fetched via Google Workspace MCP or Playwright MCP)
+- `docs/knowledge-registry.md` for project grounding
+- Fresh web research (use Playwright for Red Hat blogs — they are JS-rendered and WebFetch cannot parse them)
+
+### From existing content
+User-provided draft or notes become v1 raw material. Copy the user's content as-is to `drafts/v1.md` — do not restructure yet (the review loop handles improvement).
+
+### Image placeholders
+Include image placeholders where visuals would aid understanding. Each placeholder follows this format:
+
+```markdown
+![Image Placeholder N: <short description>]
+
+**Placement rationale**: [Why an image belongs here — what it helps the reader understand]
+
+**Image generation prompt**: [Detailed prompt including:
+- Exact content/composition to depict
+- Red Hat brand colors (#EE0000, #A30000, #151515 dark / #F5F5F5 light)
+- Clean, modern style — not overloaded, not clip art
+- Specific aspect ratio (hero: 16:9, inline: 4:3, diagram: 16:9 wide)
+- Visual hierarchy and key callouts]
+
+**Alt text**: [Descriptive, accessible alt text]
+```
+
+Refer to `docs/blogs/blog-creation-guide.md` Brand Standards Quick Reference for the full color palette, typography, and illustration style guidance.
+
+### Draft conventions
+- Follow all formatting rules from `docs/blogs/blog-creation-guide.md`
+- Sentence case headings, no H1 in body, cascading H2/H3/H4
+- No backticks for code — use monospace indication
+- No Oxford commas
+- First person voice, Red Hat brand tone (open, authentic, helpful, brave)
+- CTA near top (bolded, linked to Red Hat site) and in closing
+
+**Exit condition**: `drafts/v1.md` written to disk.
+
+## Phase 4: Review Loop
+
+**Purpose**: Iteratively improve the draft through parallel sub-agent review until quality threshold is met.
+
+### How the review loop works
+
+Read `references/scoring.md` for full scoring rules, pass criteria, and iteration controls.
+
+For each iteration:
+
+1. **Spawn four reviewer sub-agents in parallel** using the Agent tool. Each reviewer receives:
+   - Current draft (`drafts/vN.md`)
+   - Abstract (`abstract.md`)
+   - Blog creation guide (`docs/blogs/blog-creation-guide.md`)
+   - Their specific rubric (one of `references/reviewer-architect.md`, `references/reviewer-content.md`, `references/reviewer-formatting.md`, `references/reviewer-image.md`)
+   - The qualifying summary (embedded in abstract)
+
+   **Sub-agent prompt template** (adapt per reviewer):
+   ```
+   You are the [Architect/Content/Formatting/Image] reviewer for a Red Hat blog post.
+
+   Review the draft against your rubric and the blog creation guide. Score each dimension 1-10, multiply by its weight, and provide specific line-level feedback with corrections.
+
+   Inputs:
+   - Draft: [read drafts/vN.md]
+   - Abstract: [read abstract.md]
+   - Blog creation guide: [read docs/blogs/blog-creation-guide.md]
+   - Your rubric: [read references/reviewer-<type>.md]
+
+   Output format: Write your review to drafts/reviews/vN-<type>.md following the format specified in your rubric.
+   ```
+
+2. **Collect all four reviews** from `drafts/reviews/vN-*.md`
+
+3. **Aggregate scores** per `references/scoring.md`:
+   - Architect: 30%, Content: 30%, Formatting: 20%, Image: 20%
+   - Check pass criteria: overall >= 8.0, no dimension below 6.0
+   - Update `drafts/reviews/score-summary.md`
+
+4. **If passed**: Present to user for approval. Skip to Phase 5 on approval.
+
+5. **If not passed**: Revise the draft:
+   - Fix any dimension below 6.0 first (blockers)
+   - Address lowest-scoring dimension across all agents
+   - Resolve conflicting feedback using blog type as tiebreaker
+   - Apply quick wins (editorial compliance fixes)
+   - Include brief changelog at top of new draft version
+   - Write revised draft as `drafts/v(N+1).md` — never overwrite previous versions
+
+6. **Repeat** until pass or checkpoint.
+
+### Iteration controls
+
+- **Max 3 autonomous iterations** before mandatory human checkpoint
+- **At checkpoint, user chooses**:
+  - **Continue**: 3 more autonomous iterations
+  - **Steer**: Provide guidance, then 3 more iterations
+  - **Accept**: Override threshold, proceed to finalize
+  - **Abandon**: Keep all drafts and reviews, stop
+- **Hard ceiling**: 9 iterations (3 checkpoints)
+- **Early exit**: If draft passes before checkpoint, present immediately for user approval
+
+### Near-miss rule
+
+If overall >= 7.5 and only one dimension is between 5.0-5.9, flag as "conditional pass" at human checkpoint. User decides whether to accept or iterate.
+
+## Phase 5: Finalize
+
+**Purpose**: Produce submission-ready artifacts and close the loop.
+
+### Sequence
+
+1. **Strip internal changelog** from the passing draft version
+
+2. **Pre-fill blog submission form** template at top of draft:
+   - Publication type, byline (defaults to Peter Double — overridable during qualifying), reviewers needed, image checklist, pre-submission checklist
+
+3. **Write `final.md`**: Submission form + clean draft in `docs/blogs/<domain>/<topic-short>/final.md`
+
+4. **Generate `seo.md`** in `docs/blogs/<domain>/<topic-short>/seo.md`:
+   - Meta title (50-60 chars, keywords front-loaded)
+   - Meta description (150-160 chars, action-oriented)
+   - Primary and secondary keywords
+   - Suggested URL slug
+   - Internal link suggestions
+
+5. **Update `drafts/reviews/score-summary.md`** with final status
+
+6. **Offer Google Doc creation** (optional):
+   - If yes: create via `mcp__google-workspace__create_doc` with submission form + draft content using `pedouble@redhat.com`
+   - If no: skip, local artifacts are complete
+
+7. **Update `docs/knowledge-registry.md`**:
+   - Section 12 Blog Examples: add new entry with title, author, blog type, path, and description
+   - Section 11: add any new stakeholders mentioned during the process
+
+8. **Present completion summary**:
+
+```markdown
+## Blog Complete: [Title]
+
+### Artifacts
+- Abstract: [path]
+- Final draft: [path]
+- SEO metadata: [path]
+- Iterations: [N] drafts, [N*4] reviews
+- Google Doc: [link] (if created)
+
+### Final Scores
+| Agent | Score |
+|---|---|
+| Architect | [score] |
+| Content | [score] |
+| Formatting | [score] |
+| Image | [score] |
+| **Overall** | **[score]** |
+
+### Image Placeholders ([N] total)
+[list with descriptions — these need generation/sourcing]
+
+### Next Steps
+1. Generate/source images using prompts in the draft
+2. Copy to Google Docs (if not already done)
+3. Get SME/peer reviews from: [names]
+4. Submit through Workfront request form
+5. Prepare Employee Advocacy post for promotion
+```
+
+## Tool Usage Reference
+
+| Task | Tool |
+|---|---|
+| Fetch Google Docs | `mcp__google-workspace__get_doc_as_markdown` (user: pedouble@redhat.com) |
+| Fetch web pages / Red Hat blogs | Playwright (`browser_navigate` + `browser_run_code`) — Red Hat blogs are JS-rendered |
+| General web research | Playwright or WebSearch |
+| Create Google Doc | `mcp__google-workspace__create_doc` (user: pedouble@redhat.com) |
+| Spawn reviewer sub-agents | Agent tool with subagent_type unset (general-purpose) |
+| Read/write files | Read, Write, Edit tools |
+| Search project files | Glob, Grep tools |
+
+## Important Reminders
+
+- **Never overwrite drafts** — always create a new version file (v1, v2, v3...)
+- **Reviews are also versioned** — `vN-architect.md`, `vN-content.md`, etc.
+- **Read the knowledge registry fresh** every session — it's a living document
+- **Use Playwright, not WebFetch** for Red Hat blog URLs — they require JavaScript rendering
+- **Brand standards matter** — reference the Brand Standards Quick Reference in the blog creation guide for colors, typography, and illustration style
+- **The abstract is a contract** — if the draft diverges significantly from the abstract, flag it before continuing
