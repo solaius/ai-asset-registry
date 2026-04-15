@@ -224,6 +224,22 @@
       color: #151515;
     }
 
+    /* Company logos in MCP server list */
+    .article-wrap li .company-logo {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      margin-right: 8px;
+      position: relative;
+      top: -1px;
+    }
+    .article-wrap li .company-logo img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
     /* Tier section headers */
     .tier-header {
       font-family: 'Red Hat Text', sans-serif;
@@ -486,26 +502,26 @@
     <p class="tier-header">Three Red Hat MCP servers connect your AI agents directly to the platforms you already run:</p>
 
     <ul>
-      <li><strong><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a></strong>: Your agents can query cluster state, manage workloads and troubleshoot deployments through natural language. When a pod fails at 2 a.m., your on-call engineer asks the agent for the last 50 log lines and the resource status of the affected deployment. No context-switching between dashboards, no kubectl gymnastics.</li>
-      <li><strong><a href="https://www.redhat.com/en/technologies/management/ansible">Red Hat Ansible Automation Platform</a></strong>: Connect agents to your automation workflows. An agent can trigger Ansible playbooks, check job status and orchestrate configuration changes across your infrastructure. For agent-driven operations (AgentOps) teams, this means incident response workflows that span detection, diagnosis and remediation without leaving the agent context.</li>
-      <li><strong><a href="https://www.redhat.com/en/technologies/management/insights">Red Hat Insights</a></strong>: Surface platform intelligence and recommendations through your AI agents. Instead of your team manually reviewing Insights advisories, an agent can pull the latest recommendations, correlate them with your cluster state and suggest remediation steps, bringing operational insights directly into your agentic workflows.</li>
+      <li><span class="company-logo"><img src="images/redhat.svg" alt="Red Hat"></span><strong><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a></strong>: Your agents can query cluster state, manage workloads and troubleshoot deployments through natural language. When a pod fails at 2 a.m., your on-call engineer asks the agent for the last 50 log lines and the resource status of the affected deployment. No context-switching between dashboards, no kubectl gymnastics.</li>
+      <li><span class="company-logo"><img src="images/redhat.svg" alt="Red Hat"></span><strong><a href="https://www.redhat.com/en/technologies/management/ansible">Red Hat Ansible Automation Platform</a></strong>: Connect agents to your automation workflows. An agent can trigger Ansible playbooks, check job status and orchestrate configuration changes across your infrastructure. For agent-driven operations (AgentOps) teams, this means incident response workflows that span detection, diagnosis and remediation without leaving the agent context.</li>
+      <li><span class="company-logo"><img src="images/redhat.svg" alt="Red Hat"></span><strong><a href="https://www.redhat.com/en/technologies/management/insights">Red Hat Insights</a></strong>: Surface platform intelligence and recommendations through your AI agents. Instead of your team manually reviewing Insights advisories, an agent can pull the latest recommendations, correlate them with your cluster state and suggest remediation steps, bringing operational insights directly into your agentic workflows.</li>
     </ul>
 
     <p class="tier-header">Five technology partner MCP servers extend your agents into the broader enterprise stack:</p>
 
     <ul>
-      <li><strong>Confluent Kafka</strong>: Connect agents to your event streams for topic management, pipeline monitoring and real-time data access. If your agentic workflows need to react to live data, this is the integration point.</li>
-      <li><strong>EnterpriseDB (PostgreSQL)</strong>: Connect agents to PostgreSQL databases for queries, schema management and database operations, powered by EDB's pg-airman-mcp server.</li>
-      <li><strong>HashiCorp | an IBM Company Terraform</strong>: Let agents provision and manage infrastructure as code, bridging the gap between AI-driven decisions and infrastructure execution.</li>
-      <li><strong>Microsoft Azure</strong>: Enable agents to manage Azure resources, provision services and automate cloud operations alongside your OpenShift workloads.</li>
-      <li><strong>Dynatrace</strong>: Bring full-stack observability into your agentic workflows. Agents can query performance data, investigate incidents and correlate metrics across your environment.</li>
+      <li><span class="company-logo"><img src="images/CFLT.svg" alt="Confluent"></span><strong>Confluent Kafka</strong>: Connect agents to your event streams for topic management, pipeline monitoring and real-time data access. If your agentic workflows need to react to live data, this is the integration point.</li>
+      <li><span class="company-logo"><img src="images/EDB.svg" alt="EnterpriseDB"></span><strong>EnterpriseDB (PostgreSQL)</strong>: Connect agents to PostgreSQL databases for queries, schema management and database operations, powered by EDB's pg-airman-mcp server.</li>
+      <li><span class="company-logo"><img src="images/hashicorp.svg" alt="HashiCorp"></span><strong>HashiCorp | an IBM Company Terraform</strong>: Let agents provision and manage infrastructure as code, bridging the gap between AI-driven decisions and infrastructure execution.</li>
+      <li><span class="company-logo"><img src="images/azure.svg" alt="Microsoft Azure"></span><strong>Microsoft Azure</strong>: Enable agents to manage Azure resources, provision services and automate cloud operations alongside your OpenShift workloads.</li>
+      <li><span class="company-logo"><img src="images/DT.svg" alt="Dynatrace"></span><strong>Dynatrace</strong>: Bring full-stack observability into your agentic workflows. Agents can query performance data, investigate incidents and correlate metrics across your environment.</li>
     </ul>
 
     <p class="tier-header">Two community MCP servers round out the data tier:</p>
 
     <ul>
-      <li><strong>MongoDB</strong>: Query and manage document collections through your agents. Useful for RAG workflows and applications backed by unstructured or semi-structured data.</li>
-      <li><strong>MariaDB</strong>: Relational database connectivity for agents that need to query and manage structured data stores.</li>
+      <li><span class="company-logo"><img src="images/mongodb.svg" alt="MongoDB"></span><strong>MongoDB</strong>: Query and manage document collections through your agents. Useful for RAG workflows and applications backed by unstructured or semi-structured data.</li>
+      <li><span class="company-logo"><img src="images/mariadb.svg" alt="MariaDB"></span><strong>MariaDB</strong>: Relational database connectivity for agents that need to query and manage structured data stores.</li>
     </ul>
 
     <p>To put this in concrete terms: before the MCP Catalog, connecting Dynatrace to your agents meant finding a server on GitHub, building a container from source, debugging transport issues and configuring authentication, all before you could make a single tool call. Now, you select Dynatrace in the catalog and the Lifecycle Operator handles the rest.</p>
