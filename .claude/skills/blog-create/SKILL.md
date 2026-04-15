@@ -1,9 +1,9 @@
 ---
-name: create-blog
+name: blog-create
 description: Create Red Hat blog posts or review existing drafts through a multi-agent pipeline with iterative quality improvement. Use this skill whenever the user wants to write a blog post, create blog content, draft a Red Hat blog, review a blog draft, improve a blog post, or says things like "write a blog about X", "I need a blog post", "review my blog draft", "help me with a blog", "create a developer blog", or "blog about [topic]". Also use when the user shares a Google Doc or draft and wants it turned into a polished Red Hat blog post.
 ---
 
-# create-blog
+# blog-create
 
 A multi-agent blog creation and review skill for Red Hat blog posts (redhat.com/blog and developers.redhat.com/blog). Handles two modes — creating blogs from scratch and reviewing existing drafts — through a unified pipeline with iterative quality improvement via four specialized sub-agent reviewers.
 
@@ -205,7 +205,7 @@ For each iteration:
    - Draft: docs/blogs/<domain>/<topic-short>/drafts/v<N>.md
    - Abstract: docs/blogs/<domain>/<topic-short>/abstract.md
    - Blog creation guide: docs/blogs/blog-creation-guide.md
-   - Your rubric: .claude/skills/create-blog/references/reviewer-<type>.md
+   - Your rubric: .claude/skills/blog-create/references/reviewer-<type>.md
    [Content reviewer only: - Knowledge registry: docs/knowledge-registry.md]
 
    Write your review to: docs/blogs/<domain>/<topic-short>/drafts/reviews/v<N>-<type>.md
@@ -268,17 +268,26 @@ If overall >= 7.5 and only one dimension is between 5.0-5.9, flag as "conditiona
    - Suggested URL slug
    - Internal link suggestions
 
-5. **Update `drafts/reviews/score-summary.md`** with final status
+5. **Generate `blog-preview.html`**: Create a branded HTML preview of the blog post.
+   - Read the template from `assets/blog-template.html`
+   - Read the conversion guide from `references/html-preview-guide.md`
+   - Extract metadata from `final.md` (title, subtitle, author, date, product label)
+   - Convert the markdown body to HTML following the guide's conversion rules
+   - Replace all `{{PLACEHOLDER}}` tokens in the template
+   - Render structured image placeholders as actual HTML diagrams when the content describes a table or comparison; otherwise render as placeholder cards
+   - Write to `docs/blogs/<domain>/<topic-short>/blog-preview.html`
 
-6. **Offer Google Doc creation** (optional):
+6. **Update `drafts/reviews/score-summary.md`** with final status
+
+7. **Offer Google Doc creation** (optional):
    - If yes: create via `mcp__google-workspace__create_doc` with submission form + draft content using `pedouble@redhat.com`
    - If no: skip, local artifacts are complete
 
-7. **Update `docs/knowledge-registry.md`**:
+8. **Update `docs/knowledge-registry.md`**:
    - Section 12 Blog Examples: add new entry with title, author, blog type, path, and description
    - Section 11: add any new stakeholders mentioned during the process
 
-8. **Present completion summary**:
+9. **Present completion summary**:
 
 ```markdown
 ## Blog Complete: [Title]
@@ -286,6 +295,7 @@ If overall >= 7.5 and only one dimension is between 5.0-5.9, flag as "conditiona
 ### Artifacts
 - Abstract: [path]
 - Final draft: [path]
+- HTML preview: [path]
 - SEO metadata: [path]
 - Iterations: [N] drafts, [N*4] reviews
 - Google Doc: [link] (if created)
