@@ -69,6 +69,8 @@ Each placeholder in the draft should follow this structure:
 
 Flag any placeholders that are missing fields or have incomplete prompts.
 
+Each placeholder block must be wrapped with `--------------------` separator lines above and below. These separators ensure reviewers and editors can visually locate image placeholders during review. Flag any placeholders missing these separators.
+
 ## When to Recommend create-diagram Skill
 
 If a placement clearly needs a technical architecture diagram, system flow diagram, or component interaction diagram rather than a generated image, flag it:

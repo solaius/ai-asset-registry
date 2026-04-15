@@ -23,7 +23,7 @@ Score each dimension 1-10. Multiply by the weight to get the weighted score.
 | **Code formatting** | 1x | Code in monospace. No backticks (editorial team has to remove them). Code is real and runnable. Terminal output separated from commands. | Backticks used for inline code. Code blocks not marked as monospace. Pseudocode instead of real code. |
 | **CTA placement** | 2x | Primary CTA near top, bolded, linked to redhat.com content. Secondary CTA mid-article. Closing CTA in conclusion. All links working. | No CTA, or CTA only at the very end. Primary CTA links to external site instead of Red Hat. CTAs not bolded or linked. |
 | **SEO readiness** | 1x | Target keyword in title and first paragraph. Title is 50-60 chars. Meta description could be extracted from intro. Custom URL slug is obvious. | No clear keyword strategy. Title is 100+ chars. Opening paragraph doesn't contain the topic keyword. |
-| **Link strategy** | 1x | Red Hat product pages linked on first mention. Internal links (redhat.com) present. GitHub/upstream repos linked where relevant. All links tested. | No internal links. Product names mentioned but never linked. Broken links. |
+| **Link strategy** | 1x | Red Hat product pages linked on first mention. Internal links (redhat.com) present. GitHub/upstream repos linked where relevant. No competitor links. All links tested. | No internal links. Product names mentioned but never linked. Broken links. Competitors hyperlinked (gives them SEO credit). |
 | **Editorial compliance** | 2x | No Oxford commas. Official product names used throughout. No jargon or hyperbole. No animated GIFs. 10 or fewer images, all with alt text. | Oxford commas present. Unofficial product names (e.g., "RHOAI" instead of "Red Hat OpenShift AI"). Jargon unexplained. |
 | **Brand standards** | 1x | Typography references use Red Hat font families (Display/Text/Mono). Any color references use official palette. Visual/HTML elements align with brand guidelines from the blog creation guide's Brand Standards Quick Reference. | Non-brand fonts specified. Colors don't match palette. Visual elements clash with brand guidelines. |
 | **Word count** | 1x | Appropriate for blog type. Under 2,000 words for single post. If over, flag for series split with a concrete proposal for how to divide it. | Drastically over/under for the topic. 3,000-word single post that should be a series. 200-word post trying to cover a deep topic. |
@@ -40,6 +40,9 @@ These are the rules most commonly violated. Check every one:
 6. **Alt text on all images**: Required for accessibility. For Developer blog, also add captions.
 7. **No animated GIFs**: Accessibility requirement.
 8. **Features in tech preview or GA only**: Don't write about features that haven't reached at least tech preview state.
+9. **No em dashes**: The em dash character is an AI writing tell. Replace every instance with commas, periods, colons, semicolons, or restructured sentences. This is a hard rule with zero exceptions.
+10. **No competitor links**: Competitor names may be mentioned as plain text for context, but never hyperlinked. Linking to competitors gives them SEO credit and sends readers away.
+11. **Image placeholder separators**: Image placeholder blocks must be wrapped with `--------------------` lines above and below so reviewers and editors can spot them easily during review.
 
 ## Brand Standards Reference
 
@@ -90,6 +93,9 @@ Write your review to `drafts/reviews/vN-formatting.md` using this structure:
 - [ ] All images have alt text
 - [ ] No animated GIFs
 - [ ] Features at tech preview+ only
+- [ ] No em dashes (count: [N found])
+- [ ] No competitor hyperlinks (competitors mentioned as plain text only)
+- [ ] Image placeholders have -------------------- separators
 - [ ] Word count appropriate ([actual count] words)
 
 ## Summary

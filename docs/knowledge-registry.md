@@ -2,7 +2,7 @@
 
 This file tracks key information, decisions, concepts, and references gathered from all source materials for the AI Asset Registry proposal. It serves as a living document to support continued proposal development, prototyping, and documentation.
 
-Last updated: 2026-04-13
+Last updated: 2026-04-14
 
 ---
 
@@ -55,7 +55,9 @@ Notebooks, Pipelines, Evaluators, Skill Packs, Code Snippets, Workflows
 - **Features**: Virtual MCP servers, identity-aware filtering, per-tool auth/metrics/audit, streaming HTTP
 - **CRDs**: MCPServer, MCPGatewayExtension
 - **Ships with**: OCP for platform use; RHOAI required for customer MCP servers
-- **SKU**: RHOAI gets auth via Authorino + rate limiting from RHCL; full RHCL purchase for additional features
+- **SKU**: RHOAI gets auth via Authorino + rate limiting (limited to AI workloads) from RHCL; full RHCL purchase for additional features
+- **MCP Gateway TP**: MCP Gateway 0.6.0 ships as TP in RHCL 1.3.3 (April 30, 2026)
+- **RHOAI-RHCL Agreement**: Signed internal support agreement (Apr 2026) governs how RHOAI deploys and supports RHCL components (see Section 6)
 
 ### MCP Lifecycle Operator (kubernetes-sigs/mcp-lifecycle-operator)
 - **Role**: Deployment primitive for MCP servers on Kubernetes
@@ -98,6 +100,30 @@ Notebooks, Pipelines, Evaluators, Skill Packs, Code Snippets, Workflows
 - **Future asset types**: datasets, prompts, notebooks planned
 - **Architecture**: GORM + MySQL/PostgreSQL, REST API v1alpha3, generic `customProperties` for extensibility
 - **Plugin architecture**: PR #2219 by Alessio for genericizing asset types beyond models
+
+### Partner MCP Catalog (3.4 DP - Completed)
+- **Role**: Curated collection of partner and community MCP servers in RHOAI catalog for Summit splash
+- **Outcome**: 5 partners + 2 community servers integrated into RHOAI 3.4 DP by April 10 code freeze
+- **Partners in 3.4 DP**: Confluent, Dynatrace, Terraform (HashiCorp), Microsoft Azure, EnterpriseDB (EDB)
+- **Community servers**: MariaDB, MongoDB (positioned in "periphery" — demos, blogs, GenAI Studio configmap)
+- **Did not make it**: Oracle (consent given, OAuth flow unresolved), CyberArk (consent given, technical requirements not met), JFrog (server moved to remote-only)
+- **Quay org**: `quay.io/rhoai-partner-mcp` (created because `quay.io/opendatahub` process was too slow)
+- **Upstream repo**: `opendatahub-io/model-metadata-collection` — PR merged three sources: Red Hat, Partner, Community
+- **Consent process**: Katie Giglio managed consent letters and forms; 7 partners said YES; BDMs from Greg Labows' and Robert Mad's orgs handled outreach
+- **Technical requirements for partners**:
+  - **Transport**: Streamable HTTP only (no stdio)
+  - **Deployment**: On-cluster, local hosting only for DP (no remote MCP servers)
+  - **Container**: UBI-based image in Quay
+  - **Maintenance**: Partners must commit to keeping assets up-to-date
+  - **Support**: RHOAI will NOT support or fix customer tickets for partner MCP servers
+- **Partner value proposition**: Live on cluster (vs stale web listing), Summit splash visibility, quickstart inclusion, AgentOps roadmap alignment, maturity tiering system planned
+- **Metadata schema (defined for catalog)**:
+  - Core: name, description, provider, logo, license (SPDX), licenseLink, readme
+  - MCP-specific: tools[] (name, description, parameters, access type, revoked/revokedReason), transportType, deploymentMode, artifacts[] (OCI URIs), endpoints[]
+  - Security indicators: verifiedSource, sast, secureEndpoint, readOnlyTools
+- **Post-Summit plans**: Azure plugins beyond MCP (Agentic Packs), Oracle/CyberArk revisit, quickstarts (Dynatrace and Azure/ARO prioritized), deprecation of FY25 web catalogs, partner pipeline scaling
+
+> Source: [Partners MCP servers in RHOAI Catalog](https://docs.google.com/document/d/1Z2rA0fiAC2Zt_AWnond_Ogi3-2cqEzElN-U76M1x740) — working document with decided outcomes for 3.4 DP.
 
 ### AI Hub (UI Surface)
 - **Role**: Unified UI in RHOAI
@@ -174,6 +200,30 @@ Two primary ingestion lanes identified for getting MCPs into the platform:
 - Evaluations are generic (MCP Checker) and reusable across all lanes, including post-catalog customer re-evaluation
 - MLflow will be the main evaluation tool for AI assets; MCP evaluation integration with MLflow TBD
 
+### Partner Business Pipeline (from Partners MCP Catalog Doc)
+
+The partner onboarding pipeline has both business and technical dimensions:
+
+**Business Pipeline (completed for 3.4 DP)**:
+1. Curate partner list (invitation-only, strategic categories: CI/CD, databases, hyperscalers, security)
+2. BDM outreach with consent letter and value proposition
+3. Partner signs consent form (Google Form managed by Katie Giglio)
+4. Technical attestation by Ecosystem Engineering (Matt Dorn's team)
+5. Image build and push to `quay.io/rhoai-partner-mcp`
+6. Catalog integration and testing by RH AI team (Chris Hambridge)
+
+**Partner Disqualification Criteria**:
+- Technical: stdio-only transport, stale/unmaintained assets, remote-only MCP servers (for DP)
+- Business: No consent, no maintenance commitment, no "skin in the game"
+
+**Post-DP Scaling Plans**:
+- Define lighter-weight maintenance/support policy (different from operators — AI assets have different nature/longevity)
+- Partner pipeline for adding and maintaining MCP servers at scale
+- Quickstarts with featured partners (Dynatrace, Azure/ARO prioritized)
+- Deprecation of FY25 web-based catalogs (redhat.com/en/products/ai/openshift-ai/mcp-servers)
+- Change "Others" tab in UI to "Community"
+- MCP as the model for how to handle plugins, agents, and other AI asset partner onboarding
+
 ---
 
 ## 5. Personas
@@ -193,15 +243,53 @@ Two primary ingestion lanes identified for getting MCPs into the platform:
 | Release | Date | Relevant Content |
 |---|---|---|
 | RHOAI 3.0 GA | Nov 2025 | Baseline |
-| RHOAI 3.4 | Apr 2026 (code freeze) | MCP Guardrail DP; Summit demo |
-| RHOAI 3.5 | Target | MCP Registry Dev Preview; Agent registries; MCP Gateway deployment in RHOAI |
+| RHOAI 3.4 DP | Apr 10, 2026 (code freeze) | MCP Catalog DP with 5 partner + 2 community MCPs; MCP Guardrail DP; Summit demo; Kubeflow GA |
+| RHOAI 3.5 (TP target) | Target | MCP Registry Dev Preview; Agent registries; MCP Gateway deployment in RHOAI; Hardening, registry integration, gateway configuration |
+| RHOAI GA | End of CY26 target | Full GA of MCP ecosystem |
 | OCP 5.0 | Future | MCP Servers + MCP Gateway included |
 
+### Summit 2026
+- **Dates**: May 11-14, 2026, Atlanta, Georgia
+- **Partner splash**: Blog post about partner MCPs in catalog (Peter drafting, Sharon/Katie coordinating partner review)
+- **Blog submission deadline**: April 24, 2026
+- **Demo**: Lifecycle operator with catalog, gateway registration, GenAI Studio tool execution
+- **Logos**: Not in DP build; will be fixed post-DP
+- **Other Summit content**: Agentic overview blog (Younes), Agent Ops talk (Peter/Roberto/Younes), Power Hour with AI segment
+
 ### SKU & Entitlement Model
-- **RHOAI SKU**: Auth (via RHCL/Authorino) + MaaS entitled to Auth + Rate Limiting
-- **RHCL SKU**: Full entitlements including MCP Gateway
+- **RHOAI SKU**: Auth (via RHCL/Authorino) + Rate Limiting (limited to AI workloads)
+- **Permitted RHOAI use of RHCL** (from signed agreement):
+  - Unlimited tokens for AI use cases (MaaS only — ~~MCP, Agents~~ struck from scope)
+  - Token Metrics for AI use cases (MaaS only — ~~MCP, Agents~~ struck from scope)
+  - RHCL Rate limiting limited to AI workloads
+  - Authorino (covered by separate agreement)
+  - Any additional features/use cases require RHCL subscription or updated agreement
+- **RHCL SKU**: Full entitlements including MCP Gateway, DNS, HA/DR/GLB
 - **All OpenShift versions** (OVE, OKE, OCP, OPP): Auth + Rate Limiting + MCP for internal use
 - Catalog/Appendix 1 update: August 2026; verbiage due to Gerry by June/July
+
+### RHOAI-RHCL Internal Support Agreement (Signed Apr 2026)
+
+> Source: [Internal Support and Product Agreement](https://docs.google.com/document/d/11JTt4SHZJ1UFG9RWZsVL2t6MZqBFZ4Iuq4niXxtE59g) — signed agreement.
+
+**Agreement scope**: Case 1 only — RHOAI deploying specific versions of RHCL components via images pushed to registry by RHCL team. Case 2 (customers installing full RHCL alongside RHOAI) covered by separate future agreement.
+
+**RHCL Version Matrix** (key releases):
+| RHCL Version | Date | OCP Support | Notes |
+|---|---|---|---|
+| 1.3.2 | Apr 8, 2026 | 4.19, 4.20, 4.21 | |
+| 1.3.3 | Apr 30, 2026 | 4.19, 4.20, 4.21 | **MCP Gateway 0.6.0 TP** |
+| 1.4 | Jun 11, 2026 | 4.19, 4.20, 4.21, 4.22 | |
+
+**Known Version Gap (Aug 2026)**: RHOAI 3.5 will support OCP 4.19, but RHCL likely will not. Configuration (RHOAI 3.5 + RHCL + OCP 4.19) documented as **untested with best-effort support only**. OCP 4.19 maintenance support ends Dec 2026 (4 months overlap). Customers advised to upgrade to OCP 4.20+.
+
+**Support workflow**:
+- RHOAI gets RHCL early build images for integration testing
+- RHOAI support opens JIRA tickets directly with RHCL Engineering ([CONNLINK project](https://issues.redhat.com/projects/CONNLINK)) — bypasses RHCL support for faster resolution
+- Both engineering teams collaborate on customer issues
+- Pre-defined index image (tagged with supported OCP version/platform) required for dependency operator testing
+
+**Signoff status**: Signed by Christopher Ferreira (PM RHCL), Jonathan Zarecki (PM RHAI), Jeff DeMoss (PM RHAI), Andrew Mackenzie (Eng Dir RHCL), Roy Nissim (Eng Mgr RHAI), John Graham (Eng Dir RHAI). Pending: Craig Brookes (PTO), Thomas Maas, Rutuja Argade, Amana Juricic (support team reviewing).
 
 ### Deployment Dependencies
 - RHCL doesn't depend on MCP Gateway, but MCP Gateway depends on RHCL
@@ -291,6 +379,16 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 - Fragmentation: multiple frameworks, no central control (Infineon, T-Mobile, Florida Blue)
 - ROI: need cost tracking and chargeback (Turkcell, Expedia)
 
+### IBM/Red Hat Positioning for Agentic AI (from 2026-04-14 Agentic AI pod)
+- **Joint customer conversations only** — this positioning is for when IBM and Red Hat are together in front of a customer; it does NOT change Red Hat's product roadmap
+- **Red Hat focus**: Agent runtime, lifecycle management, Agent Ops (observability, evaluations, security)
+- **IBM focus**: Agent building, control plane, Watsonx Orchestrate (no-code/fancy GUI, local/business users)
+- **Key message**: Red Hat AI Enterprise will be first-class in Watsonx portfolio; IBM properties (Orchestrate, Govern) will depend on Red Hat AI Enterprise, not on wx.ai/CP4D
+- **Red Hat stays the course**: MCP Gateway, Agent Ops, evaluations/traces with MLflow — none of this changes
+- **Risk**: Field sellers may misinterpret as "Red Hat doesn't do agents" — need FAQ and repeated messaging
+- **Mitigation**: FAQ attached to Power Hour, agentic messaging review by Joe, reinforcement in podcast and webinars
+- **Tushar Katarki's framing**: "Let the best solution win" — overlaps are inevitable in AI; customer choice is the answer
+
 ### ResponsesAgent (MLflow)
 - Potential alignment with Llama Stack + Responses API
 - Connects with MLflow experiments and registry for versioning/management
@@ -326,6 +424,36 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 | Matt Dorn | Partnership Ecosystem team lead |
 | Ann Murray | Pushing Snyk for AI/agent scanning |
 | Serob | Partnership Engineering team; working on ingestion pipeline pieces |
+| Sharon Dashet | Partnership Ecosystem team, ecosystem engineering; key driver of partner MCP onboarding for 3.4 DP |
+| Katie Giglio | Partner consent letters and outreach coordination |
+| Tanya Heuze | Partner Ecosystem lead |
+| Hugo Rivero | Partner Ecosystem |
+| Paul Christensen | Partner Ecosystem; partner value proposition |
+| Alec Leschin | Business Development; partner curation and Oracle pipeline |
+| Ilan Pinto | Engineering; AI-driven SAST scanner |
+| Itamar Heim | Leadership (Partnership Ecosystem management chain) |
+| Mike Evans | Leadership (Partnership Ecosystem) |
+| Younes Ben Brahim | Product Marketing Manager; agentic messaging, Summit content |
+| Ornkanya Sinonpat (Aom) | Product Marketing; blog timeline/editorial coordination for Summit |
+| Tushar Katarki | IBM/Red Hat alignment strategy for agentic AI |
+| Noel O'Connor | Sales/field; raised concern about seller confusion on IBM/RH agentic positioning |
+| Jennifer Vargas | GTM/marketing; seller enablement concerns, web page reviews |
+| Aaron Isom | Business Development; Azure contact facilitation |
+| Daniele Martinoli | Ecosystem Engineering; original MCP validation research (Q3/Q4 FY25) |
+| Karl Eklund | Quickstart sponsorship and prioritization |
+| Swati Kale | Quickstart sponsorship |
+| Jessie Beach | Media team; ecosystem blog writing |
+| John Gibson | Suggested Vast Data as partner |
+| Roberto | Summit Agent Ops talk (with Younes and Peter) |
+| Roy Nissim | Co-founder of Jones, reporting to Catherine Weeks; observability, AI gateway exploration |
+| Jonathan Zareki | PM, RHAI; working on gateways with Roy Nissim; signed RHOAI-RHCL agreement |
+| Christopher Ferreira | PM, RHCL; signed RHOAI-RHCL agreement |
+| Jeff DeMoss | PM, RHAI; signed RHOAI-RHCL agreement |
+| Thomas Maas | Engineering Manager, RHCL |
+| John Graham | Engineering Director, RHAI; signed RHOAI-RHCL agreement |
+| Rutuja Argade | Support Manager, RHAI |
+| Amana Juricic | Support Director, RHAI |
+| Tomas Jochec | RHCL coordination; driving signoffs on support agreement |
 
 ---
 
@@ -342,6 +470,8 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 | Registry Proposal Discussion (transcript) | docs/starting-artifacts/meeting-transcriptions/ | 2026-03-19 meeting; Databricks process, plugin architecture |
 | AI Asset Registries Sync (transcript) | docs/starting-artifacts/meeting-transcriptions/ | 2026-04-07 sync; skills registry, registry vs catalog debate |
 | MCP Pipeline w/ Gen MCP (transcript) | docs/starting-artifacts/meeting-transcriptions/ | 2026-04-10 meeting; ingestion pipeline, Gen MCP role, partner containerization, scanning/evaluation |
+| Agentic AI pod v2 (transcript) | docs/starting-artifacts/meeting-transcriptions/ | 2026-04-14 meeting; IBM/Red Hat agentic positioning, MCP catalog blog post planning, Summit content coordination |
+| Sharon/Peter 1:1 - 3.4 confirmation (transcript) | docs/starting-artifacts/meeting-transcriptions/ | 2026-04-13 meeting; 3.4 sign-off confirmed, partner splash blog, quickstarts, deprecation process, AI Hub concept, MaaS/gateway resourcing |
 
 ### Google Documents
 | Document | Doc ID | Key Content |
@@ -353,6 +483,8 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 | MCP Catalog | 1L3yVBHKJLwVJ2SzF5NunzXc8gFJNZKbMU6OWfPyB_fE | Catalog PM write-up, requirements, competitor comparison |
 | MCP Registry MVP | 11mJpJ-Py8FxRDYdw41mMWEBvlahENS4rHqnpDNpqa8Y | 3.5 Dev Preview requirements, scope, integration expectations |
 | MLflow MCP Registry Data Model Proposal | 1KOLTSMVjdUhb06rQLSx4G5MVSQLXePToGAQ4wNn31m8 | **PROPOSAL**: MCPServer/MCPServerVersion data model, governance enums (lifecycle, approval, verification, certification), invariants |
+| Partners MCP servers in RHOAI Catalog | 1Z2rA0fiAC2Zt_AWnond_Ogi3-2cqEzElN-U76M1x740 | **DECIDED**: Partner selection, consent, technical pipeline, Summit outcome (5 partners + 2 community in 3.4 DP), post-Summit plans |
+| Internal Support and Product Agreement (RHOAI-RHCL) | 11JTt4SHZJ1UFG9RWZsVL2t6MZqBFZ4Iuq4niXxtE59g | **DECIDED**: Signed support agreement — RHCL version matrix, support workflow, permitted RHOAI use cases (MaaS tokens/metrics, rate limiting, Authorino), known OCP 4.19 gap |
 
 ### GitHub Repositories
 | Repository | Purpose |
@@ -362,6 +494,15 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 | kubeflow/model-registry | Model registry with plugin extensibility (PR #2219) |
 | opendatahub-io/architecture-context | Architecture documentation for OpenDataHub/RHOAI |
 | opendatahub-io/ai-helpers | AI helper tools/utilities for OpenDataHub |
+| opendatahub-io/model-metadata-collection | Default catalog metadata (Red Hat, Partner, Community MCP servers); upstream for RHOAI catalog content |
+| opdev/partner-mcp-dockerfiles | Partner MCP server container build files |
+| chambridge/ocp-mcp-servers-research | Engineering evaluation of partner MCP servers (23 evaluated) |
+| RHEcosystemAppEng/mcp-validation | MCP server validation tool (Q3/Q4 FY25 work) |
+
+### Blog Artifacts
+| Blog | Author | Type | Path | Description |
+|---|---|---|---|---|
+| The MCP Catalog is here: discover, deploy and connect on Red Hat OpenShift AI | Peter Double | Red Hat Blog | mcps/mcp-catalog/blogs/ | MCP Catalog announcement for RHOAI 3.4 DP. Covers three-tier MCP ecosystem (3 Red Hat, 5 partner, 2 community), MCP Lifecycle Operator deployment, MCP Gateway on RHCL, and enterprise governance roadmap. Target: Summit 2026 / April 24 submission. |
 
 ---
 
@@ -386,6 +527,15 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 16. How should the partner ingestion pipeline be orchestrated? (Konflux suggested; needs investigation)
 17. How does MCP Checker evaluation integrate with MLflow's evaluation capabilities? (MLflow becoming main eval tool for AI assets)
 18. What is the partnership ecosystem team's existing pipeline work? (Follow up with Serob and Matt Dorn)
+19. What indemnification clause is needed for partners whose MCPs are in our catalog? (Oracle requested IP indemnity; legal ownership unclear — may need platform-level answer for all agentic assets)
+20. How should Azure "Agentic Packs" / plugins beyond MCP be handled in AI Hub? (Azure requested this during consent process)
+21. What is the deprecation plan for FY25 web-based MCP catalogs (redhat.com pages)? (Draft started by Matt Dorn and Sharon Dashet)
+22. AI Gateway architecture decision: Which gateway approach will Red Hat adopt? (Chief architects Jason and Jessica reviewing; meeting ~2 weeks from 2026-04-13; Envoy not AI-native, Solo.io agent gateway has leadership issues, many alternatives under review)
+23. How should community MCP servers be positioned differently from partner servers in the catalog? (MariaDB and MongoDB in 3.4 but not featured in Summit splash)
+24. MaaS (AI Gateway) resourcing concern: Only 5 engineers (2 experienced) vs 40 on MLflow — risk to gateway quality (raised by Peter, 2026-04-13)
+25. RHOAI-RHCL agreement excludes MCP and Agents from unlimited tokens and token metrics (struck through in agreement). What are the implications for MCP/Agent token tracking and cost allocation? Is a separate agreement needed?
+26. RHOAI-RHCL Case 2 agreement (customers installing full RHCL alongside RHOAI for extended functionality) — not yet developed; needed when those use cases are defined
+27. RHOAI 3.5 + OCP 4.19 version gap: RHCL likely won't support OCP 4.19 when RHOAI 3.5 ships (Aug 2026). Best-effort only for 4 months until OCP 4.19 EOM (Dec 2026)
 
 ### Risks
 1. **Databricks upstream process**: ~1 month for design approval; PRs must be small/focused
@@ -401,3 +551,10 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 - Mrunal Patel: MCP servers registered post-Gateway installation; ideally Gateway installation is part of RHOAI
 - Chris Hambridge / Matt Prahl (Data Model Proposal): Should MCP Lifecycle Operator create read-only "discovered/managed" registry entries with restricted mutation? (related to RHAIRFE-294)
 - Jon Burdo (Data Model Proposal): Certification allowlist question may connect to RHAIRFE-294
+- Sharon Dashet (Partners Doc): Partner support/indemnification is a bigger scope question — "What is our legal liability to our customers when they use our agentic platform?"
+- Sharon Dashet (Partners Doc): Certification program for AI assets should be lighter than operators to avoid driving partners away
+- Hugo Rivero (Partners Doc): Which metadata requirements are RHOAI-specific vs part of the MCP specification?
+- Noel O'Connor (Agentic pod): Sellers may only remember "Red Hat doesn't do agents" from IBM/RH joint slides — need proactive counter-messaging
+- Jennifer Vargas (Agentic pod): IBM owning "AI Governance" and "gateway" in joint slides will cause problems for field sales long-term; need seller enablement materials
+- Amana Juricic (RHOAI-RHCL Agreement): "Are we anticipating any troubleshooting required from support side or between teams (support & engineering) on those requests?" — support team reviewing scope of cross-team troubleshooting
+- Rutuja Argade (RHOAI-RHCL Agreement): Clarifying when customers should be asked to upgrade to OCP 4.20 and workflow for opening tickets with RHCL engineering

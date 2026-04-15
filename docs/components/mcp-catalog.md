@@ -54,6 +54,45 @@ The governance and management layer of the MCP ecosystem within RHOAI. Manages t
 - Multi-registry federation with conflict resolution
 - Security signal enforcement (revocations, vulnerability flags, signature validation)
 
+## Partner MCP Catalog (3.4 DP - Delivered)
+
+The first instantiation of the MCP Catalog shipped in RHOAI 3.4 DP (code freeze April 10, 2026) with partner and community MCP servers for a Summit splash.
+
+> Source: [Partners MCP servers in RHOAI Catalog](https://docs.google.com/document/d/1Z2rA0fiAC2Zt_AWnond_Ogi3-2cqEzElN-U76M1x740) — decided outcomes.
+
+### What Shipped
+- **5 Partners**: Confluent, Dynatrace, Terraform (HashiCorp), Microsoft Azure, EnterpriseDB (EDB)
+- **2 Community**: MariaDB, MongoDB
+- **3 Red Hat**: OpenShift, Ansible AAP, + 1 other
+- **Quay org**: `quay.io/rhoai-partner-mcp`
+- **Upstream**: `opendatahub-io/model-metadata-collection` (PR merged Red Hat, Partner, Community sources)
+
+### Technical Requirements for Partner MCPs
+- Streamable HTTP transport only (no stdio)
+- On-cluster deployment, local hosting only (no remote for DP)
+- UBI-based container image in Quay
+- Core metadata: name, description, provider, logo, license (SPDX), licenseLink, readme
+- MCP-specific: tools[], transportType, deploymentMode, artifacts[], endpoints[]
+- Security indicators: verifiedSource, sast, secureEndpoint, readOnlyTools
+
+### Partner Pipeline
+1. Curation (invitation-only, strategic categories)
+2. BDM outreach with consent letter
+3. Partner signs consent form
+4. Technical attestation (Ecosystem Engineering)
+5. Image build and push to Quay
+6. Catalog integration and testing (RH AI)
+
+### Post-Summit Plans
+- Azure plugins beyond MCP (Agentic Packs)
+- Oracle and CyberArk revisit (consent given but failed technical pipeline)
+- Quickstarts with Dynatrace and Azure/ARO prioritized
+- Deprecation of FY25 web-based catalogs
+- Partner pipeline scaling with lighter-weight support model
+- Community server positioning and criteria
+
 ## Source Documents
 - [MCP Catalog (Google Doc)](https://docs.google.com/document/d/1L3yVBHKJLwVJ2SzF5NunzXc8gFJNZKbMU6OWfPyB_fE)
+- [Partners MCP servers in RHOAI Catalog (Google Doc)](https://docs.google.com/document/d/1Z2rA0fiAC2Zt_AWnond_Ogi3-2cqEzElN-U76M1x740)
 - docs/starting-artifacts/mcp-artifacts/MCP Catalog.pdf
+- docs/starting-artifacts/meeting-transcriptions/Sharon_Peter 1_1 - 3.4 confirmation 13-04-2026.txt

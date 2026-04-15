@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"F:/code/ai-asset-registry/.claude/skills/add-knowledge-source\")",
+      "Bash(mkdir -p \"F:/code/ai-asset-registry/.claude/skills/create-diagram\")",
+      "Bash(mv \"F:/code/ai-asset-registry/.claude/skills/add-knowledge-source.md\" \"F:/code/ai-asset-registry/.claude/skills/add-knowledge-source/skill.md\")",
+      "Bash(mv \"F:/code/ai-asset-registry/.claude/skills/create-diagram.md\" \"F:/code/ai-asset-registry/.claude/skills/create-diagram/skill.md\")",
+      "Bash(python3 -c \"import sys, yaml; yaml.safe_load\\(sys.stdin\\)\")",
+      "Bash(mkdir -p .claude/skills/create-blog-workspace/iteration-1/brief-mode-test/with_skill/outputs)",
+      "Bash(mkdir -p .claude/skills/create-blog-workspace/iteration-1/google-doc-shortcut-test/with_skill/outputs)"
+    ]
+  }
+}

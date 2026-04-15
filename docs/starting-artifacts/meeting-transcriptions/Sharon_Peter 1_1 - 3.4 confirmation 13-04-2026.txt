@@ -1,0 +1,323 @@
+# Sharon/Peter 1:1 - 3.4 confirmation 13-04-2026
+
+  Meeting started: 4/13/2026, 11:10:27 AM
+  Duration: 42 minutes
+  Participants: Peter Double, Sharon Dashet
+
+  [View original transcript](https://app.tactiq.io/api/2/u/m/r/TlBY18okyZdF9NliOw0N?o=txt)
+
+    
+
+  
+
+  
+    ## Highlights
+
+    > 01:26 Peter Double: Well, you you can't check anything yet. The that's the when our release is made gold, they will make a cluster available and then we can we can take a look or you can load it yourself once the release comes, but the it is signed off on it is in and then over the next week or two, they'll do the packaging and get it
+> 01:47 Peter Double: all kind of set up and make sure that things are working. And if they're not, though, they'll bug fix and go in and make sure that everything's kind of there. So, there is no way to currently like, go look at our, our current build as is, as far as I'm aware. But yeah, as of now like that the key was is that that ticket got signed off on on Friday, I signed off on it, everything looks good
+> 08:29 Sharon Dashet: So what is your relation for it? Tomorrow, I can speak to Itamar directly but
+> 09:03 Peter Double: can be like this is a partner splash which is bigger and more important and it
+> 09:43 Peter Double: Yeah. I think you just said it perfectly right there. Like we have partners that we are now connected to that are going to be a part of the product and we need to shine a light on this. So can we force forward a blog? And the, For me, The blog posts were due last week on Friday, but I don't think that would stop us for
+> 10:38 Sharon Dashet: Okay, no, no, I get it. I get it. So possum, it and Just just let's mention it very fast because we are not going to deal with it. Now, we need quick start and of course this is something we can push from the ecosystem and create quick start around as you're in Dinotrace. By the way Azure, I just publish in our chat published a blog about their MCP server. So out there there are endorsing it, they're pushing it, they are speaking about it. Even in the github talk, you you are attending by Alec that Alec facilitated
+> 14:07 Sharon Dashet: something more lightweight but the maintenance pipeline is important, okay? If
+> 23:06 Peter Double: databricks, they're open to it they want me to rewrite a couple things which I'm doing this afternoon and then the goal is to actually have databricks except
+> 37:02 Sharon Dashet: So now I understand that, why eat some are asked us, what to check partners. I was a question in questioning them today because he asked her to check Which partner? I don't remember. Who is the the biggest competitor. Let me see,
+
+  ## Transcript
+
+  00:00 Sharon Dashet: Hey, just a sec. Coming up. Hi, how are you?
+00:05 Peter Double: Tip Monday morning you know like it's just meetings all morning and giving answers and talking to people every Monday morning is. Yeah not
+00:13 Sharon Dashet: Busy be a busy bee.
+00:16 Peter Double: Better than not having anything to do, I guess. But yeah we've just got I think everybody now is like Oh three fours tied up. Let's get on three five. You know like and everybody's trying to figure out what I owe people bunch for three five. So I'm My afternoon is going to be spent figuring out some documentation, but yeah.
+00:35 Sharon Dashet: Yeah, I feel I feel you, so, anyhow, because we are short on time and you are very stressed with the release. And okay. So I feel a bit paranoid. Why? Because we did our part. All of us to feel the model, metadata collection, with all the partners and community or others, let's call them community. And the the PR is merge. And I look at the report, everything looks great. But what I don't understand is how to connect the dots to what Chris has been showing us with the screenshot of the AI hub.
+01:19 Sharon Dashet: Where is this coming from? What what is the ripple that I can check with? And
+01:26 Peter Double: Well, you you can't check anything yet. The that's the when our release is made gold, they will make a cluster available and then we can we can take a look or you can load it yourself once the release comes, but the it is signed off on it is in and then over the next week or two, they'll do the packaging and get it
+01:47 Peter Double: all kind of set up and make sure that things are working. And if they're not, though, they'll bug fix and go in and make sure that everything's kind of there. So, there is no way to currently like, go look at our, our current build as is, as far as I'm aware. But yeah, as of now like that the key was is that that ticket got signed off on on Friday, I signed off on it, everything looks good
+02:13 Peter Double: from you know, everything's where it should be Chris's you know, everything is weird place where should be and that we should see those. I think the for DP, we're a little less concerned about it. The only outstanding item and I don't think we'll have is the logos. Like I don't think they will have the images on the catalog.
+02:36 Sharon Dashet: Oh no. Google for the partners.
+02:38 Peter Double: Yeah, like that. No logos for Red Hat, either at this point. And again, we're in DP. Like if you look at our usage numbers know when uses DP, so it's it's saying that we can have it, but it's not like everyone's out there using it.
+02:51 Sharon Dashet: Okay, this is technical. But what about the marketing stuff? So we promised those partners Splash and Markle and all of those, the PR. And I, I, I'm not sure who is responsible for that. Is there a marketing lead who is going to do all the press releases on that? Who is going to announce the partners?
+03:14 Peter Double: So, Eunice Eunice is probably our our main point of contact there, let me get
+03:23 Sharon Dashet: I don't want to manage them. I just I just want to be less paranoid when I sleep at night.
+03:29 Peter Double: Well, I would ping Eunice on this and say, Hey, I just gave him your name. I would just say, Hey, I'm interested in. He likes people who are interested in helping with marketing, so and just say I'm here to support and that I was wondering what, we might be able to make sure is part of the market material. As, you know, we're we're going to be bringing this catalog live with partners, and I think he'll get that. And either point you to the right person, or he is the right person to be able to like help him along and I will, I mean, I will take any support, you are willing to give to make sure that there is Partnership marketing around that because I'm more focused on the catalog will be available and that and even that because it's DP we have released notes for it. There will be a lifecycle operator demo coming out that has the catalog with lifecycle operator with the ability to register it with the gateway. But if we could get and I know, they like partner stuff. So if they can get some something together for Summit, to be able to say, Yes, this is going to be available and with partners. I I think that they would really like that.
+04:37 Sharon Dashet: Or do.
+04:38 Peter Double: The marketing team. He's a product marketing manager.
+04:41 Sharon Dashet: No, we're going to sorry for the question. So who is going to create the demo? This demo.
+04:48 Peter Double: The the demo is being worked on by the catalog, team with the lifecycle operator team from OCP.
+04:55 Sharon Dashet: Okay, so this is something you can lead or influence or help to make one of the partners, two of the partners, part of the demo, right? So,
+05:05 Peter Double: Well, so the demo the demo that they are doing is super basic with OCP If we want to have other quick starts. That was what I talked to map before about, was Matt Dorn about was that you guys are welcome to work with the Quick Start team to be able to make. And that's why I was saying, If you can get to Demos, that would be great to get to demos on this. That's what we talked about before was, if you can get to a point where you can show demos with any one of these partners, that would be excellent and work.
+05:34 Sharon Dashet: For some quick start before Summit.
+05:37 Peter Double: A quick start before Summit, would be magical and
+05:39 Sharon Dashet: I don't think it's It's great, but I I was thinking something. More lightweight. Okay so we were thinking Quick start after the day after the summit of course with Dinotrace with Azure because I just forward you forward forward, an email from Itamar announcing a diner. Dress is looking for like collaboration with us on a quick start. So, miraculously enough we have their MCP as part of our catalog so this can make a great quick start and we can do it, but we cannot do it before summit
+06:17 Peter Double: Yep.
+06:20 Sharon Dashet: because we don't have enough manpower engineers.
+06:23 Peter Double: Oh, that's that's the that's the problem with all. This is that there's not enough people going around to actually help with these things. I mean, we we're barely going to get the demo for the lifecycle operator with the Gateway registration. And I was like, Can you guys have that in please? Because that would be really helpful. So, for my point of view, I would think that the best thing that we could get out of this would probably be some sort of And it would be hard to get in for something because they're so overloaded. But I was gonna say blog of now, available with these pieces and the reason that we couldn't do it,
+06:57 Sharon Dashet: Yeah, it's the blog or something, a screenshot or in the demo by by the team, just to mention the tab of the partner shows. Some of the partners mention, we are going to have solution with them, like like a sneak peek, a preview, because you remember, when we spoke about what in it for the partner, we said to them in the consent letter, You're going to be part of the summit splash. You know, we are going to mention you, so you
+07:27 Peter Double: Yeah, I I would like to get that in there that totally makes sense to me. The our biggest problem was is that everything was very last minute, just getting it in the door and we didn't know if it was gonna come. So there's, you know,
+07:42 Sharon Dashet: Of course because Ecoins was involved. Of course it's going to come because we
+07:42 Peter Double: We?
+07:46 Sharon Dashet: you ask where for our help so
+07:49 Peter Double: And it's there. So, yeah, I mean, I am all for trying to make that that happen and it being a, you know, it is a marketing push, I think that if it dawn and NMR could it I think and I only say this because they're above us in pay grade and have slightly more power than we do is if Itamar I'll even go above a don you know, Itamar if he can if he can push a little soil like hey This is big that we're going to have these partners in there. We'd like to just get a blog in there to show that this is going to be available. I think that that is
+08:29 Sharon Dashet: So what is your relation for it? Tomorrow, I can speak to Itamar directly but
+08:30 Peter Double: Fantastic.
+08:35 Sharon Dashet: who should he contact for marketing?
+08:39 Peter Double: So Eunice is my main units is my main contact, he's the product marketing manager and then he would be able to point us to the right. People? They're gonna come back and say the if if you or I reach out to them, they're gonna come back and say We have enough blogs. It's where we're overloaded with blogs but if itamar if if you start the conversation with myself and itamar on there, then we
+09:02 Sharon Dashet: Yes, yes.
+09:03 Peter Double: can be like this is a partner splash which is bigger and more important and it
+09:09 Peter Double: doesn't need to be a really deep. Blog. It's just saying, Hey guess what? Now, you can use these partners and having a listing of those partners and and have their logos as part of that blog post and be able to say We're gonna have this. So I support that full full
+09:26 Sharon Dashet: Because we promised them and we don't have time for the quick start and we all
+09:27 Peter Double: heart. Yeah.
+09:31 Sharon Dashet: want to be to have a win-win situation here. I, I will not feel comfortable with those partners that we convince coming to some extending their delegates and see nothing about their peer in the catalog. I think.
+09:43 Peter Double: Yeah. I think you just said it perfectly right there. Like we have partners that we are now connected to that are going to be a part of the product and we need to shine a light on this. So can we force forward a blog? And the, For me, The blog posts were due last week on Friday, but I don't think that would stop us for
+10:04 Peter Double: something. That is a higher criticality.
+10:06 Sharon Dashet: I would like me to start. The email thread with yourself item. Are you done and Eunice?
+10:11 Peter Double: Yeah, I think units is definitely and then Eunice if you're not, you know, it just in the email if you're not the right person to speak to about this, please let us know who is. And then idomar can step in if necessary when he needs to to
+10:24 Sharon Dashet: Okay, okay.
+10:25 Peter Double: push his weight around a bit, you know, or he can add somebody else onto the email and be like, we need this, you know, make this happen.
+10:31 Sharon Dashet: This is for the splash. Okay? So I think it's a good plan.
+10:33 Peter Double: In. Yeah, I like I mean I really do want to get it in there. It's more of just the timing thing for me at the moment. So if
+10:38 Sharon Dashet: Okay, no, no, I get it. I get it. So possum, it and Just just let's mention it very fast because we are not going to deal with it. Now, we need quick start and of course this is something we can push from the ecosystem and create quick start around as you're in Dinotrace. By the way Azure, I just publish in our chat published a blog about their MCP server. So out there there are endorsing it, they're pushing it, they are speaking about it. Even in the github talk, you you are attending by Alec that Alec facilitated
+11:19 Sharon Dashet: and we see that alongside the plugins and the skills there, they still adopt Mcps. Working hands as a building block so I feel comfortable with us going with mcpe products. Yes, for some
+11:35 Peter Double: Oh yeah, yeah.
+11:36 Sharon Dashet: So it's not like we we miss the train and now everyone is speaking only about skills. No, the Mcps the underlying building block and and this block by Microsoft come at the most opportune time because this is the exact same catalog. We, we were able to fit in So if we have two quick start with the let's say azure with arrow, let's say in Dinotrace on observability and their platform. It will be great but I'm very pessimistic. If we can make it for some it I
+12:14 Peter Double: And and that's where the blog post can even call out. The fact that quick starts
+12:16 Sharon Dashet: Yeah.
+12:18 Peter Double: are for all of these will be, you know, made soon or something like that.
+12:23 Sharon Dashet: Okay, and then we we get to keep up promise we look good and we we figure out the logo thing, okay?
+12:32 Peter Double: Yeah. Yeah. And the logo the Logos are going to be fixed. I was when I saw it. I was like, Chris, no logos and he's like, I think we were so late to the game of getting everything together that they just don't have that in, but we'll be trying to get those in for
+12:46 Sharon Dashet: if we have the book and we have some posture in the summit, or something in our booth or something to do about this, You know.
+12:55 Peter Double: It. Yeah, the blog the blog is key here. I think that we can try to force that through and it's not like some complex blog, you know, it's a, this is going to be available, check this out more more to come. This is the beginning of our mcpe ecosystem and you know, partners are going to keep joining
+13:12 Sharon Dashet: Yeah, of course, forwarding your better than me but I can start the thread, right? But
+13:17 Peter Double: Oh yeah, we can all work on it together and try to make that happen. The other thing is that I'm I'm working with. I invited Matt Dorne, Chris Ambridge, the Gen Mcp team, and we started talking about the pipeline and I don't think I'll have the pipeline for three five, but for three six, I think we can have a full in theory, a full pipeline for partnership ecosystem, as well as clients for getting their Mcps into our product. And then
+13:45 Sharon Dashet: That is another talking point. I was going to talk to you about the pipeline, the maintenance pipeline, or the scaling pipeline but also for the support because we do not expect them to support with tickets MCP server. It's not like it's a Palo Alto Network or HP, I don't know storage. Okay. It's it's it's it's
+14:06 Peter Double: Yeah.
+14:07 Sharon Dashet: something more lightweight but the maintenance pipeline is important, okay? If
+14:11 Peter Double: Yeah.
+14:12 Sharon Dashet: they have their fresh containers, and it passes all the test and like the operator, right. Yes. And then they lend their, I don't know. The metadata they can in our repo. Then we can take it from there. I don't know. Yes, okay.
+14:28 Peter Double: Yeah, and that's it. That's exactly. It is that, I mean, we need, we need to be able to do off-cycle maintenance of Mcps, so that way if they have a CV, they can immediately replace it and it's now live within the catalog instead of waiting, for our next monthly release, which is
+14:45 Sharon Dashet: Yeah, I agree. I totally agree. I would like to be part of this group. Also, if
+14:49 Peter Double: Okay.
+14:50 Sharon Dashet: you invite me and this is for Post Summit and the quick start and and the third
+14:51 Peter Double: Yep.
+14:55 Sharon Dashet: one is the deprecation. So metal myself. Started this document about the deprecation process for the two website that the pages we have for the community and the 23, supposedly curated the MCP servers and the 2025 initiative, which
+15:13 Peter Double: A VP said, Jump and everybody jumped. That's what I know about it.
+15:17 Sharon Dashet: Frankly, I don't understand. I don't understand. Yes, No partner consent.
+15:26 Peter Double: Oh, none and well let alone the 235 MCP list where it said, these work on
+15:26 Sharon Dashet: Nobody.
+15:32 Peter Double: Openshift AI and we're like those. Don't work on a Pacific.
+15:35 Sharon Dashet: Even the 23 after. Yeah. And and I was
+15:38 Peter Double: Oh yeah. Stdio they they were stale, they went out of, you know out of band right away, they were maintained at all.
+15:47 Sharon Dashet: I discovered that the Katie Julio told me that some of those partners were not approached. They did not. For example, Microsoft is there without anyone talking
+15:55 Peter Double: Yeah.
+15:59 Sharon Dashet: to them.
+16:00 Peter Double: Mm-hmm. Yeah, and it was all because of VP said Make this happen as fast as possible. That was my understanding.
+16:06 Sharon Dashet: But imagine a partner a partner like Microsoft seeing his asset on our red hat. Ai. I don't know. It's it's it's a s***. Oh, it's
+16:14 Peter Double: oh, You. Yeah, you say the partner. I Jason, Jason Smith messaged me and he goes. Do you know about this? When it right at 30, when it came out, he's like, Do you know about this? And I'm like, What are you talking about? And I click it and I'm like, Oh God. And I just copied, The link went straight to Joe Fernandez and Jeff into
+16:34 Sharon Dashet: Yeah, and
+16:34 Peter Double: Sharon was like be aware and they were like Oh no. And then they immediately escalated and we're like this shouldn't be out there.
+16:41 Sharon Dashet: So for this, we will be proactive, okay? We would create
+16:43 Peter Double: Yeah, we're working well together.
+16:46 Sharon Dashet: Yes, we will. We will create this deprecation process and after the pressure is off, we would like you to review the document we started. And after your review, we will circulate it to Itamar and the others and started application process because we don't want this these website.
+17:02 Peter Double: Yeah. And now what we need to do is use Let's use MCP as the model for how we're going to handle plugins, how we're going to handle agents? How we're going to handle
+17:12 Sharon Dashet: Exact.
+17:13 Peter Double: all of those? And we have the same pieces and we need to just replicate this over and over again because I think we worked well together. I mean we all have
+17:19 Sharon Dashet: Ly.
+17:21 Peter Double: our own priorities and things that we need to get done but I have enjoyed
+17:23 Sharon Dashet: Of course.
+17:25 Peter Double: working with all of you. I think that we're we're moving towards the right thing. I wish I could be more responsive and more useful to you on some of these things, but I think, in general, we've worked really well to make this happen and I'm I mean I'm excited that we were able to get something done in such a short period of time. Like,
+17:42 Sharon Dashet: How do you say in American Cot now?
+17:43 Sharon Dashet: ditto!
+17:46 Peter Double: Data. Yeah yeah and yeah ditto we very much I think we accomplished something great, you'll probably have
+17:55 Sharon Dashet: I want to apologize. For my Israeli nature and pushing too hard on the text. I think without it we
+18:01 Peter Double: No, no not at all.
+18:05 Sharon Dashet: could not make it happen. I'm sorry, I'm sorry.
+18:08 Peter Double: Nothing to be sorry about. I need a caretaker, I need someone to just like Make sure that I'm catching things and I'd rather you question it and find out that it's already all good then then not question it and me miss it completely. So
+18:21 Sharon Dashet: Okay, so we are good but
+18:22 Peter Double: Yeah. Oh, please, no, I mean, it. When I say I've enjoyed working with you all, like I I work with a dawn and Josh all the time on other things, but like, Matt
+18:30 Sharon Dashet: Yeah.
+18:32 Peter Double: Matt has been incredible, you've been incredible, the team matteias on the lifecycle operator team, Chris Ambridge making all this happen at any point. Chris could have just been like No you know like we're not doing this.
+18:43 Sharon Dashet: And of course, of course. But you know, Chris is with all the respect is a very good technical guy, but we need to understand the entire picture, okay? The, the
+18:51 Peter Double: He is the technical.
+18:55 Sharon Dashet: multidimensional picture, I'm also engineer, okay? But we need to to speak the language of reddit, the ecosystem, the partners, the the customer, okay, the technical is great, but without the effect, okay, we promise customers flesh and there will be no splash, who will take the repercussions. so,
+19:15 Peter Double: Well, that's where we need. We need you and partnership ecosystem to help us with that splash as well. Because it's like, we are all just so focused on getting anything to release right now.
+19:24 Sharon Dashet: I'm okay, let me see this email and start this right today. And lastly, I have a technical question because I'm not aware of all the middleware and downstream repos you have underneath, Okay? I know we contributed to the upstream this
+19:37 Peter Double: Hmm.
+19:42 Sharon Dashet: metadata and we can create a catalog out of it but I don't understand the UI, okay. So those screenshot Crease. Okay showing AI app and under IHOP we have models and we have the tabs and we have the MCP and what which repo is responsible for that. Is it a downstream of a radic?
+20:06 Peter Double: So that's that's downstream. AI Hub is our downstream, it's through kubeflow, it's a downstream of kubeflow for the catalog for the moment and the registry has the MCP registry comes in, will be in MLFLOW and we're going to move the model registry over from kubeflow to Mlflow as well. That's in in three five, we're going to have agents skills and Mcps in kubeflow. We kubeflow just went GA for us and or is going ga for us in three, four.
+20:38 Sharon Dashet: Okay, you flow. I was the head of architecture in Platica. Choosing the bits for the ML platform and I disqualified kubeflow but nevertheless never
+20:48 Peter Double: Oh yeah. We were not happy. We we wanted demo flow. Well before I started in the role and I when I say we, I mean the open shift, AI team wanted Mlflow, and for some reason they went with kubeflow, but now we're moving everything into
+21:01 Sharon Dashet: No, because I was in Google when Google contributed kubeflow and it was just an
+21:02 Peter Double: Mlflow.
+21:05 Sharon Dashet: experiment of thought, experiment and Google created their own thing. And the community took it, and it was half baked and maybe not halfback less than half baked. So,
+21:17 Peter Double: Yeah, we don't know why they chose that um and my I actually have been working with Josh on the fact that I would rather have one whole. I'm I named it one. Hope. And that it would be for from the ground up Greenfield built for AI Asset Management and governance and that it would be on OPENSHIFT, not on open shift,
+21:39 Sharon Dashet: I agree with you. I told the same to it done and Josh, but we cannot solve it
+21:39 Peter Double: AI.
+21:44 Sharon Dashet: now, but I just want to wrap my head around the technical again. Okay, so we have QUPLO and one of the downstream for QUPLO is the AI Hub, okay? Which is a
+21:55 Peter Double: Yeah.
+21:56 Sharon Dashet: collection of metadata that is backed by the model registry of Pure Flow, right? And the ui's hour UI, right? Or is it going to be contributed upstream? The
+22:08 Peter Double: As far as I was aware the mcpe catalog is contributed upstream but it is our like we built it. Now, putting it upstream and then we are downstreaming like
+22:20 Sharon Dashet: No. But why? I understand the catalog? Yes, the catalog. I saw the commands and
+22:20 Peter Double: well Yeah.
+22:25 Sharon Dashet: the CR of the life cycle, but
+22:27 Peter Double: Not registry though Registry. We have no registry right now and we will have a registry in three five. They gave me a catalog first. I wanted the registry they gave me catalog, the registry will be an MLFLOW. And in MLFLOW I've proposed a plug-in architecture that will allow for you to rapidly. Create new AI asset types in MLFLOW, instead of having, to build the whole vertical, have everything there and have a plug-in architecture where you can plug it in, and it uses the standard metadata with extended metadata custom metadata for each AI asset. I'm working through that with them right now where we have proposed it to
+23:03 Sharon Dashet: Okay.
+23:06 Peter Double: databricks, they're open to it they want me to rewrite a couple things which I'm doing this afternoon and then the goal is to actually have databricks except
+23:15 Peter Double: that and build towards the plugin architecture which mcpe agents and skills would be the first three in this.
+23:21 Sharon Dashet: And whatever we come up next. So we don't know because the Microsoft in the meeting we had with them called this plugins, AI plugin.
+23:28 Peter Double: Oh, yeah. Plugins we I actually have something like 12 AI assets, that I already have listed that. I want to be in there, but the three critical ones are agents, Mcps and skills, but we have notebooks data, pipelines guardrails, there's oh data sources. The, what else guardrails data sources? Moving prompts from their current one into this registry.
+23:52 Sharon Dashet: Here, I think the best Peter is going forward, is to look at what the cloud vendors are doing. And there are containerizing everything around the studio and in the studio. You have asset, but you have connectors. Connectors are not assets and guardrails are governance. There are not asset. So the categories are not Straightforward. Let's say like that so asset. In my opinion, rmcp, plugins and skills, all of that. But for the governance, it's a different thing for the connection connectors. It's a different thing. So if you look at the AI, Yeah, Vertex, AI or a foundry, all those say, you maker studios, they have these divisions. So as far as UX and I
+24:41 Peter Double: But you can do, you can divide them any way you want on the front.
+24:44 Sharon Dashet: Yeah. Also in the backend I think the backend is not the same for the connectors and for the but I don't I don't care.
+24:51 Peter Double: Why would you want to do that? Why would you not want to have everything under one roof that can be governed?
+24:57 Sharon Dashet: Okay? Because there are backed by a different components. For example, a Google has connectors. Okay. They always had connectors data connectors so they are
+25:08 Peter Double: Okay.
+25:09 Sharon Dashet: using the same infrastructure. It's before, okay. They will. Okay.
+25:11 Peter Double: Yeah, what do you wait? What do you think a registry is? A registry is purely metadata. So all you're doing is pointing to their current infrastructure but knowing
+25:18 Sharon Dashet: Yeah. Sophical, you know, because I handle the qflow and not the queue flow, the model
+25:22 Peter Double: their versions knowing what's deployed knowing where where it is how to connect to it. So it's just a centralized source of truth to make sure you're pointing at the right other infrastructure.
+25:37 Sharon Dashet: registry in a platica, and we created our own, but connection where were in the different place, right? We had the models, we have other asset there with versioning in life cycle and everything. And it makes sense that MCP and skills and plugins will be the same for connection. It's philosophical discussion. We we can, we will, we cannot conclude it. Now I'm happy to help with brainstorming but
+26:06 Peter Double: I just haven't heard anything from anyone that would not have if it's a metadata centralization source of truth that your agent is built on.
+26:14 Sharon Dashet: Because they were not religion and ML platform in real company.
+26:17 Peter Double: Because they, what?
+26:19 Sharon Dashet: there were not managing enamel platform in company like like
+26:23 Peter Double: Yet. Yeah, but now we are managing one and so your agent needs to know where all of these pieces are coming from. So I'm just managing metadata. I'm not doing any create like there's no functionality related so you still have your whole infrastructure somewhere else. And so all it is is saying this agent uses these things.
+26:42 Sharon Dashet: If you change my mind from the ML or ML Ops world to the Jenny, Eye Ops world, okay?
+26:48 Peter Double: Well, that's why I wanted to build an AI asset management system for Gen AI, because MLFLOW and kubeflow were build from the ML world. Not thinking that an
+26:56 Sharon Dashet: Yes.
+26:56 Peter Double: agent needs to know. This is the version of guardrail. I'm using. This is the version of like the prompt knowledge source. All of those capabilities. So, by centralizing that information, you can now evaluate directly off of those exact versions and deprecate.
+27:11 Sharon Dashet: All right. Yes, it makes sense. It makes sense. Okay.
+27:14 Peter Double: But just in Gen AI like I completely agree coming in with the ML world. Just trying to define what a catalog and registry is. I had too many meetings, too many meetings of people trying to define it and everyone has a different
+27:28 Sharon Dashet: No, because MLA Opts world. The how we worked in platica, someone created the
+27:29 Peter Double: definition.
+27:34 Sharon Dashet: Model, a data scientist team. Then after the model was a MVP, they created the
+27:36 Peter Double: Yep.
+27:40 Sharon Dashet: record in the modern registry and this is an MVP, then they taste tested it, it passes the black box, then they promoted it and then promoted it to production, but the entire asset were there built their creation. There was no way registry to take something like guardrails from Nemo or I don't know, an asset for Microsoft and bringing into your registry. The registry were for the asset we created for ourselves.
+28:10 Peter Double: yeah, for this specifically,
+28:11 Sharon Dashet: Is the trend. It's more like a hub. I think what you're saying is a hub. It's
+28:16 Peter Double: Yeah.
+28:17 Sharon Dashet: It's maybe that the World Registry is overloaded with with past disciplines and experience. And this is why I'm confused but it's a hub, it's an AI hub, I think this word by you is is great.
+28:32 Peter Double: Yeah, and the AI hope is definitely one hub AI hub. It is, the here, are all of the pieces built wherever brought in and I can point directly through them.
+28:41 Sharon Dashet: This is amazing Peter and and the registry whether it's a queue flow model registry. All the data bricks registry can be kept as an implementation detail I
+28:51 Peter Double: Yeah.
+28:51 Sharon Dashet: think but the concept of an AI hub. Absolutely it's the same as what I saw in the cloud.
+28:58 Peter Double: And that's actually what you that's a good that's a good point. We ran into that as well as like the Registry is more of just like the term for the governance on the back. But you have so many different types of like levels levels. That's a
+29:08 Sharon Dashet: Yeah.
+29:10 Peter Double: better way of saying. It of registries, you have your like low end Deb registry,
+29:12 Sharon Dashet: Yeah.
+29:14 Peter Double: where you're making all these things. Then all the way up to our AI asset endpoints in Gen, AI Studio is a registry. It's just not the same type of registry as the many layers deep. So AI Hub is probably the right way to talk about it. Here's my hub. Here's my name. Space Level AI assets that are
+29:29 Sharon Dashet: Yeah.
+29:33 Peter Double: available which it has a registry backing to it by by definition, but it's not you don't call it a registry, you know? So
+29:41 Sharon Dashet: I get you. It's an interesting world. It's, it's an amazing disruption that
+29:42 Peter Double: That's interesting.
+29:47 Sharon Dashet: everyone is. I enjoyed.
+29:50 Peter Double: Yeah. And I'm fighting through it for sure. But yeah this is it has been hectic and
+29:56 Sharon Dashet: No, you and your team are doing wonderfully. I think the only PM team that has a substance in reddit is yours.
+30:06 Peter Double: Yeah, we're trying to build and trying to get better at it and taking everybody, I think it's key to listen to people like yourself and like Josh and a don and ex and all of these themes and just try to figure it out. There's no one pm like any PM that thinks they walk into the room and have. The ants has the answers is not going to do a good job in AI. Like we need to all be hearing from each other because there's so many eccentricities in this new technology. So it's I just try to come in in here everybody and try to, you know, pick the right thing from what I can see, but every single day, it is just a whirlwind of change.
+30:43 Peter Double: And I just want them to deliver faster, because, you know, it takes I started the day after summit last year. For Summit this year, I will have a catalog. That's all I've been able to accomplish in one year because the time to make a an architectural choice, the time to actually get people on it and then to make them develop it all, I'm getting is a catalog and I'm like,
+31:07 Sharon Dashet: Well, but you did all this spearheads, going forward to the next releases. You have the vision you have the architecture. You have the semantics it's because
+31:17 Peter Double: But that the only thing is, is I had all of that when I started last year. I
+31:18 Sharon Dashet: you
+31:22 Peter Double: knew we needed the Gateway Registry. Catalog means of ingestion.
+31:25 Sharon Dashet: Peter, when I joined the week, week one, I told the Itamar, we need an identic ai studio and I gave him the, the mock and I gave him the, the peach and I I told him this is what we need. And they they asked me. What is an identical? and it was, when I joined two years ago on,
+31:47 Peter Double: Sit and I'm from services and two years ago when I was in services. I was like we don't have any AI solution. So I built with a team my my team built composer AI, and it was my vision with five really good, our five really good consultants and we built out composer. AI and services, which was a composable solution for rapid agent prototyping. And
+32:11 Sharon Dashet: They are remember the deck. It was
+32:13 Peter Double: Yeah, that ticked off a lot of people.
+32:15 Sharon Dashet: Recent Vincent, I think Vincent shared it.
+32:18 Peter Double: Yeah, yeah. And I started going at all these calls. I wanted that too Agent studio. So I came in said, Hey here's what we did. Here's what we should do. Let's start building towards that IBM. Heard about it and just was like, no, They went to Matt Hicks. Matt Hicks went to Steven heels Stevens, went to Joe. Fernandez Joe Fernandez went to Jeff Martin Demoss and he went straight down to me and goes Stop, what you're doing.
+32:39 Sharon Dashet: Mmm? Because of the Lexus. Supposedly! No, yes.
+32:43 Peter Double: The the Orca IBM orchestrate.
+32:46 Sharon Dashet: Glorious product which we posed and did miserably, okay?
+32:50 Peter Double: Yeah, yeah. And all I wanted to do was get to rapid prototyping
+32:53 Sharon Dashet: Not that I recorded. This is between us and okay.
+32:55 Peter Double: Yeah. Everybody knows it. It's hilarious, IBM. Definitely slowed us down. Stopped us from moving that way.
+33:04 Sharon Dashet: You know, where we feel see that, when we did the steel PLC, with the Tracy team, the one with us credit and where we used a decay. And so, it started with what's on next orchestrate and it was so tied and coupled to the IBM ecosystem, like, What's our next governance and data and it was not generic and flexible to
+33:21 Peter Double: Exactly. And that's why I think it's hilarious. A lot of people know that I was
+33:29 Sharon Dashet: use it with other frameworks and not interoperable. So it was
+33:39 Peter Double: around. I was the the vision behind composer and now we're talking about in meetings, people will be talking about how you need to be able to put together these different things. And one of the people on the call will be like, it sounds like a composable solution and like does it just to pick other people off on it? Gerard gets really pissed about it.
+33:59 Sharon Dashet: You know, Tracy Rights trying to pull off also something.
+34:04 Peter Double: Yeah, but we, we finally are being allowed to move in that direction, we're finally allowed to actually start building and saving agents. We're finally allowed to start moving towards the business where we were being held back from being near the business and I'm like nothing. We build gives any business value like I want to get to business value and the agent op solution that we're putting in over the next couple releases here. It's I've seen some like
+34:30 Sharon Dashet: And all I connect the Diabet into you, this clear.
+34:35 Peter Double: All right. Yeah.
+34:35 Sharon Dashet: the AI hub with the clear, but what about mass when is mass is going to be announced
+34:43 Peter Double: Mass was already announced with Rio and three. Four is supposedly it going Ga but you want to know what? Okay. This is one of those of
+34:51 Sharon Dashet: Is it like demo? Something else? Is it?
+34:55 Peter Double: Is it? What?
+34:56 Sharon Dashet: The light, okay.
+34:57 Peter Double: Oh, is it light? No. It's um, it's still connectivity link. Yeah, envoying
+35:02 Sharon Dashet: Mmm.
+35:02 Peter Double: connectivity. Link for the gateway. But here's the Peter's with just Angers me and this is that off the record situation. Mazes are number one, big rock. It is the thing that we're supposed to be focused on
+35:15 Sharon Dashet: Yeah.
+35:16 Peter Double: Guess how many people were working on it?
+35:19 Sharon Dashet: Zero.
+35:19 Peter Double: Now we had five people two of them experienced, three of them completely brand new and Guess how many people were working on Mlflow? 40.
+35:32 Sharon Dashet: Oh my God. Oh my
+35:32 Peter Double: 40 People. And that's our number three. Big rock. I was furious because to me. Maz is the shining light should be the best thing. We put out, make sure that it's perfect because
+35:44 Sharon Dashet: So we have on the demo. Read that the demo platform is the lightweight mass is the light llmas. It's not the one that is going to be in the in the product
+35:51 Peter Double: Yeah.
+35:54 Sharon Dashet: based on Envoy and the the More Enterprise-ready Gateway, right?
+35:56 Peter Double: Yep. Yeah, and the whole thing was a disaster. I really wanted us to put all of our efforts behind Maz because if you're working below that in the stack, like when you go to a client, you say Hey we have all this stuff, they're like, Okay, I want stuff for ML and I want to go through this but include Mass and that I like maz a lot when you build above and you're talking about agentic and what we can do with agentic, they're like, Yeah, I like that but make sure Mass is part of that as well. Like
+36:25 Sharon Dashet: Of course, this is the second. If you cannot enter the gateway and consumer model and have observability and I don't know, moderation of the token usage.
+36:36 Peter Double: Chargeback show back token. Yeah tokens. It's natural two years ago, when Geomutiere brought out his math solution.
+36:47 Sharon Dashet: Yeah.
+36:47 Peter Double: I was in services and in a, you know, just working on other stuff, but I went to Joe Fernandez. I went to Stephen Hills people. I did not know, and I was like, When are we productizing that? We need to have mass productize. Every one of my clients will want this and they were like we're not.
+37:02 Sharon Dashet: So now I understand that, why eat some are asked us, what to check partners. I was a question in questioning them today because he asked her to check Which partner? I don't remember. Who is the the biggest competitor. Let me see,
+37:24 Peter Double: To to mass.
+37:24 Sharon Dashet: okay, okay. Port key.
+37:28 Peter Double: Porky.
+37:29 Sharon Dashet: Port Key is like a big ensemble of AI. Gateway. A man.
+37:34 Peter Double: You know, you know what area? Gateway is written in?
+37:38 Sharon Dashet: Envoy.
+37:39 Peter Double: JavaScript.
+37:41 Sharon Dashet: JavaScript. Okay. No. What
+37:42 Peter Double: It is a JavaScript gateway. We've been making fun of it for the past week. I said, What's next in ActionScript? Gateway, you know, like let's bring back Flash now.
+37:51 Sharon Dashet: No, but you're a true foundry cloudflare, you have Kong. You have a big, big
+37:56 Peter Double: Kong.
+37:58 Sharon Dashet: guns.
+37:58 Peter Double: Yeah, they are, they are definitely big guns and we don't have an AI gateway. And the AI gateway is like they have not been able to make a decision on direction on that so that iOS agent gateways, run by Solo.io which is
+38:12 Sharon Dashet: Is it? Holy name is it rainy? Same.
+38:15 Peter Double: Is it whose team?
+38:17 Sharon Dashet: Ruin him.
+38:18 Peter Double: I, I don't know, Roy.
+38:20 Sharon Dashet: Roiny Sim is a former Jones reporting to Catherine Weeks and responsible for the observability.
+38:30 Peter Double: Okay, yeah, that this is the chief architects, Jason and Jessica, having to make a decision on which way we'll go for an AI gateway and Envoy is not. Yeah. I
+38:38 Sharon Dashet: roy nissim
+38:41 Peter Double: don't know, Roy. The Envoy Gateway does not handle AI workloads. Well, because AI Workloads put a lot of things in the body. All, so the it's not an AI native proxy. It's
+38:56 Sharon Dashet: Yeah, the data plan is not on par with the area requirements. I understand.
+39:01 Peter Double: Yeah, yeah. And then the agent gateway from Solo is run by an egomaniac that no one wants to be a part of so we can't go with that one. And then there are a hundred others but they've been reviewing them all. We needed decision and we've Adil and I are pushing the architects to make a decision. They have a meeting in two weeks.
+39:19 Sharon Dashet: Oh, how come you don't know Roy because he mentioned this team is working all day. I gateway
+39:25 Peter Double: Because Jonathan works with him. Jonathan Zareki is is working directly with
+39:28 Sharon Dashet: Oh, and Roy are the co-founder of Jones?
+39:29 Peter Double: him. Yep.
+39:33 Sharon Dashet: so,
+39:34 Peter Double: Yeah so Jonathan knows gateways and is pushing on that as well. I'm just all I do is say we need one. Make a decision. I'm not like
+39:41 Sharon Dashet: Put that in, Roy can come, they created Jones and Itamari done in myself, interviewed them and before the equally higher. So this is why they are working
+39:50 Peter Double: Yeah.
+39:52 Sharon Dashet: together. Anyhow, I know you're you're busy. So let's wrap up. Okay, so we got the partners in time. It will be okay in the UI. I don't have visibility to it. but,
+40:03 Peter Double: Yeah, there is no way as of right now until they make a build that it is fully released.
+40:09 Sharon Dashet: Can you please just do me a solid when they make the build and you have the true screenshot pass them my way. So I can send it to itamari me down and show them the screenshot before Summit. And I will start to thread about the A publication about above the marketing and and that the rest of the stuff we
+40:28 Peter Double: Okay.
+40:32 Sharon Dashet: will deal. As we go, because we have a lot of follow-ups that deprecation the solution, the quick start, the new features, and the main
+40:40 Peter Double: We got four or four weeks or something like that, five weeks, five weeks until summit. Yeah.
+40:45 Sharon Dashet: Yeah, I may be able to travel and meet you and we can discuss further. Let's
+40:49 Peter Double: That'd be great. I hope you can make it. That would be fun and I'm gonna follow
+40:50 Sharon Dashet: see.
+40:52 Peter Double: up with Chris to see when I'll be able to see that live and then as soon as I
+40:56 Sharon Dashet: Yeah.
+40:56 Peter Double: know that answer, I'll let you know and we can
+40:58 Sharon Dashet: Even if it's a mock, take a screenshot, bring it my way. I don't care. I just want to To have some solid. I don't know, manifestation of what we did for the, for the manager. So, it's not like an email, Sharon, or this partners are part of the metadata. They need to see something.
+41:17 Peter Double: Yep, sounds good.
+41:18 Sharon Dashet: Okay, great Peter. Nice to talk to you as always. Sorry for taking so much of
+41:22 Peter Double: Yes.
+41:23 Sharon Dashet: your time.
+41:24 Peter Double: No problem, no problem. Glad to talk. I had, I had a little bit of a gap so that worked out and on my next meeting here in a second.
+41:30 Sharon Dashet: And good luck with all the meetings and the hard work. Thank you for your help.
+41:33 Peter Double: Yeah.
+41:34 Sharon Dashet: It was great.
+41:34 Peter Double: No, thank you for pushing this. It's like, I don't know that we would have got even close to it without you pushing so hard on it. So this is excellent that we have this capability. I was happy that I could push this through my bosses and push this.
+41:45 Sharon Dashet: This is Sharon, it's a double edge sword. I am a poster, but I also get stuff
+41:47 Peter Double: Yeah.
+41:50 Sharon Dashet: done and I irritate people
+41:51 Peter Double: I you are a pusher but you've been reasonable and that's what matters. It's unreasonable. People that are hard to deal with.
+41:57 Sharon Dashet: I I agree. Thank you very much, bye.
+41:59 Peter Double: Yeah. Take it easy.
+  

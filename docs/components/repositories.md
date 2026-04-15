@@ -104,3 +104,32 @@
 - RHOAI-connected: RHOAIENG project examples, Konflux components, OCI CVE checking
 
 **Registry relevance**: Functions as a decentralized asset registry and discovery system - tools cataloged, versioned through Git, distributed via marketplace plugins. Models one approach to asset management and distribution.
+
+---
+
+### opendatahub-io/model-metadata-collection
+**Purpose**: Default catalog metadata for RHOAI — Red Hat, Partner, and Community MCP servers.
+
+**Key Details**:
+- Upstream source for the RHOAI MCP Catalog content
+- Three sources merged in a single PR for 3.4 DP: Red Hat servers, Partner servers, Community servers
+- Partner PR: https://github.com/opendatahub-io/model-metadata-collection/pull/120
+- Also affects the upstream lifecycle manager operator
+- Contains YAML manifests with MCP server metadata (name, description, tools, transport, artifacts)
+
+**Registry relevance**: This is the current catalog content source. As the registry (MLflow-backed) comes online in 3.5, the relationship between this metadata collection and the registry's system of record will need to be defined.
+
+---
+
+### opdev/partner-mcp-dockerfiles
+**Purpose**: Partner MCP server container build files managed by Ecosystem Engineering.
+
+---
+
+### chambridge/ocp-mcp-servers-research
+**Purpose**: Engineering evaluation of 23 partner MCP servers from the redhat.com catalog. Used as validation baseline for partner selection.
+
+---
+
+### RHEcosystemAppEng/mcp-validation
+**Purpose**: MCP server validation tool from Q3/Q4 FY25. Basic attestation and conformance checking. No connection to the MCP Lifecycle Operator.

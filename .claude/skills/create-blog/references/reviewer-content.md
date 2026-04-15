@@ -24,6 +24,7 @@ Score each dimension 1-10. Multiply by the weight to get the weighted score.
 | **Originality** | 1x | Offers a perspective, framework, or insight the reader won't find in the docs. The author's experience and opinion are visible. | Reads like a reformatted docs page or feature announcement. No author voice. Nothing new. |
 | **Evidence & examples** | 2x | Backed by benchmarks, architecture diagrams, real scenarios, code output, or performance data. "Show, don't tell." | Vague assertions ("it's faster", "it simplifies things") without data, examples, or proof. |
 | **Product positioning** | 1x | Products mentioned naturally where relevant. Red Hat's role is clear without being forced. Open source projects credited. | Every paragraph is a product pitch. Or: products not mentioned at all when they should be. Forced marketing language. |
+| **Human authenticity** | 2x | Reads like a human wrote it. Natural sentence rhythm, varied structure, no AI fingerprints. A colleague reading it would not suspect AI involvement. | Obvious AI patterns: em dash overuse, symmetrical paragraphs, filler transitions, marketing tropes, vague enthusiasm. Reads like ChatGPT output. |
 
 ## Fact-Checking Against Knowledge Registry
 
@@ -45,7 +46,41 @@ From the blog creation guide, Red Hat's brand voice is: **open, authentic, helpf
 | Admit tradeoffs and limitations honestly | Claim your solution is perfect |
 | Address the reader as "you" | Use "one" or "users" abstractly |
 
-**No Oxford commas** — Red Hat style omits the serial comma.
+**No Oxford commas** -- Red Hat style omits the serial comma.
+
+## AI Writing Detection
+
+The blog must read as if a human wrote it. AI-generated text has recognizable fingerprints that erode reader trust and can damage the author's credibility. Check for all of these:
+
+### Hard failures (score 0-3 on Human authenticity if present)
+
+- **Em dashes (the -- character).** This is the single most common AI tell. Every em dash must be replaced with commas, periods, colons, semicolons, or restructured sentences. Zero tolerance.
+- **"That changes today" / "Enter [product name]"** -- formulaic pivot phrases that scream AI.
+- **"We are pleased to announce" / "We are excited to"** -- corporate boilerplate no human engineer would write unprompted.
+
+### Moderate issues (cap score at 5-6 if present)
+
+- **Symmetrical paragraph structure.** Three bullet points that each follow the exact same "Description. Benefit. Example." rhythm. Break the pattern.
+- **Filler transitions.** "Moreover", "Furthermore", "Additionally", "It's worth noting", "It goes without saying" -- these add no information. Cut them or replace with a direct connection.
+- **Vague enthusiasm.** "powerful", "seamless", "robust", "cutting-edge" without concrete specifics of what makes it so.
+- **Lists of three adjectives.** "Fast, flexible and scalable" -- AI loves triplets. If the adjectives don't each carry distinct meaning, cut to one or two.
+
+### Subtle patterns (deduct 1-2 points if pervasive)
+
+- **Overly uniform sentence length.** Real writers vary between short punchy sentences and longer explanatory ones. AI tends toward a consistent medium length.
+- **Excessive colons before lists.** One or two per post is natural. Five or six is a pattern.
+- **"Let's" overuse.** "Let's explore", "Let's dive in", "Let's take a look" -- occasional is fine, repeated is an AI fingerprint.
+
+## Competitive References
+
+- **Never link to competitors.** If competitors are mentioned for positioning context (e.g., naming alternative catalogs or tools), their names appear as plain text without hyperlinks. Linking to competitors gives them SEO credit and sends readers away from Red Hat content.
+- Mentioning competitors by name is acceptable when it establishes context the reader needs. Just don't make it a hyperlink.
+
+## Precision on Feature State
+
+- **Don't conflate components.** If an MCP server is deployed by the Lifecycle Operator and separately connected through the Gateway, describe those as distinct steps. Don't merge them into a single magical action.
+- **Developer Preview means limitations exist.** If something is in DP, don't describe it as if it's a polished GA experience. Be honest about manual steps, known limitations, or features still in development.
+- **Don't name unconfirmed roadmap items.** When referencing future capabilities, use generic descriptions ("additional AI asset types") rather than specific names unless they have been officially announced or are at least in tech preview.
 
 ## Review Output Format
 
@@ -64,7 +99,8 @@ Write your review to `drafts/reviews/vN-content.md` using this structure:
 | Originality | [score] | 1x | [score] |
 | Evidence & examples | [score] | 2x | [score * 2] |
 | Product positioning | [score] | 1x | [score] |
-| **Total** | | | **[sum] / 90** → **[normalized 1-10]** |
+| Human authenticity | [score] | 2x | [score * 2] |
+| **Total** | | | **[sum] / 110** → **[normalized 1-10]** |
 
 ## Line-Level Feedback
 
@@ -75,6 +111,19 @@ Write your review to `drafts/reviews/vN-content.md` using this structure:
 - **Issue**: [What's wrong]
 - **Current**: "[quoted text]"
 - **Suggested**: "[revised text]"
+
+## AI Writing Flags
+
+[List every instance of AI writing patterns found. For each, quote the text and classify as Hard Failure, Moderate Issue, or Subtle Pattern per the AI Writing Detection section.]
+
+### Em Dashes
+- [Count]: [locations, or "None found"]
+
+### Formulaic Phrases
+- [list any marketing tropes, filler transitions, or AI pivot phrases found]
+
+### Structural Patterns
+- [note any symmetrical paragraph structures, uniform sentence lengths, or excessive patterns]
 
 ## Accuracy Flags
 
@@ -87,9 +136,9 @@ Write your review to `drafts/reviews/vN-content.md` using this structure:
 
 ## Scoring Normalization
 
-Your total possible weighted score is 90 (sum of all weights × 10). Normalize to 1-10:
+Your total possible weighted score is 110 (sum of all weights × 10). Normalize to 1-10:
 
-`normalized_score = (weighted_total / 90) * 10`
+`normalized_score = (weighted_total / 110) * 10`
 
 ## Inputs You Receive
 

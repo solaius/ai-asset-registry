@@ -39,3 +39,25 @@ Key alignment points:
 - Observability and evaluation data should link back to registered assets
 - Security/identity models should integrate with registry governance
 - AI Hub surfaces registry-governed assets for consumption
+
+## IBM/Red Hat Agentic Positioning (2026-04-14)
+
+> Source: Agentic AI pod v2 meeting (2026-04-14) — decided positioning for joint customer conversations.
+
+This positioning is **strictly for joint IBM/Red Hat customer conversations**. It does NOT change Red Hat's product roadmap.
+
+### Division of Focus
+- **Red Hat**: Agent runtime, lifecycle management, Agent Ops (observability, evaluations, security), MCP Gateway
+- **IBM**: Agent building, control plane, Watsonx Orchestrate (no-code, business user GUI)
+
+### Key Points
+- Red Hat AI Enterprise to be first-class in Watsonx portfolio (not hidden behind wx.ai)
+- Red Hat stays the course on all agentic investments
+- IBM cannot dictate Red Hat's roadmap; this is about reducing confusion in joint customer meetings
+- "Let the best solution win" — customer choice is the arbiter
+- Red Hat traces with MLflow; IBM with LangFuse — different approaches, coexisting
+
+### Risk: Field Seller Confusion
+- Noel O'Connor raised concern: sellers may only hear "Red Hat doesn't do agents"
+- Jennifer Vargas: IBM owning "governance" and "gateway" labels in joint slides creates long-term sales friction
+- Mitigation: FAQ for sellers, Power Hour segment, repeated messaging, agentic messaging review by Joe

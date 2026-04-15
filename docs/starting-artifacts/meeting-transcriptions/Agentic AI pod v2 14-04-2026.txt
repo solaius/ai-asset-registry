@@ -1,0 +1,229 @@
+# Agentic AI pod v2 14-04-2026
+
+  Meeting started: 4/14/2026, 10:04:47 AM
+  Duration: 29 minutes
+  Participants: Adel Zaalouk, Jennifer Vargas, Noel O'Connor, Ornkanya Sinonpat (Aom), Peter Double, Taylor Smith, Tushar Katarki, Younes Ben Brahim
+
+  [View original transcript](https://app.tactiq.io/api/2/u/m/r/0hr9ttxhfXQoDDFCZHeg?o=txt)
+
+    
+
+  
+
+  
+    ## Highlights
+
+    > 00:43 Tushar Katarki: contact with the contact. If the context of that question is, how do we position Red Hat, AI, and what's the next in general? And specifically orchestrate in a specifically in joint conversations with With, with customers, I think, you know, we, we can talk about it, but I'll just say one thing, though. I mean, the most important thing for you all is to, this is just exactly specifically for those joint customer conversations. This doesn't mean that, you know, we are going to change any of what we are doing
+> 11:02 Tushar Katarki: That? Yeah, that's the important point.
+> 12:59 Younes Ben Brahim: slides would do before we present next week too.
+> 18:50 Younes Ben Brahim: No, I agree. We'll state a course, we'll add the effect. You like I said, Adel and the call from next week will be the opportunity to cover all of this. The only thing that bugs me the back of my head is I know for example, Noel, you're enemy and I know that Johan was specifically looking to work with IBM on things like these. I don't know. This is the way that he wanted to go where a slide that shows. But we'll leave it for now.
+> 19:17 Younes Ben Brahim: We're just gonna stay the course, especially getting so close to summit The message. In should be, I mean, Joe's review. Reviewing the message in this week, for agentic, that you reviewed already Adel. And I think the rest of this team, it's in. It's in the notes of this golf. You guys want to look at it. So hopefully we can share it by next week and add an FAQ to it and that definitely just doubles down on terms of the value prop and where we play energetic which is mainly Agent ops and everything that we discussed.
+> 21:48 Ornkanya Sinonpat (Aom): God um that will lead to my second question. So since we are partnering with them and we have we use their name and stuff, we need to get them to review it. I can put this blog in a timeline for Summit, which we have to submit by April
+> 26:45 Ornkanya Sinonpat (Aom): just to get like a all updates for agency for to submit because I know Carlos is
+
+  ## Transcript
+
+  00:00 Younes Ben Brahim: Yeah, we will kick it off. So, we have a couple.
+00:00 Taylor Smith: Why where's Hunter?
+00:02 Noel O'Connor: We've killed him.
+00:04 Younes Ben Brahim: We've got a couple.
+00:05 Noel O'Connor: And yeah.
+00:06 Younes Ben Brahim: Things we want to cover today, but one of them is what I think most of us were in the previous, call the Crosby you call. on the positioning for agentic of IBM, Orchestra versus Red Hat, AI And just what we have, two Sharif can give us a quick update. And I have some slides on the notes and those are the main ones that we wanted to talk about Tushar. And yes, Noel is filling in for Hunter. That pretty much raised on this.
+00:35 Tushar Katarki: Yeah, I mean yeah. You understand and everybody. So, so first of all, let me
+00:35 Younes Ben Brahim: I'll share my screen to show the slides.
+00:43 Tushar Katarki: contact with the contact. If the context of that question is, how do we position Red Hat, AI, and what's the next in general? And specifically orchestrate in a specifically in joint conversations with With, with customers, I think, you know, we, we can talk about it, but I'll just say one thing, though. I mean, the most important thing for you all is to, this is just exactly specifically for those joint customer conversations. This doesn't mean that, you know, we are going to change any of what we are doing
+01:19 Noel O'Connor: recording ?
+01:22 Tushar Katarki: with regards to our product roadmap. And what we have today, we're not going to disinvest. We are not going to do any of that, right? This is just specifically
+01:29 Younes Ben Brahim: Transcribing
+01:32 Tushar Katarki: in those specific kinds of scenarios when we are both in front of a customer, how we don't cause confusion, and, you know, appear as a aligned company and product portfolios. Does that first make sense? I mean, otherwise, you know, that this gets into, Oh, you know, Oh, you're not doing agent ops then, and those kinds of questions. I just wanted to kind of get that out of the way, right?
+01:56 Noel O'Connor: So, I hear you.
+01:57 Tushar Katarki: Yeah.
+01:58 Noel O'Connor: I hear you with this. That my concern was our. So our sales says hints usually have got the, I would say, Limited attention span but there are overwhelmed information.
+02:08 Tushar Katarki: Yeah.
+02:09 Noel O'Connor: and what I when I was looking at this the last day on Monday, Wednesday, I asked a few of the people that were there and I said, Why, why aren't we doing agents anymore? What's going on here? What's happening with this? And because literally, the context was lost, if that made any sense, even though you were taught but IBM. So I'm concerned that basically when it gets and days or the
+02:31 Tushar Katarki: Yeah.
+02:33 Noel O'Connor: SSAS. And I was talking to Max afterwards and he got it immediately. But what I'm really worried about is, is the Essays and accounting sex, who hear one thing. They'll only remember one thing which is basically, you know, I'm Red Hat, doesn't do agents.
+02:49 Tushar Katarki: Yeah.
+02:50 Noel O'Connor: Because that's what will come across as as opposed to Red Hat. Doesn't do agents
+02:53 Younes Ben Brahim: Notes: https://docs.google.com/document/d/1JJLBJFw2E5d6ElZFLMMbuzo1J4r10UTX_TQKRa9k3_o/edit?tab=t.0
+02:53 Noel O'Connor: when we're when we're in this a joint session with IBM. Do you know what I mean? So I just want to call our explicitly.
+03:00 Adel Zaalouk: so,
+03:01 Tushar Katarki: Yeah. That's I mean, no, totally understood, but that's kind of why we need to repeat it. We need to do it, say it again. And again, we say it in multiple
+03:08 Noel O'Connor: Yep.
+03:11 Tushar Katarki: different ways. I mean, we all on this call, probably need to be saying reiterating that message, etc. Right. You know, so I mean, it's totally. I mean, that's how it works. I mean, yes, I mean sales have short attention plans and, and therefore, you need to kind of drill this repeatedly into them and, you know, we can take it from there but I think I mean that that's the main thing.
+03:38 Tushar Katarki: No. I don't know who is showing the slides, but that's the long and short of this. The, I think even before this, there's another one. What we really trying to get IBM to do from a product alignment perspective, is to say that. What's the next is your portfolio? You know, don't get into details of what's the next orchestrate ai, but specifically, Are trying to get Watson X portfolio, especially orchestrated Gower, Dot GOVER etc to run directly on Red Hat and AI Enterprise, right. So, from a product alignment perspective that really works out in our favor because You know, you know today what happens is that Openshift AI is a part of what's next.i but it doesn't get exposed, right? So there are several drawbacks to it including you know, all of the best features that we be bringing through the console etc. You know, customers don't access it that way they go through, Wx Dot ai and they're dependent on how Wx.ai interprets that and integrates it into that. We are removing that, right? Like we are saying, Right? Yeah, Enterprise should be a first class thing. It needs to be deployed and you know if what's the next orchestrate or any of those other platforms need you know, platform services like inferencing or tool calling or What have you then we have that on our platform but you shall not like any. You'll use that directly in that way.
+05:03 Tushar Katarki: And and by the way, I had an enterprise also include social cp now, right? So they definitely need that and in some ways we are trying to remove that dependency on Wx.ai and Cp40 and all that stuff. That happens today. So that's the the bigger point here, right? You know. And then You know, so the main thing really is that from what we have heard with us. So, you know, if further one that we are also talking and I think gargi and I are aligned on this, who is my product on WX orchestrate is that, you know, look, you might be doing agent building and, you know, especially targeting kind of local, you know, and in business Users and lines of businesses etc. But ultimately all those agents need to be deployed and therefore you need a agent to run time.
+05:57 Tushar Katarki: And, and I think that's something that they have moved on, right? Like they're saying Okay. Yeah, I mean, you know, we can be the agent building and control plane and you guys can be the agent runtime, I think it's kind of how we are positioning and I think come, I don't know who was showing the slides, but again, I was about to kind of head back to the office. I was working from home but I can show those slides. Who is no, who are you showing the slice units
+06:18 Younes Ben Brahim: Oh s***. I was I was I just had screenshots but yeah.
+06:21 Tushar Katarki: place. Okay. I mean I can quickly. Yeah, that's fine. I can but that that's kind of where we are headed. I mean I can kind of put those slides here, I mean fire up my laptop, you know, we don't need screenshots. I can give these guys the slides itself just don't comment on it because it's shared with IBM, you know? So
+06:43 Younes Ben Brahim: Okay.
+06:44 Tushar Katarki: That's all.
+06:48 Jennifer Vargas: Tushar. I understand what you guys are going with this information but For the long-term on our side. The fact that we're saying that they managed AI Governance and their gateway, it's gonna cost problems for the fuel cells, like because those are the exactly
+07:04 Younes Ben Brahim: Yeah.
+07:06 Jennifer Vargas: the two topics. We're investing the most amount of money and the two things that we want to own as a red, a red hat and red hat, AI. And by giving that away to IBM, we're gonna cause a lot of trouble.
+07:18 Tushar Katarki: But it's first of all, nobody's giving anything away. Remember again.
+07:22 Jennifer Vargas: It's on the market inside, you're saying in the slide, we
+07:25 Tushar Katarki: No, no. I mean we are not giving again. We are not giving it to how. Again this is a joint. This is not where we're not jointly marketing saying that only IBM will bring you a gateway Jennifer, right? We are saying This is a joint go to customer conversation. That's how we're going to position it, but that doesn't mean that we are not going to have any gateway. That doesn't mean that we are going to talk about it. That doesn't mean that we will not show it in our road map. None of that applies. That's, that doesn't mean that we are not going to market it. Right? So this is kind of again.
+07:58 Jennifer Vargas: No, I know. I know, I know, but what I'm saying is that we need to figure out ways on how to
+07:59 Tushar Katarki: You know.
+08:04 Jennifer Vargas: help the sellers because, I've seen these. Playing the past with what's on exodai. And then at the end of the day they're just gonna come back to us and say Can I can you give me a spreadsheet or a table that highlights a difference between openshift AI and what's on X rai like these guys until today is today almost two years ago, we put the whole bundle together. I'm still getting those questions.
+08:30 Jennifer Vargas: So I know we're in a hard position because it's a go to market with IBM but then maybe what we need to do on our side is come up with a story and how we help sellers. That's what I want us to work on and yeah.
+08:44 Tushar Katarki: Well, again again the I'll keep saying the same thing saying that, you know, nothing is stopping us from doing whatever we want to do to our sellers. This is mostly IBM sellers, right? This is How do we talk jointly with IBM sellers? This is not about how we'll talk to our sellers Jennifer again, and keep back going back to that, right? Yes, of course. There is no. I mean, again to me again, right? Enterprise will be a first class citizen in that, what's the next orchestrate and govern. And all those properties will need to depend on ahead and enterprise. They will not be depending on double X dot AI. And what that has allows us to do is therefore, if we think that if customer likes our AI gateway features eventually, then they'll adopt ours or they will, if they want IBMS.
+09:34 Tushar Katarki: They can they have a choice, right? You know, we're just trying to start with no or trying to appear as if we have a lot of conflicts in a portfolio, because they're confuses the customer this Actually, what we are doing with NVIDIA, for example, with nvie also, right? I mean, those overlaps will exist, you know? That's the reality of, you know, this kind of world AI. Is everybody wants to do AI? Everybody wants to do Asians, and
+09:57 Jennifer Vargas: Yeah.
+09:57 Tushar Katarki: so those kinds of conflicts and we just had to that. There is no. You know, you know, Oh, we will do all these things and you shall not do anything. I mean, we can't tell IBM that and IBM. Can't tell us that, you know,
+10:10 Younes Ben Brahim: Yeah.
+10:11 Tushar Katarki: you know, and that that's the thing, right? I mean, because if we tell them that, they can tell us too, right? Like, which is what they're doing and their mood from that. So it's just a matter of we coexisting and doing it in a manner as if you know where it is. We are collaborative and one plus one equal to three and not trying to say that, oh, we are at and therefore we will say exactly what we will do and you guys will back off from what we are doing, right? That's, that's not a thing.
+10:43 Younes Ben Brahim: Yeah. No. That's Thanks for sharing that tushar, that's reassuring. We're just want to make sure that Yes, just like Jennifer was saying, We are still focusing on Agent Ops. We're still focusing on MC Gateway. I get way that is still a very plop. Even
+10:54 Tushar Katarki: Yeah.
+10:57 Younes Ben Brahim: though these slides, my shirt, a little bit different, that might be Better together like you said, one plus one cool three. But for us, we'll stay,
+11:02 Tushar Katarki: That? Yeah, that's the important point.
+11:04 Younes Ben Brahim: we'll stay to run. We'll stay the course.
+11:06 Tushar Katarki: You you stay the course exactly. And nobody has asked you. This is not about, Oh, don't do gay, I Gateway does not. Do, don't do Agent. Ops is not about, don't do this, don't do that. You know, for example, you know, for we we are heavily invested and Adel can tell us that but we're invested in traces with Mlflow. Whereas what's the next orchestra who is going to use? What is that Lang Fuse is that my understanding and And so and so be it, right? Like we'll have different kind of approaches to this and so be it. And then eventually, I suspect the customer is going to choose the one that is more mature. The one that is much more open source friendly and where the customer is, and the customer is a choice in this regard, right? And
+11:54 Younes Ben Brahim: Yeah.
+11:55 Tushar Katarki: by the way, let's also be a bit modest. You know, we are saying, We'll do a lot of things will not delivered on any of this. So, I mean, let's just be a bit modest, let's go and deliver, let's get some success. Let's get some Winston customers. And when we do that, then you know, you know, what do you think happened with Credit Mutual? You're very specific example. Customers saw what they're getting from. What's the next door aI customers saw what they're getting me to a bunch of tea influencing and they pick They force the answer, right? This is what is going to happen. Customers are ultimately are going to choose the best solution that suits that thing. And the ultimately let let the best solution win, right? You know, I don't think we should be afraid of this, you know.
+12:39 Younes Ben Brahim: It sounds good.
+12:40 Tushar Katarki: Yeah.
+12:41 Younes Ben Brahim: And we'll also have just as FYI. Also, part of the podcast called next Tuesday, the 21st will have the one hour power. Our special AI and we'll have a good 10 15 minutes that we'll talk about a gentech and we'll reinforce pretty much everything that you set your shirt up. We are so focused on an agent ops and everything else and I'll share those
+12:57 Tushar Katarki: yeah, I mean
+12:59 Younes Ben Brahim: slides would do before we present next week too.
+13:00 Tushar Katarki: But I mean, basically we we already had the what's new watch next slides, right? Like the Q1 that Adel and Peter and others presented, I mean that can be the
+13:05 Younes Ben Brahim: Yeah.
+13:10 Tushar Katarki: basis. Again, we are not going to change any of that because of this IBM thing, you know, you know, and that's like, I'll keep reiterating that that just a, how
+13:14 Younes Ben Brahim: Sounds good.
+13:19 Tushar Katarki: to message that's a very narrow scenario, right? Like, we are going in front of it joint. Customer how do we message here? Such that we don't show up as too many conflicts that exist, but we also say that right? Like, You know, we say that we will be. That doesn't mean that just because IBM Watson, X is doing agent office, doesn't mean that we, you won't find any agent ops in Red, Enterprise. We specifically have that. I mean, you know, we say, majoring in minding and I don't know, doesn't things that they're just American concept, which we can change, right? We can say primary and secondary etc. But you know
+13:56 Younes Ben Brahim: Yeah.
+13:57 Tushar Katarki: what we're gonna say really is that? Yeah, primarily they're focused. This on on let's say the control plane and local, no code and a fancy GUI etc. And we are primarily focused on agent runtime and life cycle, etc. And then we can. So we also have agent ops etc, but you know but then you know and that the customer decide eventually he's just initial start, you know, kind of a visual thing saying that we Don't, we are not bringing two separate solutions to the market because they have quotas, they need to retire and we have quotas that we need to retire.
+14:32 Tushar Katarki: Let's just be cognizant of that, right? Like if we simply say that they don't have anything, then they will have a hard time too. Right retiring. Good. So we just had to be careful about all that. All right. Anyways, I'll try to find the slides and send it to you guys. But let
+14:47 Younes Ben Brahim: Now.
+14:51 Tushar Katarki: me know if you have any other questions but I'll drop off otherwise, you know,
+14:55 Younes Ben Brahim: Right. Thank you, Tushar.
+14:58 Tushar Katarki: All right. Thanks guys. Appreciate it.
+15:00 Younes Ben Brahim: Thanks. All right. Hopefully that answer a little bit of some of your questions. No. And we have to
+15:13 Adel Zaalouk: That was a fun topic to discuss.
+15:13 Younes Ben Brahim: transcript here. Well, I didn't know, I woke up to Hunter's messages and I was like, I've never seen these slides, I don't know what's going on, but I got a little bit of clarification.
+15:24 Adel Zaalouk: Like I I also joined a bit late. Like, what was the context initially like for
+15:26 Jennifer Vargas: Not.
+15:28 Adel Zaalouk: this?
+15:29 Noel O'Connor: So I was on the qbr yesterday, give me a qbr and the advised to show to present on this, right? And like I got where he was coming from with us. We're all like all I heard in my head was a sales guy. We've seen this with a few with a few says teams that you remember the last thing I heard if that makes sense. And what I heard was Red Hat, doesn't do agents and doesn't do agent tops. I went
+15:50 Adel Zaalouk: Yeah.
+15:54 Noel O'Connor: Holy Park, right. So basically then I kind of went, right. I need to get to stay that this wasn't really for the people here. So I think Hunter and Well, that's why I'm here because he he's I sent him to say he sent it to you, Younes. Obviously that's where it came from but it was just that I'm because I'm
+16:09 Younes Ben Brahim: Yeah, it's just
+16:11 Noel O'Connor: concerned from say the account teams enough, they're getting saturated bombarded
+16:15 Jennifer Vargas: My recommendation Younes is to jump ahead and address it. This is our GTM motion with IBM, but that doesn't prevent us from talking about the same things
+16:15 Noel O'Connor: with stuff so they won't get to know it's
+16:19 Jennifer Vargas: Yeah, I recommendation, I put it there units is to jump ahead somehow, maybe in the go to market power or somehow just say, like, this is a way that we are gonna go to go to market with IBM. But these doesn't block you from selling. The full value of Identic with red hairy eye, something like that. And I don't know if he's right, we don't have to
+16:44 Younes Ben Brahim: like,
+16:45 Jennifer Vargas: do it by someone.
+16:46 Younes Ben Brahim: Well.
+16:47 Jennifer Vargas: Probably should. Yeah.
+16:47 Adel Zaalouk: Who's the main audience of power of the Power Hour like just who's the main audience there?
+16:53 Younes Ben Brahim: So general sellers, red haters.
+16:55 Adel Zaalouk: Okay. I mean like yeah I would put this in an ethic you and give that to the sellers versus cover that there because I don't want them to be confused. They
+17:06 Younes Ben Brahim: Yeah, I will.
+17:07 Adel Zaalouk: will need more context honestly, like, this is my personal opinion, right? If we can put a ethic, you attached to the, the power hour and maybe cover those questions and here like, watch this. And here's an epic. If you have other questions and then like here, additional content that you can then read on our
+17:20 Jennifer Vargas: Yeah.
+17:23 Adel Zaalouk: strategy for a genetic or other things that they will get the idea. Like, Hey, you know, read that is pushing hard on Asians. But at the same time, we just want to make sure that when they get asked the question. We give them the answer.
+17:37 Jennifer Vargas: The thing is not many of the sellers. So what happens is the following, when they go to cell, they go together on join accounts, there's a bunch of different
+17:45 Adel Zaalouk: Go.
+17:46 Jennifer Vargas: accounts, they go together, they go to sell, so they're gonna be in the meeting and they're gonna find the IBN guy, and the IBN guy is gonna show you slice. Gonna say this is whatever. Does this what we do? so we don't also don't want to like blind side, our sellers, you know, you
+18:00 Adel Zaalouk: We can add the appendix in the slides for the slice themselves. We can add an appendix and I don't know what they sell it. Like, you know, I don't believe we have like we do have some slides on the genetic and if we want to standardize on, here's the slice that people work will use for selling. We can add an appendix on that was the slide but I wouldn't again to Here's the thing, I understand the situations happen and we want the sellers to be armed with an answer, but at the same time, like this is all us flying in me to mode. Well you know, you know under under Certain altitude because when we fly higher things get hashy and then we, we stop doing the things that we really want to do, which will bring both IBM and red hat, money and business. And, and so it's for the for the good of both companies to do it this way.
+18:50 Younes Ben Brahim: No, I agree. We'll state a course, we'll add the effect. You like I said, Adel and the call from next week will be the opportunity to cover all of this. The only thing that bugs me the back of my head is I know for example, Noel, you're enemy and I know that Johan was specifically looking to work with IBM on things like these. I don't know. This is the way that he wanted to go where a slide that shows. But we'll leave it for now.
+19:17 Younes Ben Brahim: We're just gonna stay the course, especially getting so close to summit The message. In should be, I mean, Joe's review. Reviewing the message in this week, for agentic, that you reviewed already Adel. And I think the rest of this team, it's in. It's in the notes of this golf. You guys want to look at it. So hopefully we can share it by next week and add an FAQ to it and that definitely just doubles down on terms of the value prop and where we play energetic which is mainly Agent ops and everything that we discussed.
+19:42 Younes Ben Brahim: But yeah.
+19:44 Noel O'Connor: If anything goes wrong, you can blame Hunter. Because I understand it.
+19:47 Younes Ben Brahim: Exactly. If and if it doesn't stick on Hunter will blame T-shirt.
+19:53 Noel O'Connor: Yeah, that's however that works is this?
+19:57 Younes Ben Brahim: A couple of more items, I don't know. We only have five minutes sorry thank a big one that we want to talk about is Peter on the MC Partner, Mcpe catalog. There's gonna be some addition, def preview, and I think you're working on a block that we are trying to hopefully publish on Summit or Presummit, right?
+20:14 Peter Double: Yes, so I I should have the draft by End of Day. Today, I'm working with Sharon from partnership, ecosystem team on this. The only reason that we didn't have it earlier is we didn't think it was gonna make three four but it is a great splash of being able to show that we will have partner Mcps preloaded in the MCP catalog and Partnership. Ecosystem team is very interested in having that in there, of course, because they did bend over backwards to get the consents and sign offs and all the images and everything in there. And we basically just need to get that draft figured out today, Sharon is working on part of it at the moment and then I should be able to get it for refinement here in just a few hours. And by end of day, I would like to have it refined and basically ready for submission.
+21:01 Peter Double: so, Yep, question.
+21:05 Ornkanya Sinonpat (Aom): Yeah. On that blog I work for a few questions so when you're doing the draft is it only Red Hat? I'm doing the draft or the partners also doing the drop as well.
+21:18 Peter Double: It was just us doing the draft. It was basically we told them that there would be publicity for them at Summit if we could get the Mcps in and it would basically be Hey, the catalogs coming, but check it out. We're going to have these partners with their and that we've we have permission to use their logos, so with the, their logos with those associated. So it'll About the three Red Hat, Mcps that are going to be in there. The five partner Mcps into community Mcps, that will be there.
+21:48 Ornkanya Sinonpat (Aom): God um that will lead to my second question. So since we are partnering with them and we have we use their name and stuff, we need to get them to review it. I can put this blog in a timeline for Summit, which we have to submit by April
+22:06 Ornkanya Sinonpat (Aom): 24th which should which should be okay. But I am gonna try my best. If we can get the partners to review it by then since I see that, you, you send me. I saw
+22:15 Peter Double: Okay.
+22:17 Jennifer Vargas: We should involve Katie Giglio and Jessie Beach
+22:20 Ornkanya Sinonpat (Aom): the message, they're like, five partners. So, in my take a while, for all of them to review, everything and give us a feedback and for a deterior team to do
+22:28 Younes Ben Brahim: Katie is invovled
+22:29 Ornkanya Sinonpat (Aom): the review and everything as well. But I will talk to the editor. Team and PR team on how to make this work, but yeah.
+22:39 Peter Double: And the Asians just said, You know, Katie's involved in this. She actually sent out the consent letters and has direct contact with the partners, so we can make
+22:48 Ornkanya Sinonpat (Aom): Okay.
+22:48 Peter Double: sure to work that as quickly as possible. As soon as this meeting's overall, actually reach out to Sharon and make sure she knows that we're looking to do that. And she can pay Katie and make sure that that conversation is already getting started.
+23:00 Ornkanya Sinonpat (Aom): Okay, perfect. If kitties know that that's great. Yeah.
+23:04 Peter Double: all right, Jennifer
+23:06 Younes Ben Brahim: Jennifer. You're a mute.
+23:08 Jennifer Vargas: I you should get involved JCP as well. She's on the in the media team and she's
+23:10 Peter Double: Scange.
+23:15 Jennifer Vargas: normally is the one that kind of helps out, write the blocks as well for the ecosystem. Like last time we did this with the MCB catalog She wrote it and then
+23:22 Ornkanya Sinonpat (Aom): essie Beach
+23:24 Jennifer Vargas: Katie was the connection with the partners.
+23:27 Ornkanya Sinonpat (Aom): Jessie Beach
+23:30 Jennifer Vargas: All can do that for you guys, you don't have to go, Jesse.
+23:30 Peter Double: Thanks!
+23:31 Younes Ben Brahim: Yeah.
+23:33 Peter Double: Okay. Alright. Okay.
+23:34 Jennifer Vargas: um,
+23:37 Younes Ben Brahim: And and that's what I was gonna ask for yesterday. Peter's, like, What is the ask if you ask? Because I heard splash, and I don't even know. I didn't know what that meant. So is a blog fulfilled. A splash commitment or do we need more than that?
+23:49 Peter Double: I think they would all take more than that. But from my, my personal
+23:52 Jennifer Vargas: We have the webpage.
+23:53 Peter Double: perspective, you can talk to Sharon and, and Katie and them, if they, they thought differently. But from my perspective that was the Hey, this is coming. I mean the catalogs and DP. It's not it's not a ga. Yeah. And so it was more of
+24:03 Jennifer Vargas: We probably need to go back and review the webpage
+24:05 Younes Ben Brahim: Yeah.
+24:07 Peter Double: just a hey these people are included. Check it out. You can use their Mcps directly within the blog. Talking about, the quick starts that will be coming post summit the, you know, they know they can't get the quick starts by then. So, it's more of a, hey, be aware that there's gonna be quick starts for these M4. Using these Mcps with specific use cases, with Dynastrates being, probably the first one. Because they're actively waiting for us to start with them.
+24:28 Younes Ben Brahim: Sounds good. Cool. Because yeah, I was talking to Katie and she was asking exactly what are they need. But I think for now, the blog will fulfill that. Oh,
+24:41 Peter Double: I think the blog at minimum, fulfills it if they want to do something else, they would have to push for that.
+24:44 Younes Ben Brahim: Yeah, well, I think it would be good to have a conversation with Gcb. Chicago works on partner PRS, so if I mentioned in a PR, maybe a long one or something, just to drop their name. Is that something that's possible? Not, we'll see.
+24:57 Peter Double: Yeah, and drop named dropping would be great here. It's just to show that we're really starting to grow that partner. The partnership ecosystem team again or partnerships again. And you know, we have connectors and some other things coming too. So we can continually start showing that, we're bringing partners into the product, not keeping them, just on openshift,
+25:15 Younes Ben Brahim: That's good. Go for it. Oh,
+25:19 Ornkanya Sinonpat (Aom): After the drop-down, I can just create a slack with Jesse Katie and Lorraine from editor team. Just to let all of us, have a promotion plan and everything for that and make sure that partner get review.
+25:30 Peter Double: I think that would still go right? Yeah.
+25:32 Ornkanya Sinonpat (Aom): Also, I know that we have a itch and take overview blog for somebody as well. Do we still keep that or do you want to replace it with the MCP? No, you
+25:44 Younes Ben Brahim: Yeah. Is that the part of the Adel series?
+25:51 Ornkanya Sinonpat (Aom): Oh no. It's
+25:51 Adel Zaalouk: What? Which was that? Sorry.
+25:52 Peter Double: Hey.
+25:53 Ornkanya Sinonpat (Aom): It's this is the one that in as we talk in PMM that we want to have like a one big isn't take overview for some, it block that we plan.
+26:05 Peter Double: And that definitely would not MCP, would definitely not replace that.
+26:09 Younes Ben Brahim: No.
+26:09 Peter Double: I especially after what we just talked about earlier in this call I feel like yeah that needs to be there and then this would just be ancillary to that.
+26:18 Ornkanya Sinonpat (Aom): okay, so that would be two for agent and it should be submitted by it between
+26:22 Jennifer Vargas: need to go, sorry for crashing your party and thanks for having me. It was a very instructive catch up for me.
+26:24 Adel Zaalouk: Hey, is there like who's writing that? Agentic overview post.
+26:27 Younes Ben Brahim: Yeah. Yeah.
+26:29 Ornkanya Sinonpat (Aom): Oh, I I thought it would be Eunice cuz we were talking about that.
+26:32 Adel Zaalouk: Okay.
+26:35 Peter Double: And in, are we talking about an agentic overview or an agent ops blog?
+26:40 Ornkanya Sinonpat (Aom): Over overview. I think I think what we talk. Yeah. I think what we talk is like
+26:40 Peter Double: Do you know? Okay. Okay. Just want to confirm
+26:45 Ornkanya Sinonpat (Aom): just to get like a all updates for agency for to submit because I know Carlos is
+26:53 Ornkanya Sinonpat (Aom): writing a Red Hat. Ai inference, what's new? What's next block? So basically like updating the change from me for server into inference and then we have, we had AI 3.4, we have a market marketplace, cloud from Jennifer and we have a spec cool letter from Raw
+27:16 Younes Ben Brahim: Okay, so
+27:17 Ornkanya Sinonpat (Aom): So far, yeah.
+27:18 Younes Ben Brahim: So we're just looking to pretty much at a an agentic blog. They'll talk about what are the 3.4 things are included.
+27:26 Ornkanya Sinonpat (Aom): Yeah.
+27:27 Younes Ben Brahim: Okay.
+27:29 Ornkanya Sinonpat (Aom): if you if you think that's like necessary, if it's not then, Totally fine as well.
+27:34 Younes Ben Brahim: I think this is the right between Peter and Adele enough, I think it's necessary. What you guys think it'll be good to have that included in three. Four.
+27:42 Adel Zaalouk: Can you repeat that? Sorry. I got distracted.
+27:44 Younes Ben Brahim: Two, I think almost talking about we have the opportunity to write a blog, it is what's new in agentic 3.4 that would be released by Summit. I think there'll be
+27:52 Adel Zaalouk: Yeah. Yeah. We can do that. Yeah.
+27:52 Younes Ben Brahim: want to take Okay. Yeah, we'll definitely get you that
+27:58 Ornkanya Sinonpat (Aom): Perfect, thank you.
+27:59 Younes Ben Brahim: Thank you. And we are over the last few points that I have in. The notes is I think I covered in my last call as well. There's a power, five, podcast that's published. What is Agent Ops? If you guys I saw you put in some comments. Thank you. Peter. What is Agent Ops is more of an SEO article to drive some traffic to
+28:16 Adel Zaalouk: Yes, I haven't. I haven't had a look also on that. What is Asian ultimate? Like
+28:16 Peter Double: Thank you Aom and Younes for the support!
+28:17 Younes Ben Brahim: our genetic page. And there's a webinar at the end of this month as well with the abstract in there.
+28:27 Adel Zaalouk: I think I think this is just one disclaimer, the way the industry defines well away, Some of the industry defines Asian tops is not how we've been positioning it and so that will be something that we need to take into consideration like the age, the industries, looking at Asia tops. More from like the objectivity evaluation standpoint and we're looking at it from like that plus onboarding agents to platforms life cycle and security. And so this is just the only high
+28:52 Younes Ben Brahim: Okay.
+28:55 Adel Zaalouk: level feedback and I think like if we can like align with, that would be good.
+29:00 Peter Double: And Adel on that note, the talk for Summit that I'm helping with is the agent Ops piece. So I'll definitely be working with you to craft that message and then Roberto and Eunice are part of that. So we'll all work together to make sure that we have that message on lock going forward. Now that three fours nearly tied up, we can actually start digging into that and making sure that we have that. So,
+29:22 Adel Zaalouk: Yeah, there's a spotlight as well like Anne-Marie and Roberto are going like through our whole narrative more or less. Yeah.
+29:30 Peter Double: Perfect. Yeah. So we'll definitely tie on tie that up together. Yeah.
+29:35 Younes Ben Brahim: And Peter, I already quick update, you. I had a quick kick off of Roberto last week for that talk and I think we shared the deck that we're gonna be working on offline. If I find it, I'll share with you right now.
+29:46 Peter Double: please do and I
+29:47 Younes Ben Brahim: And we'll go also out some time or three of us to talk this week or next.
+29:51 Peter Double: Okay, sounds great.
+29:54 Younes Ben Brahim: Thank you all guys. And yeah, if you have any questions, but
+29:55 Peter Double: All right, thanks everybody.
+29:58 Noel O'Connor: Cellular. Bye.
+  

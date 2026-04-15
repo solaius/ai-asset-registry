@@ -125,29 +125,54 @@ User-provided draft or notes become v1 raw material. Copy the user's content as-
 Include image placeholders where visuals would aid understanding. Each placeholder follows this format:
 
 ```markdown
-![Image Placeholder N: <short description>]
+--------------------
+**[Image Placeholder N: <short description>]**
 
-**Placement rationale**: [Why an image belongs here — what it helps the reader understand]
+**Placement rationale**: [Why an image belongs here, what it helps the reader understand]
 
 **Image generation prompt**: [Detailed prompt including:
 - Exact content/composition to depict
-- Red Hat brand colors (#EE0000, #A30000, #151515 dark / #F5F5F5 light)
-- Clean, modern style — not overloaded, not clip art
+- Red Hat brand colors (#EE0000, #A30000, #151515 dark / #F0F0F0 light)
+- Clean, modern style, not overloaded, not clip art
 - Specific aspect ratio (hero: 16:9, inline: 4:3, diagram: 16:9 wide)
 - Visual hierarchy and key callouts]
 
 **Alt text**: [Descriptive, accessible alt text]
+
+--------------------
 ```
+
+The `--------------------` separators before and after make image placeholders visually distinct from body text, ensuring reviewers and editors can locate them easily during review.
 
 Refer to `docs/blogs/blog-creation-guide.md` Brand Standards Quick Reference for the full color palette, typography, and illustration style guidance.
 
 ### Draft conventions
 - Follow all formatting rules from `docs/blogs/blog-creation-guide.md`
 - Sentence case headings, no H1 in body, cascading H2/H3/H4
-- No backticks for code — use monospace indication
+- No backticks for code, use monospace indication
 - No Oxford commas
 - First person voice, Red Hat brand tone (open, authentic, helpful, brave)
 - CTA near top (bolded, linked to Red Hat site) and in closing
+
+#### AI writing avoidance
+
+LLM-generated prose has recognizable patterns that erode reader trust. The draft must read as if a human wrote it. Specific rules:
+
+- **No em dashes.** The em dash character (—) is a telltale sign of AI-generated text. Use commas, periods, colons, semicolons, or restructure the sentence instead. Every single em dash must be eliminated.
+- **No marketing tropes.** Avoid "That changes today", "We are pleased to announce", "In today's fast-paced world", "game-changer", "at the end of the day". These phrases signal AI or committee-written content.
+- **No filler transitions.** Avoid "Moreover", "Furthermore", "Additionally", "It's worth noting that", "It goes without saying". Use direct connections or start a new thought.
+- **Vary sentence structure.** AI text tends toward parallel constructions (three bullet points of identical rhythm, two-sentence paragraphs repeating the same pattern). Break the symmetry.
+- **Be specific over vague.** Replace "it simplifies things" with what specifically gets simpler and how. Replace "it's faster" with the actual mechanism.
+
+#### Competitive references
+
+- **Never link to competitors.** If competitors need to be mentioned for positioning context (e.g., naming alternative catalogs), use their names as plain text without hyperlinks. Linking gives them SEO credit and sends readers away.
+- **Do not name unconfirmed future capabilities.** When referencing roadmap items, use generic descriptions ("additional AI asset types") rather than specific names ("agents, skills, guardrails") unless officially announced.
+
+#### Precision
+
+- **Don't aggregate counts when tiers tell the story.** If there are three Red Hat servers, five partner servers, and two community servers, say that, not "10 servers". The tier structure is the message.
+- **Be precise about automation vs manual steps.** Especially for Developer Preview features, do not imply seamless end-to-end automation if there are manual steps. Describe what each component actually does ("the Operator deploys it on your cluster... From there, the Gateway handles runtime connectivity") rather than conflating them into a single magic action.
 
 **Exit condition**: `drafts/v1.md` written to disk.
 
