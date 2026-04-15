@@ -326,6 +326,57 @@
   .state-pill.deprecated { border-color: var(--rh-orange); color: var(--rh-orange); background: rgba(244, 180, 0, 0.06); }
   .state-arrow { color: var(--rh-gray-600); font-size: 1.5rem; }
 
+  /* Changelog */
+  .changelog {
+    background: var(--rh-gray-900); border: 1px solid var(--rh-gray-700); border-radius: 12px;
+    padding: 1.5rem 2rem;
+  }
+  .changelog[open] { padding-bottom: 2rem; }
+  .changelog summary {
+    cursor: pointer; list-style: none; display: flex; align-items: center; gap: 0.25rem;
+    padding: 0.25rem 0; user-select: none;
+  }
+  .changelog summary::-webkit-details-marker { display: none; }
+  .changelog summary::before {
+    content: '\25B6'; font-size: 0.6rem; color: var(--rh-gray-500); margin-right: 0.5rem;
+    transition: transform 0.2s;
+  }
+  .changelog[open] summary::before { transform: rotate(90deg); }
+  .changelog-version {
+    margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--rh-gray-800);
+  }
+  .changelog-version:first-of-type { margin-top: 1.25rem; }
+  .changelog-version h4 {
+    font-size: 0.95rem; color: var(--rh-white); margin-bottom: 0.25rem;
+  }
+  .changelog-date {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.75rem; font-weight: 400;
+    color: var(--rh-gray-500); margin-left: 0.5rem;
+  }
+  .changelog-context {
+    font-size: 0.82rem; color: var(--rh-gray-400); margin-bottom: 0.75rem; line-height: 1.5;
+  }
+  .changelog-group { margin-bottom: 1rem; }
+  .changelog-group:last-child { margin-bottom: 0; }
+  .changelog-label {
+    font-family: 'Red Hat Mono', monospace; font-size: 0.68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 0.15rem 0.5rem; border-radius: 3px; display: inline-block; margin-bottom: 0.4rem;
+  }
+  .changelog-label.added { color: var(--rh-green); background: rgba(62, 134, 53, 0.12); }
+  .changelog-label.changed { color: var(--rh-blue-light); background: rgba(67, 148, 229, 0.12); }
+  .changelog-label.removed { color: var(--rh-red); background: rgba(238, 0, 0, 0.1); }
+  .changelog-group ul { list-style: none; padding: 0; }
+  .changelog-group li {
+    font-size: 0.82rem; color: var(--rh-gray-300); padding: 0.2rem 0 0.2rem 1rem;
+    position: relative; line-height: 1.5;
+  }
+  .changelog-group li::before {
+    content: ''; position: absolute; left: 0; top: 0.55rem; width: 5px; height: 5px;
+    border-radius: 50%; background: var(--rh-gray-600);
+  }
+  .changelog-group li strong { color: var(--rh-white); font-weight: 600; }
+
   /* Footer */
   footer { border-top: 1px solid var(--rh-gray-700); padding: 3rem 2rem; text-align: center; }
   footer p { font-size: 0.82rem; color: var(--rh-gray-500); }
@@ -385,7 +436,7 @@
       </p>
       <div class="hero-stats">
         <div class="hero-stat">
-          <span class="number">10</span>
+          <span class="number">11</span>
           <span class="label">Targeted user stories for 3.5 DP</span>
         </div>
         <div class="hero-stat">
@@ -517,6 +568,14 @@
     </div>
   </div>
 
+  <div class="not-box animate-on-scroll" style="margin-bottom: 1rem;">
+    <div style="font-size: 1.2rem; color: var(--rh-teal);">&#9432;</div>
+    <div>
+      <div class="not-label">Mandatory vs. Optional Metadata</div>
+      <p>Identity fields (name, version, publish state) are mandatory on every record. Extended metadata (description, tags, labels, deployment references) is optional and can be populated incrementally as the record matures.</p>
+    </div>
+  </div>
+
   <div class="not-box animate-on-scroll">
     <div style="font-size: 1.5rem; color: var(--rh-gray-500);">&ne;</div>
     <div>
@@ -588,7 +647,7 @@
   <div class="section-label">3.5 Dev Preview Scope</div>
   <h2 class="section-title">Targeted User Stories</h2>
   <p class="section-subtitle">
-    Ten stories defining the minimum user-visible and system-visible behaviors for the first MCP Registry deliverable.
+    Eleven stories defining the minimum user-visible and system-visible behaviors for the first MCP Registry deliverable.
     Each story describes who acts, what changes, and which component interaction it implies.
   </p>
 
@@ -613,6 +672,7 @@
       <ul class="story-notes">
         <li>Stores endpoint or source references</li>
         <li>Same record shape as internal MCPs</li>
+        <li>Version defaults to "latest" when unspecified &mdash; declared, not enforced</li>
       </ul>
       <div class="cross-comp">Downstream components consume one normalized record regardless of hosting.</div>
     </div>
@@ -621,8 +681,9 @@
       <div class="story-num">03</div>
       <div class="story-actor">Platform Engineer / Integration</div>
       <h4>Retrieve and list MCP records</h4>
-      <p class="story-want">Retrieve by identifier and version, or list with basic filtering. Results include identity, version, metadata, publish state, and references.</p>
+      <p class="story-want">Retrieve by identifier and version, or list with structured field filtering. Results include identity, version, metadata, publish state, and references.</p>
       <ul class="story-notes">
+        <li>Filter by name, publish state, workspace scope, hosting model, and version</li>
         <li>Results filtered by caller's access scope</li>
       </ul>
       <div class="cross-comp">Core read surface for catalog, gateway, and AAA/Studio.</div>
@@ -647,6 +708,7 @@
       <p class="story-want">Catalog reads only published, scope-appropriate MCPs from the registry for discovery and selection.</p>
       <ul class="story-notes">
         <li>Catalog does not define its own governance state</li>
+        <li>Catalog sync queries published + deprecated (multi-state) so users see deprecation warnings</li>
       </ul>
       <div class="cross-comp">Registry = governance truth. Catalog = discovery surface.</div>
     </div>
@@ -670,6 +732,7 @@
       <p class="story-want">Gateway reads identity, version, endpoint references, and publish state from the registry for runtime mediation.</p>
       <ul class="story-notes">
         <li>Gateway remains the runtime control layer</li>
+        <li>Registry stores the deployment endpoint (from lifecycle operator); gateway creates its own mediated route</li>
         <li>Full automation is a later-phase goal</li>
       </ul>
       <div class="cross-comp">Registry becomes governed source for gateway metadata.</div>
@@ -708,6 +771,20 @@
         <li>Supports auditability without full audit logging</li>
       </ul>
       <div class="cross-comp">Catalog and Studio guide users toward current versions.</div>
+    </div>
+
+    <div class="story-card animate-on-scroll">
+      <div class="story-num">11</div>
+      <div class="story-actor">Platform Engineer</div>
+      <h4>Register an already-deployed MCP server</h4>
+      <p class="story-want">Bring an MCP server that was deployed outside the platform (e.g. from a catalog browse-and-deploy flow) under registry governance after the fact.</p>
+      <ul class="story-notes">
+        <li>Lifecycle operator writes a deployment reference back to the registry after deployment</li>
+        <li>Registry creates a new record (draft) linked to that deployment reference</li>
+        <li>Platform engineer can then publish the record to make it visible to catalog, gateway, and Studio</li>
+        <li>Ensures no deployed MCP server remains ungoverned</li>
+      </ul>
+      <div class="cross-comp">Closes the "catalog &rarr; deploy &rarr; never registered" gap. Lifecycle Operator &rarr; Registry write-back.</div>
     </div>
   </div>
 </section>
@@ -851,6 +928,44 @@
       </ul>
     </div>
   </div>
+</section>
+
+<!-- Changelog -->
+<section id="changelog" style="padding-bottom: 2rem;">
+  <details class="changelog">
+    <summary>
+      <span class="section-label" style="margin-bottom: 0; display: inline;">Changelog</span>
+      <span style="font-size: 0.82rem; color: var(--rh-gray-500); margin-left: 0.5rem;">Revision history</span>
+    </summary>
+
+    <div class="changelog-version">
+      <h4>v1.1 <span class="changelog-date">2026-04-15</span></h4>
+      <p class="changelog-context">Updates from Chris Hambridge's review of MCP Registry MVP Requirements doc.</p>
+
+      <div class="changelog-group">
+        <div class="changelog-label added">Added</div>
+        <ul>
+          <li><strong>Story 11</strong> &mdash; Register an already-deployed MCP server. Covers the "catalog &rarr; deploy &rarr; never registered" gap where lifecycle operator writes a deployment reference back to the registry.</li>
+          <li><strong>Registry section</strong> &mdash; Mandatory vs. optional metadata note. Identity fields (name, version, publish state) are mandatory; extended metadata is optional and can be populated incrementally.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <div class="changelog-label changed">Changed</div>
+        <ul>
+          <li><strong>Story 02</strong> &mdash; Added note: version defaults to "latest" when unspecified for external MCPs (declared, not enforced).</li>
+          <li><strong>Story 03</strong> &mdash; Replaced "basic filtering" with structured field filtering. Enumerated filter fields: name, publish state, workspace scope, hosting model, version.</li>
+          <li><strong>Story 05</strong> &mdash; Added note: catalog sync queries published + deprecated (multi-state) so users see deprecation warnings.</li>
+          <li><strong>Story 07</strong> &mdash; Added clarification: registry stores deployment endpoint (from lifecycle operator); gateway creates its own mediated route.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="changelog-version">
+      <h4>v1.0 <span class="changelog-date">2026-04-08</span></h4>
+      <p class="changelog-context">Initial version with 10 targeted user stories for RHOAI 3.5 Dev Preview.</p>
+    </div>
+  </details>
 </section>
 
 <!-- Footer -->
