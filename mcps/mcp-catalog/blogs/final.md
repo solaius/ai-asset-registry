@@ -8,7 +8,7 @@
 - **Submission deadline**: April 24, 2026
 - **Series**: First post in MCP ecosystem series
 - **Products mentioned**: Red Hat OpenShift AI, Red Hat OpenShift, Red Hat Ansible Automation Platform, Red Hat Insights, Red Hat Connectivity Link, MCP Lifecycle Operator, MCP Gateway
-- **Partners mentioned**: Confluent, EnterpriseDB, HashiCorp, Microsoft, Dynatrace
+- **Partners mentioned**: Confluent, EnterpriseDB, HashiCorp | an IBM Company, Microsoft, Dynatrace
 - **Community projects mentioned**: MongoDB, MariaDB
 - **Partner review required**: Yes (Katie Giglio coordinating with all five partners)
 - **Editorial contacts**: Aom Sinonpat (timeline), Jessie Beach (ecosystem blog writing), Lorraine (editor team)
@@ -31,13 +31,15 @@
 
 You have tried it. Pulled an MCP server from a GitHub repo, wrestled it into a container, sorted out authentication yourself and hoped it would hold up in production. That is the state of [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) adoption in the enterprise today: promising protocol, painful deployment.
 
-[Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai) 3.4 takes a different approach. We are introducing the **MCP Catalog** in Developer Preview, a curated catalog of MCP servers that you can discover, deploy and manage directly on [Red Hat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift). It ships pre-loaded with MCP servers from Red Hat, technology partners and the open source community, and we are actively adding more. **[Try Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai/trial)** to explore the MCP Catalog yourself.
+[Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai) 3.4 takes a different approach. We are introducing the **MCP Catalog** in Developer Preview, a curated catalog of MCP servers that you can discover, deploy and manage directly on [Red Hat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift). It ships pre-loaded with MCP servers from Red Hat, technology partners and the open source community, and we are actively adding more.
 
-This is not a static listing. Every MCP server in the catalog deploys live on your cluster through the [MCP Lifecycle Operator](https://github.com/kubernetes-sigs/mcp-lifecycle-operator), connects through the [MCP Gateway](https://github.com/Kuadrant/mcp-gateway) running on [Red Hat Connectivity Link](https://www.redhat.com/en/technologies/cloud-computing/connectivity-link) and becomes consumable in Gen AI Studio, the interface in Red Hat OpenShift AI where you build and test AI applications. This is the beginning of the enterprise MCP ecosystem we are building.
+[**Try Red Hat OpenShift AI**](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai/trial) to explore the MCP Catalog yourself.
+
+This is not a static listing. Every MCP server in the catalog deploys live on your cluster through the [MCP Lifecycle Operator](https://github.com/kubernetes-sigs/mcp-lifecycle-operator), connects through the [MCP Gateway](https://github.com/Kuadrant/mcp-gateway) running on [Red Hat Connectivity Link](https://www.redhat.com/en/technologies/cloud-computing/connectivity-link) and becomes consumable in gen AI studio, the interface in Red Hat OpenShift AI where you build and test AI applications. This is the beginning of the enterprise MCP ecosystem we are building.
 
 ## The MCP Catalog: from discovery to deployment
 
-Until now, the AI Hub in Red Hat OpenShift AI was focused on models. With 3.4, MCP servers join the catalog as the first step toward a broader AI asset surface that will expand in upcoming releases.
+Until now, the [AI Hub](https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/3.4/html/working_with_the_model_catalog/overview-of-model-registries_working-model-catalog) in Red Hat OpenShift AI UI was focused on models. With 3.4, MCP servers join the catalog as first class citizens. It is also the first step toward a broader AI asset surface that will expand in upcoming releases.
 
 Most MCP catalogs available today, including Smithery, Docker MCP Catalog and the official MCP registry, are discovery surfaces. They help you find servers, but deployment, security and lifecycle management are your problem. You download a container image of unknown provenance, configure it manually and hope the next update does not break your workload.
 
@@ -52,7 +54,7 @@ The result is a governed path from discovery to deployment to consumption. Selec
 
 **Image generation prompt**: If the Red Hat OpenShift AI 3.4 UI is available, capture a real screenshot of the AI Hub MCP Catalog tab. If a generated mockup is needed: Red Hat OpenShift AI Hub interface with a left sidebar (#212427 dark background, navigation items including "AI Hub > MCP Catalog") and a main content area (#F0F0F0 light background). Show a 3x2 grid of MCP server cards featuring OpenShift, Ansible, Confluent, Dynatrace, Microsoft Azure and MongoDB. Each card displays: server name, provider logo area, one-line description, tier badge (Red Hat / Partner / Community) and a "Deploy" button in #EE0000 Red Hat Red. Use Red Hat Text for card body text, Red Hat Display for headings. 16:9 aspect ratio, clean enterprise UI style consistent with PatternFly design system.
 
-**Alt text**: The MCP Catalog in the Red Hat OpenShift AI Hub displaying MCP server cards organized by tier (Red Hat, partner and community), each with a deploy action, showing the governed path from discovery to deployment.
+**Alt text**: The MCP Catalog in the Red Hat OpenShift AI Hub UI displaying MCP server cards organized by tier (Red Hat, partner and community), each with a deploy action, showing the governed path from discovery to deployment.
 
 --------------------
 
@@ -70,7 +72,7 @@ The catalog ships with three tiers of MCP servers, each addressing real enterpri
 
 - **Confluent Kafka**: Connect agents to your event streams for topic management, pipeline monitoring and real-time data access. If your agentic workflows need to react to live data, this is the integration point.
 - **EnterpriseDB (PostgreSQL)**: Connect agents to PostgreSQL databases for queries, schema management and database operations, powered by EDB's pg-airman-mcp server.
-- **HashiCorp Terraform**: Let agents provision and manage infrastructure as code, bridging the gap between AI-driven decisions and infrastructure execution.
+- **HashiCorp | an IBM Company Terraform**: Let agents provision and manage infrastructure as code, bridging the gap between AI-driven decisions and infrastructure execution.
 - **Microsoft Azure**: Enable agents to manage Azure resources, provision services and automate cloud operations alongside your OpenShift workloads.
 - **Dynatrace**: Bring full-stack observability into your agentic workflows. Agents can query performance data, investigate incidents and correlate metrics across your environment.
 
@@ -88,9 +90,9 @@ To put this in concrete terms: before the MCP Catalog, connecting Dynatrace to y
 
 **Placement rationale**: Visually reinforces the three-tier structure (Red Hat, partner, community) and the breadth of use cases covered, giving the reader a scannable summary after the detailed listing.
 
-**Image generation prompt**: Clean horizontal three-column layout on #FFFFFF white background. Left column labeled "Red Hat" (#EE0000 header bar): three rows listing OpenShift, Ansible Automation Platform, Insights with text labels in Red Hat Text 400 weight. Center column labeled "Partners" (#0066CC header bar): five rows listing Confluent, EnterpriseDB, HashiCorp, Microsoft, Dynatrace with text labels. Right column labeled "Community" (#3D7317 header bar): two rows listing MongoDB, MariaDB with text labels. Center title above columns: "MCP Catalog" in Red Hat Display 600 weight. Thin #D2D2D2 borders between columns. Each row is the same height with centered text. 16:9 wide aspect ratio for inline placement.
+**Image generation prompt**: Clean horizontal three-column layout on #FFFFFF white background. Left column labeled "Red Hat" (#EE0000 header bar): three rows listing OpenShift, Ansible Automation Platform, Insights with text labels in Red Hat Text 400 weight. Center column labeled "Partners" (#0066CC header bar): five rows listing Confluent, EnterpriseDB, HashiCorp | an IBM Company, Microsoft, Dynatrace with text labels. Right column labeled "Community" (#3D7317 header bar): two rows listing MongoDB, MariaDB with text labels. Center title above columns: "MCP Catalog" in Red Hat Display 600 weight. Thin #D2D2D2 borders between columns. Each row is the same height with centered text. 16:9 wide aspect ratio for inline placement.
 
-**Alt text**: Diagram showing the three tiers of MCP servers shipping in the catalog: three Red Hat servers (OpenShift, Ansible Automation Platform, Insights), five partner servers (Confluent, EnterpriseDB, HashiCorp, Microsoft, Dynatrace) and two community servers (MongoDB, MariaDB), illustrating the breadth of the day-one ecosystem.
+**Alt text**: Diagram showing the three tiers of MCP servers shipping in the catalog: three Red Hat servers (OpenShift, Ansible Automation Platform, Insights), five partner servers (Confluent, EnterpriseDB, HashiCorp | an IBM Company, Microsoft, Dynatrace) and two community servers (MongoDB, MariaDB), illustrating the breadth of the day-one ecosystem.
 
 --------------------
 
@@ -98,7 +100,7 @@ To put this in concrete terms: before the MCP Catalog, connecting Dynatrace to y
 
 The MCP servers you get in Red Hat OpenShift AI 3.4 are the foundation, not the ceiling. We are building toward a full enterprise MCP ecosystem with the capabilities that production deployments demand.
 
-**Quickstarts are coming.** We are working with our partners to deliver guided quickstart experiences. The first two: connecting Dynatrace observability into your agentic incident response workflows and managing Azure resources alongside your OpenShift workloads. We will publish these as they are ready.
+**Quickstarts are coming.** We are working with our partners to deliver guided [AI Quickstart](https://docs.redhat.com/en/learn/ai-quickstarts) experiences. Developed with strategic partners, AI quickstarts are ready-to-run, industry-specific use cases that put the power of **Red Hat AI** directly into your hands. These simple-to-deploy playgrounds help teams sharpen the skills needed to move AI ideas from experimentation to production on enterprise-ready, open source infrastructure.
 
 **The ecosystem will grow.** We evaluated more servers than we shipped. Some required transport changes we could not support in Developer Preview. Others lacked the maintenance commitment we need from ecosystem partners. Curation is as much about what you leave out as what you include, and the process we have built, from partner consent through technical validation and catalog integration, is designed to scale. MCP servers are the first AI asset type going through this pipeline and we will use the same model as additional AI asset types mature.
 

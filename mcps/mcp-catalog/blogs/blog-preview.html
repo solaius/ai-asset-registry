@@ -454,13 +454,15 @@
 
     <p>You have tried it. Pulled an MCP server from a GitHub repo, wrestled it into a container, sorted out authentication yourself and hoped it would hold up in production. That is the state of <a href="https://modelcontextprotocol.io/">Model Context Protocol (MCP)</a> adoption in the enterprise today: promising protocol, painful deployment.</p>
 
-    <p><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai">Red Hat OpenShift AI</a> 3.4 takes a different approach. We are introducing the <strong>MCP Catalog</strong> in Developer Preview, a curated catalog of MCP servers that you can discover, deploy and manage directly on <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a>. It ships pre-loaded with MCP servers from Red Hat, technology partners and the open source community, and we are actively adding more. <strong><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai/trial">Try Red Hat OpenShift AI</a></strong> to explore the MCP Catalog yourself.</p>
+    <p><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai">Red Hat OpenShift AI</a> 3.4 takes a different approach. We are introducing the <strong>MCP Catalog</strong> in Developer Preview, a curated catalog of MCP servers that you can discover, deploy and manage directly on <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a>. It ships pre-loaded with MCP servers from Red Hat, technology partners and the open source community, and we are actively adding more.</p>
 
-    <p>This is not a static listing. Every MCP server in the catalog deploys live on your cluster through the <a href="https://github.com/kubernetes-sigs/mcp-lifecycle-operator">MCP Lifecycle Operator</a>, connects through the <a href="https://github.com/Kuadrant/mcp-gateway">MCP Gateway</a> running on <a href="https://www.redhat.com/en/technologies/cloud-computing/connectivity-link">Red Hat Connectivity Link</a> and becomes consumable in Gen AI Studio, the interface in Red Hat OpenShift AI where you build and test AI applications. This is the beginning of the enterprise MCP ecosystem we are building.</p>
+    <p><strong><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai/trial">Try Red Hat OpenShift AI</a></strong> to explore the MCP Catalog yourself.</p>
+
+    <p>This is not a static listing. Every MCP server in the catalog deploys live on your cluster through the <a href="https://github.com/kubernetes-sigs/mcp-lifecycle-operator">MCP Lifecycle Operator</a>, connects through the <a href="https://github.com/Kuadrant/mcp-gateway">MCP Gateway</a> running on <a href="https://www.redhat.com/en/technologies/cloud-computing/connectivity-link">Red Hat Connectivity Link</a> and becomes consumable in gen AI studio, the interface in Red Hat OpenShift AI where you build and test AI applications. This is the beginning of the enterprise MCP ecosystem we are building.</p>
 
     <h2>The MCP Catalog: from discovery to deployment</h2>
 
-    <p>Until now, the AI Hub in Red Hat OpenShift AI was focused on models. With 3.4, MCP servers join the catalog as the first step toward a broader AI asset surface that will expand in upcoming releases.</p>
+    <p>Until now, the <a href="https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/3.4/html/working_with_the_model_catalog/overview-of-model-registries_working-model-catalog">AI Hub</a> in Red Hat OpenShift AI UI was focused on models. With 3.4, MCP servers join the catalog as first class citizens. It is also the first step toward a broader AI asset surface that will expand in upcoming releases.</p>
 
     <p>Most MCP catalogs available today, including Smithery, Docker MCP Catalog and the official MCP registry, are discovery surfaces. They help you find servers, but deployment, security and lifecycle management are your problem. You download a container image of unknown provenance, configure it manually and hope the next update does not break your workload.</p>
 
@@ -474,7 +476,7 @@
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
       </div>
       <div class="ph-title">Image 1: MCP Catalog in AI Hub</div>
-      <div class="ph-alt">The MCP Catalog in the Red Hat OpenShift AI Hub displaying MCP server cards organized by tier (Red Hat, partner and community), each with a deploy action, showing the governed path from discovery to deployment.</div>
+      <div class="ph-alt">The MCP Catalog in the Red Hat OpenShift AI Hub UI displaying MCP server cards organized by tier (Red Hat, partner and community), each with a deploy action, showing the governed path from discovery to deployment.</div>
     </div>
 
     <h2>MCP servers ready to use</h2>
@@ -494,7 +496,7 @@
     <ul>
       <li><strong>Confluent Kafka</strong>: Connect agents to your event streams for topic management, pipeline monitoring and real-time data access. If your agentic workflows need to react to live data, this is the integration point.</li>
       <li><strong>EnterpriseDB (PostgreSQL)</strong>: Connect agents to PostgreSQL databases for queries, schema management and database operations, powered by EDB's pg-airman-mcp server.</li>
-      <li><strong>HashiCorp Terraform</strong>: Let agents provision and manage infrastructure as code, bridging the gap between AI-driven decisions and infrastructure execution.</li>
+      <li><strong>HashiCorp | an IBM Company Terraform</strong>: Let agents provision and manage infrastructure as code, bridging the gap between AI-driven decisions and infrastructure execution.</li>
       <li><strong>Microsoft Azure</strong>: Enable agents to manage Azure resources, provision services and automate cloud operations alongside your OpenShift workloads.</li>
       <li><strong>Dynatrace</strong>: Bring full-stack observability into your agentic workflows. Agents can query performance data, investigate incidents and correlate metrics across your environment.</li>
     </ul>
@@ -524,7 +526,7 @@
           <div class="tier-col-header partner">Partners</div>
           <div class="tier-col-item">Confluent</div>
           <div class="tier-col-item">EnterpriseDB</div>
-          <div class="tier-col-item">HashiCorp</div>
+          <div class="tier-col-item">HashiCorp | an IBM Company</div>
           <div class="tier-col-item">Microsoft</div>
           <div class="tier-col-item">Dynatrace</div>
         </div>
@@ -540,7 +542,7 @@
 
     <p>The MCP servers you get in Red Hat OpenShift AI 3.4 are the foundation, not the ceiling. We are building toward a full enterprise MCP ecosystem with the capabilities that production deployments demand.</p>
 
-    <p><strong>Quickstarts are coming.</strong> We are working with our partners to deliver guided quickstart experiences. The first two: connecting Dynatrace observability into your agentic incident response workflows and managing Azure resources alongside your OpenShift workloads. We will publish these as they are ready.</p>
+    <p><strong>Quickstarts are coming.</strong> We are working with our partners to deliver guided <a href="https://docs.redhat.com/en/learn/ai-quickstarts">AI Quickstart</a> experiences. Developed with strategic partners, AI quickstarts are ready-to-run, industry-specific use cases that put the power of <strong>Red Hat AI</strong> directly into your hands. These simple-to-deploy playgrounds help teams sharpen the skills needed to move AI ideas from experimentation to production on enterprise-ready, open source infrastructure.</p>
 
     <p><strong>The ecosystem will grow.</strong> We evaluated more servers than we shipped. Some required transport changes we could not support in Developer Preview. Others lacked the maintenance commitment we need from ecosystem partners. Curation is as much about what you leave out as what you include, and the process we have built, from partner consent through technical validation and catalog integration, is designed to scale. MCP servers are the first AI asset type going through this pipeline and we will use the same model as additional AI asset types mature.</p>
 
