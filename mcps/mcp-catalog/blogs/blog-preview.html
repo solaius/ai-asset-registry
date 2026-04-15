@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The MCP Catalog is here: discover, deploy and connect on Red Hat OpenShift AI</title>
+  <meta name="description" content="Red Hat OpenShift AI 3.4 introduces the MCP Catalog with MCP servers from Red Hat, partners and community that you can discover, deploy and manage on OpenShift.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700&family=Red+Hat+Text:wght@400;500;700&family=Red+Hat+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Red Hat Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 18px;
+      line-height: 1.7;
+      color: #151515;
+      background: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- Top banner --- */
+    .rh-banner {
+      background: #151515;
+      padding: 12px 0;
+      border-bottom: 3px solid #EE0000;
+    }
+    .rh-banner-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .rh-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .rh-logo svg {
+      height: 28px;
+      width: auto;
+    }
+    .rh-nav {
+      display: flex;
+      gap: 20px;
+    }
+    .rh-nav a {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    /* --- Blog breadcrumb bar --- */
+    .blog-bar {
+      background: #F0F0F0;
+      border-bottom: 1px solid #D2D2D2;
+      padding: 14px 0;
+    }
+    .blog-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #6A6E73;
+    }
+    .blog-bar-inner a {
+      color: #0066CC;
+      text-decoration: none;
+    }
+    .blog-bar-inner a:hover {
+      text-decoration: underline;
+    }
+    .blog-bar-inner .sep {
+      color: #B8BBBE;
+    }
+
+    /* --- Hero section --- */
+    .hero {
+      background: linear-gradient(135deg, #151515 0%, #292929 60%, #3F0000 100%);
+      padding: 80px 0 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(238, 0, 0, 0.08) 0%, rgba(238, 0, 0, 0.02) 100%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-label {
+      display: inline-block;
+      background: #EE0000;
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Red Hat Display', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+    .hero .subtitle {
+      font-family: 'Red Hat Text', sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: #B8BBBE;
+      line-height: 1.5;
+      margin-bottom: 32px;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #A3A3A3;
+      font-size: 14px;
+    }
+    .hero-meta .author {
+      color: #FFFFFF;
+      font-weight: 500;
+    }
+    .hero-meta .dot {
+      color: #6A6E73;
+    }
+
+    /* --- Article body --- */
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    .article-wrap p {
+      margin-bottom: 24px;
+    }
+
+    .article-wrap a {
+      color: #0066CC;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .article-wrap a:hover {
+      border-bottom-color: #0066CC;
+    }
+
+    .article-wrap strong a {
+      font-weight: 700;
+    }
+
+    /* CTA links */
+    .cta-link {
+      color: #0066CC;
+      font-weight: 700;
+    }
+
+    .article-wrap h2 {
+      font-family: 'Red Hat Display', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: #151515;
+      margin-top: 48px;
+      margin-bottom: 20px;
+      padding-top: 8px;
+      border-top: 2px solid #F0F0F0;
+    }
+
+    .article-wrap h2:first-of-type {
+      margin-top: 40px;
+    }
+
+    .article-wrap h3 {
+      font-family: 'Red Hat Display', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #151515;
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+
+    .article-wrap ul, .article-wrap ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+
+    .article-wrap li {
+      margin-bottom: 16px;
+      padding-left: 4px;
+    }
+
+    .article-wrap li strong {
+      color: #151515;
+    }
+
+    /* Tier section headers */
+    .tier-header {
+      font-family: 'Red Hat Text', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 28px;
+      margin-bottom: 12px;
+      color: #151515;
+    }
+
+    /* Signature tagline */
+    .tagline {
+      font-size: 20px;
+      font-weight: 500;
+      color: #383838;
+      margin-top: 32px;
+      margin-bottom: 32px;
+      padding: 20px 24px;
+      border-left: 4px solid #EE0000;
+      background: #FEF0F0;
+      line-height: 1.5;
+    }
+
+    /* --- Image placeholders --- */
+    .image-placeholder {
+      margin: 40px 0;
+      background: #F0F0F0;
+      border: 2px dashed #D2D2D2;
+      border-radius: 8px;
+      padding: 48px 32px;
+      text-align: center;
+    }
+    .image-placeholder .ph-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      background: #E0E0E0;
+      border-radius: 50%;
+      margin-bottom: 16px;
+    }
+    .image-placeholder .ph-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: #6A6E73;
+    }
+    .image-placeholder .ph-title {
+      font-family: 'Red Hat Display', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #383838;
+      margin-bottom: 8px;
+    }
+    .image-placeholder .ph-alt {
+      font-size: 14px;
+      color: #6A6E73;
+      line-height: 1.5;
+      max-width: 560px;
+      margin: 0 auto;
+      font-style: italic;
+    }
+
+    /* --- Three-tier diagram --- */
+    .tier-diagram {
+      margin: 40px 0;
+      border: 1px solid #D2D2D2;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .tier-diagram-title {
+      font-family: 'Red Hat Display', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      text-align: center;
+      padding: 20px;
+      background: #FFFFFF;
+      border-bottom: 1px solid #D2D2D2;
+      color: #151515;
+    }
+    .tier-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .tier-col {
+      border-right: 1px solid #D2D2D2;
+    }
+    .tier-col:last-child {
+      border-right: none;
+    }
+    .tier-col-header {
+      padding: 12px 16px;
+      font-family: 'Red Hat Display', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+    .tier-col-header.rh { background: #EE0000; }
+    .tier-col-header.partner { background: #0066CC; }
+    .tier-col-header.community { background: #3D7317; }
+    .tier-col-item {
+      padding: 12px 16px;
+      font-size: 15px;
+      text-align: center;
+      border-top: 1px solid #F0F0F0;
+      color: #383838;
+    }
+
+    /* --- Series callout --- */
+    .series-callout {
+      margin-top: 48px;
+      padding: 20px 24px;
+      background: #E0F0FF;
+      border-left: 4px solid #0066CC;
+      border-radius: 0 4px 4px 0;
+      font-size: 16px;
+      color: #003366;
+      line-height: 1.6;
+    }
+
+    /* --- Footer --- */
+    .rh-footer {
+      background: #151515;
+      padding: 40px 0;
+      margin-top: 0;
+    }
+    .rh-footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .rh-footer-text {
+      color: #6A6E73;
+      font-size: 13px;
+    }
+    .rh-footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .rh-footer-links a {
+      color: #A3A3A3;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 30px;
+      }
+      .hero .subtitle {
+        font-size: 17px;
+      }
+      .article-wrap {
+        padding: 40px 20px 60px;
+      }
+      .article-wrap h2 {
+        font-size: 24px;
+      }
+      .tier-columns {
+        grid-template-columns: 1fr;
+      }
+      .tier-col {
+        border-right: none;
+        border-bottom: 1px solid #D2D2D2;
+      }
+      .tier-col:last-child {
+        border-bottom: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top banner -->
+  <header class="rh-banner">
+    <div class="rh-banner-inner">
+      <div class="rh-logo">
+        <svg viewBox="0 0 613 145" xmlns="http://www.w3.org/2000/svg">
+          <path d="M127.47 83.49c12.51 0 30.61-2.58 30.61-17.46a14 14 0 0 0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89 8.69 103.76.5 97.51.5 91.69.5 90 8 83.06 8c-6.68 0-11.64-5.6-17.89-5.6-6 0-9.91 4.09-12.93 12.5 0 0-8.41 23.72-9.49 27.16a6.43 6.43 0 0 0-.22 1.94c0 9.22 36.3 39.45 84.94 39.45M127.47 83.49c-12.51 0-30.61 2.58-30.61 17.46a14 14 0 0 0 .31 3.42l7.45 32.36c1.72 7.12 3.23 10.35 15.73 16.6 9.7 4.96 30.83 13.15 37.08 13.15 5.82 0 7.51-7.5 14.45-7.5 6.68 0 11.64 5.6 17.89 5.6 6 0 9.91-4.09 12.93-12.5 0 0 8.41-23.72 9.49-27.16a6.43 6.43 0 0 0 .22-1.94c0-9.22-36.3-39.45-84.94-39.45" fill="#EE0000"/>
+          <text x="220" y="95" font-family="Red Hat Display, sans-serif" font-weight="700" font-size="72" fill="#FFFFFF">Red Hat</text>
+        </svg>
+      </div>
+      <nav class="rh-nav">
+        <a href="#">Products</a>
+        <a href="#">Solutions</a>
+        <a href="#">Training</a>
+        <a href="#">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Breadcrumb bar -->
+  <div class="blog-bar">
+    <div class="blog-bar-inner">
+      <a href="#">Red Hat Blog</a>
+      <span class="sep">/</span>
+      <a href="#">Red Hat AI</a>
+      <span class="sep">/</span>
+      <span>MCP Catalog</span>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-label">Red Hat OpenShift AI</span>
+      <h1>The MCP Catalog is here: discover, deploy and connect on Red Hat OpenShift AI</h1>
+      <p class="subtitle">Your agents need tools and the MCP Catalog in Red Hat OpenShift AI delivers them</p>
+      <div class="hero-meta">
+        <span class="author">Peter Double</span>
+        <span class="dot">&middot;</span>
+        <span>April 2026</span>
+        <span class="dot">&middot;</span>
+        <span>6 min read</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Article -->
+  <article class="article-wrap">
+
+    <p>You have tried it. Pulled an MCP server from a GitHub repo, wrestled it into a container, sorted out authentication yourself and hoped it would hold up in production. That is the state of <a href="https://modelcontextprotocol.io/">Model Context Protocol (MCP)</a> adoption in the enterprise today: promising protocol, painful deployment.</p>
+
+    <p><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai">Red Hat OpenShift AI</a> 3.4 takes a different approach. We are introducing the <strong>MCP Catalog</strong> in Developer Preview, a curated catalog of MCP servers that you can discover, deploy and manage directly on <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a>. It ships pre-loaded with MCP servers from Red Hat, technology partners and the open source community, and we are actively adding more. <strong><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai/trial">Try Red Hat OpenShift AI</a></strong> to explore the MCP Catalog yourself.</p>
+
+    <p>This is not a static listing. Every MCP server in the catalog deploys live on your cluster through the <a href="https://github.com/kubernetes-sigs/mcp-lifecycle-operator">MCP Lifecycle Operator</a>, connects through the <a href="https://github.com/Kuadrant/mcp-gateway">MCP Gateway</a> running on <a href="https://www.redhat.com/en/technologies/cloud-computing/connectivity-link">Red Hat Connectivity Link</a> and becomes consumable in Gen AI Studio, the interface in Red Hat OpenShift AI where you build and test AI applications. This is the beginning of the enterprise MCP ecosystem we are building.</p>
+
+    <h2>The MCP Catalog: from discovery to deployment</h2>
+
+    <p>Until now, the AI Hub in Red Hat OpenShift AI was focused on models. With 3.4, MCP servers join the catalog as the first step toward a broader AI asset surface that will expand in upcoming releases.</p>
+
+    <p>Most MCP catalogs available today, including Smithery, Docker MCP Catalog and the official MCP registry, are discovery surfaces. They help you find servers, but deployment, security and lifecycle management are your problem. You download a container image of unknown provenance, configure it manually and hope the next update does not break your workload.</p>
+
+    <p>The MCP Catalog in Red Hat OpenShift AI closes that gap. When you browse the catalog in the AI Hub, you are looking at MCP servers that have been validated for enterprise deployment: production-grade connectivity (streamable HTTP transport), on-cluster hosting and container images built on <a href="https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image">Red Hat Universal Base Image</a> and scanned for vulnerabilities. When you select a server, the MCP Lifecycle Operator deploys it on your cluster, creating the Kubernetes resources and exposing the service. From there, the MCP Gateway handles runtime connectivity, providing identity-aware routing and per-tool metrics so your platform team knows exactly which agents are calling which tools.</p>
+
+    <p>The result is a governed path from discovery to deployment to consumption. Select, deploy, connect.</p>
+
+    <!-- Image Placeholder 1 -->
+    <div class="image-placeholder">
+      <div class="ph-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+      </div>
+      <div class="ph-title">Image 1: MCP Catalog in AI Hub</div>
+      <div class="ph-alt">The MCP Catalog in the Red Hat OpenShift AI Hub displaying MCP server cards organized by tier (Red Hat, partner and community), each with a deploy action, showing the governed path from discovery to deployment.</div>
+    </div>
+
+    <h2>MCP servers ready to use</h2>
+
+    <p>The catalog ships with three tiers of MCP servers, each addressing real enterprise workflows. Here is what is available today.</p>
+
+    <p class="tier-header">Three Red Hat MCP servers connect your AI agents directly to the platforms you already run:</p>
+
+    <ul>
+      <li><strong><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a></strong>: Your agents can query cluster state, manage workloads and troubleshoot deployments through natural language. When a pod fails at 2 a.m., your on-call engineer asks the agent for the last 50 log lines and the resource status of the affected deployment. No context-switching between dashboards, no kubectl gymnastics.</li>
+      <li><strong><a href="https://www.redhat.com/en/technologies/management/ansible">Red Hat Ansible Automation Platform</a></strong>: Connect agents to your automation workflows. An agent can trigger Ansible playbooks, check job status and orchestrate configuration changes across your infrastructure. For agent-driven operations (AgentOps) teams, this means incident response workflows that span detection, diagnosis and remediation without leaving the agent context.</li>
+      <li><strong><a href="https://www.redhat.com/en/technologies/management/insights">Red Hat Insights</a></strong>: Surface platform intelligence and recommendations through your AI agents. Instead of your team manually reviewing Insights advisories, an agent can pull the latest recommendations, correlate them with your cluster state and suggest remediation steps, bringing operational insights directly into your agentic workflows.</li>
+    </ul>
+
+    <p class="tier-header">Five technology partner MCP servers extend your agents into the broader enterprise stack:</p>
+
+    <ul>
+      <li><strong>Confluent Kafka</strong>: Connect agents to your event streams for topic management, pipeline monitoring and real-time data access. If your agentic workflows need to react to live data, this is the integration point.</li>
+      <li><strong>EnterpriseDB (PostgreSQL)</strong>: Connect agents to PostgreSQL databases for queries, schema management and database operations, powered by EDB's pg-airman-mcp server.</li>
+      <li><strong>HashiCorp Terraform</strong>: Let agents provision and manage infrastructure as code, bridging the gap between AI-driven decisions and infrastructure execution.</li>
+      <li><strong>Microsoft Azure</strong>: Enable agents to manage Azure resources, provision services and automate cloud operations alongside your OpenShift workloads.</li>
+      <li><strong>Dynatrace</strong>: Bring full-stack observability into your agentic workflows. Agents can query performance data, investigate incidents and correlate metrics across your environment.</li>
+    </ul>
+
+    <p class="tier-header">Two community MCP servers round out the data tier:</p>
+
+    <ul>
+      <li><strong>MongoDB</strong>: Query and manage document collections through your agents. Useful for RAG workflows and applications backed by unstructured or semi-structured data.</li>
+      <li><strong>MariaDB</strong>: Relational database connectivity for agents that need to query and manage structured data stores.</li>
+    </ul>
+
+    <p>To put this in concrete terms: before the MCP Catalog, connecting Dynatrace to your agents meant finding a server on GitHub, building a container from source, debugging transport issues and configuring authentication, all before you could make a single tool call. Now, you select Dynatrace in the catalog and the Lifecycle Operator handles the rest.</p>
+
+    <p><strong><a href="https://github.com/kubernetes-sigs/mcp-lifecycle-operator">Explore the MCP Lifecycle Operator on GitHub</a></strong> to see how MCP servers are deployed and managed on Kubernetes.</p>
+
+    <!-- Three-tier diagram -->
+    <div class="tier-diagram">
+      <div class="tier-diagram-title">MCP Catalog</div>
+      <div class="tier-columns">
+        <div class="tier-col">
+          <div class="tier-col-header rh">Red Hat</div>
+          <div class="tier-col-item">OpenShift</div>
+          <div class="tier-col-item">Ansible Automation Platform</div>
+          <div class="tier-col-item">Insights</div>
+        </div>
+        <div class="tier-col">
+          <div class="tier-col-header partner">Partners</div>
+          <div class="tier-col-item">Confluent</div>
+          <div class="tier-col-item">EnterpriseDB</div>
+          <div class="tier-col-item">HashiCorp</div>
+          <div class="tier-col-item">Microsoft</div>
+          <div class="tier-col-item">Dynatrace</div>
+        </div>
+        <div class="tier-col">
+          <div class="tier-col-header community">Community</div>
+          <div class="tier-col-item">MongoDB</div>
+          <div class="tier-col-item">MariaDB</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Building the enterprise MCP ecosystem</h2>
+
+    <p>The MCP servers you get in Red Hat OpenShift AI 3.4 are the foundation, not the ceiling. We are building toward a full enterprise MCP ecosystem with the capabilities that production deployments demand.</p>
+
+    <p><strong>Quickstarts are coming.</strong> We are working with our partners to deliver guided quickstart experiences. The first two: connecting Dynatrace observability into your agentic incident response workflows and managing Azure resources alongside your OpenShift workloads. We will publish these as they are ready.</p>
+
+    <p><strong>The ecosystem will grow.</strong> We evaluated more servers than we shipped. Some required transport changes we could not support in Developer Preview. Others lacked the maintenance commitment we need from ecosystem partners. Curation is as much about what you leave out as what you include, and the process we have built, from partner consent through technical validation and catalog integration, is designed to scale. MCP servers are the first AI asset type going through this pipeline and we will use the same model as additional AI asset types mature.</p>
+
+    <p><strong>Enterprise governance is next.</strong> Right now, you can discover and deploy. What you cannot yet do is trace where an MCP server came from, enforce which teams can deploy which servers or audit every tool call an agent makes. That governance layer is what we are building next: supply chain controls to verify every server's provenance and build, trust tiers to distinguish certified from community assets, access policies to scope deployment permissions and full auditability across the lifecycle. The goal is to give your platform team the same operational control over MCP servers that they already have for any other production workload.</p>
+
+    <h2>Get started</h2>
+
+    <p>The MCP Catalog gives platform teams a governed, production-ready path from discovery to deployment: curated servers, validated images and lifecycle management on your cluster.</p>
+
+    <p>It is available now in Red Hat OpenShift AI 3.4 Developer Preview. <strong><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai/trial">Try Red Hat OpenShift AI</a></strong> to explore the MCP Catalog and deploy your first MCP server on OpenShift. Attending Red Hat Summit 2026 in Atlanta (May 11-14)? Come see the catalog and MCP Lifecycle Operator in action.</p>
+
+    <div class="series-callout">
+      This is the first post in a series on the MCP ecosystem in Red Hat OpenShift AI. Stay tuned for hands-on quickstarts with our partner MCP servers.
+    </div>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="rh-footer">
+    <div class="rh-footer-inner">
+      <div class="rh-footer-text">&copy; 2026 Red Hat, Inc.</div>
+      <div class="rh-footer-links">
+        <a href="#">Privacy statement</a>
+        <a href="#">Terms of use</a>
+        <a href="#">Cookie preferences</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
