@@ -1273,9 +1273,747 @@ function navigateTo(target) {
   // Other nav items are non-functional stubs in this prototype
 }
 
+function renderListView() {
+  const servers = filteredServers();
+  const is3next = state.featureToggle;
+
+  document.getElementById('view-list').innerHTML = `
+    ${is3next ? `
+    <div class="next-banner">
+      <div class="feature-toggle">
+        <span>3.5 DP</span>
+        <div class="toggle-track on" onclick="toggleFeature()">
+          <div class="toggle-thumb"></div>
+        </div>
+        <span class="label-active">3.next</span>
+      </div>
+      <span>Showing advanced governance features</span>
+    </div>` : ''}
+
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="#" onclick="navigateTo('mcp-servers');return false;">MCP Servers</a>
+      </div>
+      <div class="title-row">
+        <h1>
+          <svg width="22" height="22" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="5" rx="1.5" stroke="#11171C" stroke-width="1.5"/><rect x="2" y="9" width="12" height="5" rx="1.5" stroke="#11171C" stroke-width="1.5"/><circle cx="5" cy="4.5" r="1" fill="#11171C"/><circle cx="5" cy="11.5" r="1" fill="#11171C"/></svg>
+          MCP Servers
+        </h1>
+        <div class="title-actions">
+          ${!is3next ? `
+          <div class="feature-toggle">
+            <span class="label-active">3.5 DP</span>
+            <div class="toggle-track" onclick="toggleFeature()">
+              <div class="toggle-thumb"></div>
+            </div>
+            <span>3.next</span>
+          </div>` : ''}
+          <button class="btn btn-primary" onclick="openRegisterModal()">
+            <span style="font-size:15px;line-height:1;">+</span> Register MCP Server
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="search-wrapper">
+        <svg class="search-icon" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#8396A5" stroke-width="1.5"/><path d="M9.5 9.5L13 13" stroke="#8396A5" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <input type="text" placeholder="Search MCP servers..." value="${state.searchQuery}" oninput="state.searchQuery=this.value;renderListView();">
+      </div>
+      <select onchange="state.filterState=this.value;renderListView();">
+        <option value="all"${state.filterState==='all'?' selected':''}>All States</option>
+        <option value="Published"${state.filterState==='Published'?' selected':''}>Published</option>
+        <option value="Draft"${state.filterState==='Draft'?' selected':''}>Draft</option>
+        <option value="Deprecated"${state.filterState==='Deprecated'?' selected':''}>Deprecated</option>
+      </select>
+      <select onchange="state.filterSource=this.value;renderListView();">
+        <option value="all"${state.filterSource==='all'?' selected':''}>All Sources</option>
+        <option value="Red Hat"${state.filterSource==='Red Hat'?' selected':''}>Red Hat</option>
+        <option value="Partner"${state.filterSource==='Partner'?' selected':''}>Partner</option>
+        <option value="Community"${state.filterSource==='Community'?' selected':''}>Community</option>
+      </select>
+    </div>
+
+    <div style="flex:1;overflow-x:auto;padding:0 24px 0 0;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Latest Version</th>
+            <th>Lifecycle State</th>
+            ${is3next ? '<th class="col-3next">Approval</th><th class="col-3next">Verified</th><th class="col-3next">Certified</th><th class="col-3next">Deployed</th>' : ''}
+            <th>Source</th>
+            <th>Tools</th>
+            <th>Last Modified</th>
+            <th>Tags</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${servers.map(s => {
+            const v = getLatestVersion(s);
+            const tagKeys = Object.keys(s.tags).slice(0, 2);
+            return `
+            <tr onclick="openDetail('${s.id}')">
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="server-icon" style="background:${s.icon.bg};">${s.icon.text}</div>
+                  <a href="#" onclick="openDetail('${s.id}');return false;">${s.name}</a>
+                </div>
+              </td>
+              <td>v${v.num}</td>
+              <td><span class="badge ${getLifecycleBadgeClass(v.state)}">${v.state}</span></td>
+              ${is3next ? `
+              <td class="col-3next"><span class="badge ${getApprovalBadgeClass(v.approval || 'None')}">${v.approval || 'None'}</span></td>
+              <td class="col-3next">${v.verified ? '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="verified-icon"><circle cx="8" cy="8" r="6" stroke="#3CAA60" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#3CAA60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="unverified-icon"><circle cx="8" cy="8" r="6" stroke="#C0CDD8" stroke-width="1.5"/></svg>'}</td>
+              <td class="col-3next"><span class="badge ${getCertBadgeClass(v.certified || 'None')}">${v.certified || 'None'}</span></td>
+              <td class="col-3next">${v.deployed ? '<span class="deploy-dot" style="background:#3CAA60;width:12px;height:12px;border-radius:50%;display:inline-block;"></span>' : '<span class="deploy-dot" style="background:#C0CDD8;width:12px;height:12px;border-radius:50%;display:inline-block;"></span>'}</td>
+              ` : ''}
+              <td style="color:var(--color-text-secondary);">${s.source}</td>
+              <td style="color:var(--color-text-secondary);">${s.tools.length}</td>
+              <td style="color:var(--color-text-secondary);">${v.lastModified}</td>
+              <td>${tagKeys.map(k => `<span class="tag">${s.tags[k]}</span>`).join(' ')}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <span>Showing 1-${servers.length} of ${servers.length} MCP servers</span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span>Rows per page:</span>
+        <select style="padding:2px 8px;height:28px;border:1px solid var(--color-border-input);border-radius:var(--radius-sm);font-size:12px;">
+          <option>10</option><option>25</option><option>50</option><option>100</option>
+        </select>
+      </div>
+    </div>
+  `;
+}
+
+function toggleFeature() {
+  state.featureToggle = !state.featureToggle;
+  render();
+}
+
+function openDetail(id) {
+  state.currentView = 'detail';
+  state.selectedServerId = id;
+  state.showAllTools = false;
+  render();
+}
+
+function renderDetailView() {
+  const server = getServer(state.selectedServerId);
+  if (!server) return;
+  const latest = getLatestVersion(server);
+  const is3next = state.featureToggle;
+  const tagEntries = Object.entries(server.tags);
+  const toolsToShow = state.showAllTools ? server.tools : server.tools.slice(0, 6);
+
+  document.getElementById('view-detail').innerHTML = `
+    ${is3next ? `
+    <div class="next-banner">
+      <div class="feature-toggle">
+        <span>3.5 DP</span>
+        <div class="toggle-track on" onclick="toggleFeature()"><div class="toggle-thumb"></div></div>
+        <span class="label-active">3.next</span>
+      </div>
+      <span>Showing advanced governance features</span>
+    </div>` : ''}
+
+    <div class="page-header" style="border-bottom:1px solid var(--color-border-light);">
+      <div class="breadcrumb">
+        <a href="#" onclick="navigateTo('mcp-servers');return false;">MCP Servers</a>
+        <span style="color:var(--color-border);">/</span>
+        <span>${server.name}</span>
+      </div>
+      <div class="title-row">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="server-icon large" style="background:${server.icon.bg};">${server.icon.text}</div>
+          <div>
+            <h1 style="font-size:22px;">${server.name}</h1>
+            <div class="subtitle">Registered by ${latest.createdBy} · Source: ${server.source}</div>
+          </div>
+        </div>
+        <div class="title-actions">
+          ${!is3next ? `
+          <div class="feature-toggle">
+            <span class="label-active">3.5 DP</span>
+            <div class="toggle-track" onclick="toggleFeature()"><div class="toggle-thumb"></div></div>
+            <span>3.next</span>
+          </div>` : ''}
+          <div class="lifecycle-dropdown-wrapper">
+            <button class="lifecycle-btn" onclick="toggleLifecycleMenu('detail')">
+              <span class="badge ${getLifecycleBadgeClass(latest.state)}">${latest.state}</span>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="lifecycle-menu" id="lifecycle-menu-detail">
+              <div class="lifecycle-menu-header">Transition to</div>
+              ${getValidTransitions(latest.state).map(t => `
+              <div class="lifecycle-menu-item" onclick="openTransitionModal('${server.id}', ${latest.num}, '${latest.state}', '${t.state}')">
+                <span>${t.icon}</span>
+                <div>
+                  <span class="badge ${getLifecycleBadgeClass(t.state)}">${t.state}</span>
+                  <div class="lmi-desc">${t.desc}</div>
+                </div>
+              </div>`).join('')}
+            </div>
+          </div>
+          <button class="overflow-btn">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="3" r="1" fill="#445461"/><circle cx="7" cy="7" r="1" fill="#445461"/><circle cx="7" cy="11" r="1" fill="#445461"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex:1;overflow-y:auto;">
+      <!-- Metadata -->
+      <div class="section-block">
+        <div class="section-inner">
+          <div class="section-header" onclick="toggleSection('detail-meta')">
+            ${CHEVRON_SVG}
+            <h3>Metadata</h3>
+          </div>
+          <div class="section-content" id="section-detail-meta">
+            <div class="meta-grid">
+              <div class="meta-item"><div class="meta-label">Created</div><div>${latest.registeredAt}</div></div>
+              <div class="meta-item"><div class="meta-label">Last Modified</div><div>${latest.lastModified}</div></div>
+              <div class="meta-item"><div class="meta-label">Creator</div><div>${latest.createdBy}</div></div>
+              <div class="meta-item"><div class="meta-label">Transport</div><div>Streamable HTTP</div></div>
+              <div class="meta-item"><div class="meta-label">Endpoint</div><div style="color:var(--color-primary);font-family:var(--font-mono);font-size:12px;">${latest.endpoint || 'Not deployed'}</div></div>
+              <div class="meta-item"><div class="meta-label">Workspace</div><div>default</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      ${is3next ? `
+      <!-- Governance Status (3.next) -->
+      <div class="section-block">
+        <div class="section-inner">
+          <div class="section-header" onclick="toggleSection('detail-gov')">
+            ${CHEVRON_SVG}
+            <h3>Governance Status</h3>
+            <span class="next-label">3.next</span>
+          </div>
+          <div class="section-content" id="section-detail-gov">
+            <div class="governance-grid">
+              <div class="governance-card">
+                <div class="gc-header">
+                  <span class="gc-label">Approval</span>
+                  <span class="badge ${getApprovalBadgeClass(latest.approval || 'None')}">${latest.approval || 'None'}</span>
+                </div>
+                <div class="gc-body">
+                  ${latest.approvedBy ? `Approved by <strong>${latest.approvedBy}</strong><br>${latest.approvedAt} · "${latest.approvalReason}"` : 'No approval record'}
+                </div>
+              </div>
+              <div class="governance-card">
+                <div class="gc-header">
+                  <span class="gc-label">Verification</span>
+                  <span class="badge ${latest.verified ? 'badge-lime' : 'badge-default'}">
+                    ${latest.verified ? '✓ Verified' : 'Unverified'}
+                  </span>
+                </div>
+                <div class="gc-body">
+                  ${latest.verified ? `Source verified from <strong>${latest.verifiedSource || 'unknown'}</strong><br>Verified ${latest.verifiedAt || ''}` : 'Source not verified'}
+                </div>
+              </div>
+              <div class="governance-card">
+                <div class="gc-header">
+                  <span class="gc-label">Certification</span>
+                  <span class="badge ${getCertBadgeClass(latest.certified || 'None')}">${latest.certified || 'None'}</span>
+                </div>
+                <div class="gc-body">
+                  ${latest.certified === 'Certified' ? `Red Hat Certified Partner MCP<br>Certified ${latest.certifiedAt || ''} · Expires ${latest.certExpiry || ''}` : latest.certified === 'Candidate' ? 'Certification in progress' : 'Not certified'}
+                </div>
+              </div>
+              <div class="governance-card">
+                <div class="gc-header">
+                  <span class="gc-label">Linked Policies</span>
+                  <span class="badge badge-indigo">${(latest.policies || []).length} active</span>
+                </div>
+                <div class="gc-body">
+                  ${(latest.policies || []).map(p => `<a href="#">${p}</a>`).join(' · ') || 'No policies linked'}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>` : ''}
+
+      <!-- Tags -->
+      <div class="section-block">
+        <div class="section-inner">
+          <div class="section-header" onclick="toggleSection('detail-tags')">
+            ${CHEVRON_SVG}
+            <h3>Tags</h3>
+          </div>
+          <div class="section-content" id="section-detail-tags">
+            <div class="tags-inline">
+              ${tagEntries.map(([k, v]) => `<span class="tag"><span class="tag-key">${k}:</span> ${v}</span>`).join('')}
+              <button class="tag-add-btn">+ Add tag</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="section-block">
+        <div class="section-inner">
+          <div class="section-header" onclick="toggleSection('detail-desc')">
+            ${CHEVRON_SVG}
+            <h3>Description</h3>
+            <button class="section-action">Edit</button>
+          </div>
+          <div class="section-content" id="section-detail-desc">
+            <p style="color:#445461;line-height:1.6;">${server.description}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools -->
+      <div class="section-block">
+        <div class="section-inner">
+          <div class="section-header" onclick="toggleSection('detail-tools')">
+            ${CHEVRON_SVG}
+            <h3>Tools</h3>
+            <span class="section-meta">(${server.tools.length})</span>
+          </div>
+          <div class="section-content" id="section-detail-tools">
+            <div class="tools-grid">
+              ${toolsToShow.map(t => `
+              <div class="tool-card">
+                <code class="tool-name">${t.name}</code>
+                <span class="tool-desc">${t.desc}</span>
+              </div>`).join('')}
+            </div>
+            ${server.tools.length > 6 && !state.showAllTools ? `
+            <div class="show-more">
+              <a href="#" onclick="state.showAllTools=true;renderDetailView();return false;">Show all ${server.tools.length} tools</a>
+            </div>` : ''}
+          </div>
+        </div>
+      </div>
+
+      <!-- Versions -->
+      <div class="section-block" style="padding-bottom:24px;">
+        <div class="section-inner" style="border-bottom:none;">
+          <div class="section-header" onclick="toggleSection('detail-versions')">
+            ${CHEVRON_SVG}
+            <h3>Versions</h3>
+          </div>
+          <div class="section-content" id="section-detail-versions">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <div class="seg-control" style="width:auto;display:inline-flex;">
+                <button class="active" style="padding:4px 12px;font-size:12px;">All <span style="opacity:0.7;">(${server.versions.length})</span></button>
+                <button style="padding:4px 12px;font-size:12px;">Active <span>(${server.versions.filter(v => v.state !== 'Retired').length})</span></button>
+              </div>
+            </div>
+            <table class="data-table" style="font-size:13px;">
+              <thead>
+                <tr>
+                  <th style="width:30px;"></th>
+                  <th>Version</th>
+                  <th>Registered at</th>
+                  <th>Lifecycle State</th>
+                  <th>Created by</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${server.versions.map(v => `
+                <tr onclick="openVersion('${server.id}', ${v.num})">
+                  <td><span class="status-dot ${v.state === 'Retired' ? 'grey' : 'green'}"></span></td>
+                  <td><a href="#" onclick="openVersion('${server.id}', ${v.num});return false;">Version ${v.num}</a></td>
+                  <td style="color:var(--color-text-secondary);">${v.registeredAt}</td>
+                  <td><span class="badge ${getLifecycleBadgeClass(v.state)}">${v.state}</span></td>
+                  <td style="color:var(--color-text-secondary);">${v.createdBy}</td>
+                  <td style="color:var(--color-text-secondary);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v.description}</td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      ${is3next && latest.audit && latest.audit.length > 0 ? `
+      <!-- Audit Trail (3.next) -->
+      <div class="section-block" style="padding-bottom:24px;">
+        <div class="section-inner" style="border-bottom:none;">
+          <div class="section-header" onclick="toggleSection('detail-audit')">
+            ${CHEVRON_SVG}
+            <h3>Audit Trail</h3>
+            <span class="next-label">3.next</span>
+          </div>
+          <div class="section-content" id="section-detail-audit">
+            <div class="audit-trail">
+              ${latest.audit.map(a => `
+              <div class="audit-entry">
+                <div class="audit-dot" style="background:${a.color};"></div>
+                <div class="audit-title">${a.action}</div>
+                <div class="audit-meta">${a.at} · ${a.by}${a.comment ? ` · "${a.comment}"` : ''}</div>
+              </div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>` : ''}
+    </div>
+  `;
+}
+
+function openVersion(serverId, versionNum) {
+  state.currentView = 'version';
+  state.selectedServerId = serverId;
+  state.selectedVersionNum = versionNum;
+  state.showAllTools = false;
+  render();
+}
+
+function toggleLifecycleMenu(context) {
+  const menu = document.getElementById('lifecycle-menu-' + context);
+  if (menu) menu.classList.toggle('visible');
+}
+
+function toggleSection(key) {
+  const content = document.getElementById('section-' + key);
+  const header = content?.previousElementSibling;
+  if (content) {
+    content.classList.toggle('hidden');
+    if (header) header.classList.toggle('collapsed');
+  }
+}
+
+function renderVersionView() {
+  const server = getServer(state.selectedServerId);
+  if (!server) return;
+  const version = getVersion(server, state.selectedVersionNum);
+  if (!version) return;
+  const is3next = state.featureToggle;
+  const versionTags = Object.entries(version.tags || {});
+  const toolsToShow = state.showAllTools ? server.tools : server.tools.slice(0, 6);
+
+  const serverJson = JSON.stringify({
+    name: server.id + '-mcp',
+    version: version.semver,
+    transport: 'streamable-http',
+    tools: server.tools.slice(0, 5).map(t => ({ name: t.name, description: t.desc }))
+  }, null, 2);
+
+  const highlightedJson = serverJson
+    .replace(/"([^"]+)":/g, '<span class="key">"$1"</span>:')
+    .replace(/: "([^"]+)"/g, ': <span class="str">"$1"</span>')
+    .replace(/[{}\[\]]/g, '<span class="punct">$&</span>');
+
+  document.getElementById('view-version').innerHTML = `
+    ${is3next ? `
+    <div class="next-banner">
+      <div class="feature-toggle">
+        <span>3.5 DP</span>
+        <div class="toggle-track on" onclick="toggleFeature()"><div class="toggle-thumb"></div></div>
+        <span class="label-active">3.next</span>
+      </div>
+      <span>Showing advanced governance features</span>
+    </div>` : ''}
+
+    <div class="page-header" style="border-bottom:1px solid var(--color-border-light);">
+      <div class="breadcrumb">
+        <a href="#" onclick="navigateTo('mcp-servers');return false;">MCP Servers</a>
+        <span style="color:var(--color-border);">/</span>
+        <a href="#" onclick="openDetail('${server.id}');return false;">${server.name}</a>
+        <span style="color:var(--color-border);">/</span>
+        <span>Version ${version.num}</span>
+      </div>
+      <div class="title-row">
+        <div>
+          <h1 style="font-size:22px;">Version ${version.num}</h1>
+          <div class="subtitle">${server.name}</div>
+        </div>
+        <div class="title-actions">
+          ${!is3next ? `
+          <div class="feature-toggle">
+            <span class="label-active">3.5 DP</span>
+            <div class="toggle-track" onclick="toggleFeature()"><div class="toggle-thumb"></div></div>
+            <span>3.next</span>
+          </div>` : ''}
+          <div class="lifecycle-dropdown-wrapper">
+            <button class="lifecycle-btn" onclick="toggleLifecycleMenu('version')">
+              <span class="badge ${getLifecycleBadgeClass(version.state)}">${version.state}</span>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="lifecycle-menu" id="lifecycle-menu-version">
+              <div class="lifecycle-menu-header">Transition to</div>
+              ${getValidTransitions(version.state).map(t => `
+              <div class="lifecycle-menu-item" onclick="openTransitionModal('${server.id}', ${version.num}, '${version.state}', '${t.state}')">
+                <span>${t.icon}</span>
+                <div>
+                  <span class="badge ${getLifecycleBadgeClass(t.state)}">${t.state}</span>
+                  <div class="lmi-desc">${t.desc}</div>
+                </div>
+              </div>`).join('')}
+            </div>
+          </div>
+          <button class="overflow-btn">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="3" r="1" fill="#445461"/><circle cx="7" cy="7" r="1" fill="#445461"/><circle cx="7" cy="11" r="1" fill="#445461"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex:1;overflow-y:auto;">
+      <!-- Metadata -->
+      <div class="section-block">
+        <div class="section-inner">
+          <div class="section-header" onclick="toggleSection('ver-meta')">
+            ${CHEVRON_SVG}
+            <h3>Metadata</h3>
+          </div>
+          <div class="section-content" id="section-ver-meta">
+            <div class="meta-grid">
+              <div class="meta-item"><div class="meta-label">Registered At</div><div>${version.registeredAt}</div></div>
+              <div class="meta-item"><div class="meta-label">Last Modified</div><div>${version.lastModified}</div></div>
+              <div class="meta-item"><div class="meta-label">Creator</div><div>${version.createdBy}</div></div>
+              <div class="meta-item"><div class="meta-label">Version</div><div style="font-family:var(--font-mono);">${version.semver}</div></div>
+              <div class="meta-item"><div class="meta-label">Source Run</div><div><a href="#" style="font-family:var(--font-mono);font-size:12px;">${version.sourceRun || 'N/A'}</a></div></div>
+              <div class="meta-item"><div class="meta-label">Lifecycle State</div><div><span class="badge ${getLifecycleBadgeClass(version.state)}">${version.state}</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deployment -->
+      <div class="section-block">
+        <div class="section-inner">
+          <div class="section-header" onclick="toggleSection('ver-deploy')">
+            ${CHEVRON_SVG}
+            <h3>Deployment</h3>
+            ${version.deployed ? '<span class="badge badge-lime" style="margin-left:4px;"><span class="status-dot green" style="width:6px;height:6px;"></span> Active</span>' : '<span class="badge badge-default" style="margin-left:4px;">Not Deployed</span>'}
+          </div>
+          <div class="section-content" id="section-ver-deploy">
+            ${version.deployed ? `
+            <div class="deploy-card">
+              <div class="meta-grid">
+                <div class="meta-item"><div class="meta-label">Namespace</div><div style="font-family:var(--font-mono);font-size:12px;">${version.namespace}</div></div>
+                <div class="meta-item"><div class="meta-label">Endpoint</div><div style="color:var(--color-primary);font-family:var(--font-mono);font-size:12px;">${version.endpoint}</div></div>
+                <div class="meta-item"><div class="meta-label">Gateway Registered</div><div style="display:flex;align-items:center;gap:4px;">${version.gatewayRegistered ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#3CAA60" stroke-width="1.5"/><path d="M4.5 7l2 2 3.5-4" stroke="#3CAA60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="color:#203C25;font-size:12px;">Yes</span>' : '<span style="color:var(--color-text-secondary);font-size:12px;">No</span>'}</div></div>
+              </div>
+            </div>` : '<p style="color:var(--color-text-secondary);">This version has not been deployed.</p>'}
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="section-block">
+        <div class="section-inner">
+          <div class="section-header" onclick="toggleSection('ver-desc')">
+            ${CHEVRON_SVG}
+            <h3>Description</h3>
+            <button class="section-action">Edit</button>
+          </div>
+          <div class="section-content" id="section-ver-desc">
+            <p style="color:#445461;line-height:1.6;">${version.description}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div class="section-block">
+        <div class="section-inner">
+          <div class="section-header" onclick="toggleSection('ver-tags')">
+            ${CHEVRON_SVG}
+            <h3>Tags</h3>
+          </div>
+          <div class="section-content" id="section-ver-tags">
+            <div class="tags-inline">
+              ${versionTags.map(([k, v]) => `<span class="tag"><span class="tag-key">${k}:</span> ${v}</span>`).join('')}
+              <button class="tag-add-btn">+ Add tag</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Server Definition -->
+      <div class="section-block">
+        <div class="section-inner">
+          <div class="section-header" onclick="toggleSection('ver-json')">
+            ${CHEVRON_SVG}
+            <h3>Server Definition</h3>
+            <span class="section-meta">server.json · immutable</span>
+          </div>
+          <div class="section-content" id="section-ver-json">
+            <div class="code-block"><pre style="margin:0;white-space:pre-wrap;">${highlightedJson}
+    <span class="dim">... (${server.tools.length} tools total)</span></pre></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools Schema -->
+      <div class="section-block" style="padding-bottom:24px;">
+        <div class="section-inner" style="border-bottom:none;">
+          <div class="section-header" onclick="toggleSection('ver-schema')">
+            ${CHEVRON_SVG}
+            <h3>Tools Schema</h3>
+            <span class="section-meta">(${server.tools.length} tools)</span>
+          </div>
+          <div class="section-content" id="section-ver-schema">
+            <table class="schema-table">
+              <thead>
+                <tr><th>Tool Name</th><th>Description</th><th>Input Schema</th></tr>
+              </thead>
+              <tbody>
+                ${toolsToShow.map(t => `
+                <tr>
+                  <td><code class="tool-name">${t.name}</code></td>
+                  <td style="color:#445461;">${t.desc}</td>
+                  <td class="schema-type">${t.schema}</td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+            ${server.tools.length > 6 && !state.showAllTools ? `
+            <div class="show-more">
+              <a href="#" onclick="state.showAllTools=true;renderVersionView();return false;">Show all ${server.tools.length} tools</a>
+            </div>` : ''}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function openRegisterModal() {
+  const modal = document.getElementById('modal-register');
+  document.getElementById('modal-register-inner').innerHTML = `
+    <div class="modal-header">
+      <h2>Register MCP Server</h2>
+      <button class="modal-close" onclick="closeModal('register')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Name <span class="required">*</span></label>
+        <input class="form-input" type="text" placeholder="e.g., My MCP Server" id="reg-name">
+        <div class="form-hint">A unique name for this MCP server in the registry</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" rows="3" placeholder="Describe what this MCP server does..." id="reg-desc"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Source Type <span class="required">*</span></label>
+        <div class="seg-control">
+          <button class="active" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));this.classList.add('active');">Internal</button>
+          <button onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));this.classList.add('active');">External</button>
+        </div>
+        <div class="form-hint">Internal: deployed in-cluster via Lifecycle Operator. External: hosted outside the cluster.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">MCP Server Definition (server.json) <span class="required">*</span></label>
+        <div class="tab-bar">
+          <button class="active">Paste JSON</button>
+          <button>Upload File</button>
+          <button>From URL</button>
+        </div>
+        <div class="code-block" style="border-radius:0 0 var(--radius-sm) var(--radius-sm);max-height:140px;" contenteditable="true">
+{
+  <span class="key">"name"</span>: <span class="str">"my-mcp-server"</span>,
+  <span class="key">"version"</span>: <span class="str">"1.0.0"</span>,
+  <span class="key">"tools"</span>: <span class="punct">[</span><span class="punct">]</span>
+<span class="punct">}</span></div>
+        <div class="form-hint">The canonical MCP server payload. This becomes immutable once registered.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tags</label>
+        <div class="tags-inline">
+          <input type="text" placeholder="Add tag..." style="padding:3px 8px;border:1px dashed var(--color-border-input);border-radius:var(--radius-sm);font-size:12px;font-family:inherit;color:var(--color-text-primary);outline:none;width:100px;">
+        </div>
+      </div>
+      <div class="info-banner">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#2272B4" stroke-width="1.5"/><path d="M8 6v1.5M8 10h.01" stroke="#2272B4" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>This will create <strong>Version 1</strong> in <strong>Draft</strong> state. You can publish it after review.</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('register')">Cancel</button>
+      <button class="btn btn-primary" onclick="simulateRegister()">Register</button>
+    </div>
+  `;
+  modal.classList.add('visible');
+}
+
+function simulateRegister() {
+  closeModal('register');
+  state.currentView = 'list';
+  render();
+}
+
+function openTransitionModal(serverId, versionNum, fromState, toState) {
+  document.querySelectorAll('.lifecycle-menu').forEach(m => m.classList.remove('visible'));
+
+  const modal = document.getElementById('modal-transition');
+  document.getElementById('modal-transition-inner').innerHTML = `
+    <div class="modal-header">
+      <h2 style="font-size:16px;">Transition Lifecycle State</h2>
+      <button class="modal-close" onclick="closeModal('transition')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="transition-visual">
+        <span class="badge ${getLifecycleBadgeClass(fromState)}" style="padding:3px 10px;font-size:12px;font-weight:500;">${fromState}</span>
+        <svg width="20" height="14" viewBox="0 0 20 14" fill="none" class="transition-arrow"><path d="M2 7h16M14 3l4 4-4 4" stroke="#2272B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="badge ${getLifecycleBadgeClass(toState)}" style="padding:3px 10px;font-size:12px;font-weight:500;">${toState}</span>
+      </div>
+      <div class="info-alert" style="margin-bottom:16px;">
+        ${getTransitionMessage(toState)}
+      </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label" style="font-size:12px;">Comment (optional)</label>
+        <textarea class="form-textarea" rows="2" placeholder="Reason for this transition..."></textarea>
+      </div>
+      ${toState === 'Published' ? `
+      <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:#445461;cursor:pointer;">
+        <input type="checkbox" style="margin-top:2px;accent-color:var(--color-primary);">
+        <span>Deprecate all other published versions of this MCP server</span>
+      </label>` : ''}
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('transition')">Cancel</button>
+      <button class="btn btn-primary" onclick="executeTransition('${serverId}', ${versionNum}, '${toState}')">${getTransitionVerb(toState)}</button>
+    </div>
+  `;
+  modal.classList.add('visible');
+}
+
+function executeTransition(serverId, versionNum, toState) {
+  const server = getServer(serverId);
+  if (server) {
+    const version = getVersion(server, versionNum);
+    if (version) {
+      version.state = toState;
+    }
+  }
+  closeModal('transition');
+  render();
+}
+
+function closeModal(name) {
+  document.getElementById('modal-' + name).classList.remove('visible');
+}
+
+// Close modals on overlay click, close lifecycle menus on outside click
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal-overlay')) {
+    e.target.classList.remove('visible');
+  }
+  if (!e.target.closest('.lifecycle-dropdown-wrapper')) {
+    document.querySelectorAll('.lifecycle-menu').forEach(m => m.classList.remove('visible'));
+  }
+});
+
 function render() {
   renderSidebar();
-  // View rendering added in subsequent tasks
+  document.getElementById('view-list').classList.toggle('active', state.currentView === 'list');
+  document.getElementById('view-detail').classList.toggle('active', state.currentView === 'detail');
+  document.getElementById('view-version').classList.toggle('active', state.currentView === 'version');
+  if (state.currentView === 'list') renderListView();
+  if (state.currentView === 'detail') renderDetailView();
+  if (state.currentView === 'version') renderVersionView();
 }
 
 // ===== INIT =====
