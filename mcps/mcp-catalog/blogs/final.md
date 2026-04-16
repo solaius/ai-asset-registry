@@ -7,7 +7,7 @@
 - **Target publication**: Pre-Summit / Summit 2026 (May 11-14, Atlanta)
 - **Submission deadline**: April 24, 2026
 - **Series**: First post in MCP ecosystem series
-- **Products mentioned**: Red Hat OpenShift AI, Red Hat OpenShift, Red Hat Ansible Automation Platform, Red Hat Insights, Red Hat Connectivity Link, MCP Lifecycle Operator, MCP Gateway
+- **Products mentioned**: Red Hat AI, Red Hat OpenShift AI, Red Hat OpenShift, Red Hat Ansible Automation Platform, Red Hat Insights, Red Hat Connectivity Link, MCP Lifecycle Operator, MCP Gateway
 - **Partners mentioned**: Confluent, EnterpriseDB, HashiCorp | an IBM Company, Microsoft, Dynatrace
 - **Community projects mentioned**: MongoDB, MariaDB
 - **Partner review required**: Yes (Katie Giglio coordinating with all five partners)
@@ -31,7 +31,7 @@
 
 You have tried it. Pulled an MCP server from a GitHub repo, wrestled it into a container, sorted out authentication yourself and hoped it would hold up in production. That is the state of [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) adoption in the enterprise today: promising protocol, painful deployment.
 
-[Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai) 3.4, part of the [Red Hat AI](https://www.redhat.com/en/artificial-intelligence) portfolio, takes a different approach. We are introducing the **MCP Catalog** in Developer Preview, a curated catalog of MCP servers that you can discover, deploy and manage directly on [Red Hat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift). It ships pre-loaded with MCP servers from Red Hat, technology partners and the open source community, and we are actively adding more.
+[Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai) 3.4, part of the [Red Hat AI portfolio](https://www.redhat.com/en/artificial-intelligence), takes a different approach. We are introducing the **MCP Catalog** in Developer Preview, a curated catalog of MCP servers that you can discover, deploy and manage directly on [Red Hat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift). It ships pre-loaded with MCP servers from Red Hat, technology partners and the open source community, and we are actively adding more.
 
 [**Try Red Hat OpenShift AI**](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai/trial) to explore the MCP Catalog yourself.
 
@@ -45,16 +45,14 @@ Most MCP catalogs available today, including Smithery, Docker MCP Catalog and th
 
 The MCP Catalog in Red Hat OpenShift AI closes that gap. When you browse the catalog in the AI Hub, you are looking at MCP servers that have been validated for enterprise deployment: production-grade connectivity (streamable HTTP transport), on-cluster hosting and container images built on [Red Hat Universal Base Image](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image) and scanned for vulnerabilities. When you select a server, the [MCP Lifecycle Operator](https://github.com/kubernetes-sigs/mcp-lifecycle-operator) deploys it on your cluster, creating the Kubernetes resources and exposing the service. From there, the [MCP Gateway](https://github.com/Kuadrant/mcp-gateway) handles runtime connectivity, providing identity-aware routing and per-tool metrics so your platform team knows exactly which agents are calling which tools.
 
-The result is a governed path from discovery to deployment to consumption. Select, deploy, connect.
+The result is a governed path from discovery to deployment to consumption. Select, deploy, connect, consume.
 
 --------------------
-**[Image Placeholder 1: MCP Catalog in AI Hub]**
+**[Figure 1: MCP server lifecycle flow]**
 
-**Placement rationale**: Shows the reader the catalog experience, including the AI Hub tabs, MCP server cards with partner branding and the deploy action path.
+**Placement rationale**: Visually reinforces the blog's core "select, deploy, connect" message by showing the four-stage lifecycle with the components responsible for each stage. Complements the catalog screenshot (Figure 2) which shows what you select, while this diagram shows what happens after.
 
-**Image generation prompt**: If the Red Hat OpenShift AI 3.4 UI is available, capture a real screenshot of the AI Hub MCP Catalog tab. If a generated mockup is needed: Red Hat OpenShift AI Hub interface with a left sidebar (#212427 dark background, navigation items including "AI Hub > MCP Catalog") and a main content area (#F0F0F0 light background). Show a 3x2 grid of MCP server cards featuring OpenShift, Ansible, Confluent, Dynatrace, Microsoft Azure and MongoDB. Each card displays: server name, provider logo area, one-line description, tier badge (Red Hat / Partner / Community) and a "Deploy" button in #EE0000 Red Hat Red. Use Red Hat Text for card body text, Red Hat Display for headings. 16:9 aspect ratio, clean enterprise UI style consistent with PatternFly design system.
-
-**Alt text**: The MCP Catalog in the Red Hat OpenShift AI Hub UI displaying MCP server cards organized by tier (Red Hat, partner and community), each with a deploy action, showing the governed path from discovery to deployment.
+**Alt text**: Flow diagram showing the four stages of the MCP server lifecycle in Red Hat OpenShift AI: select in the MCP Catalog, deploy via the MCP Lifecycle Operator, connect through the MCP Gateway and consume in gen AI studio.
 
 --------------------
 
@@ -76,25 +74,23 @@ The catalog ships with three tiers of MCP servers, each addressing real enterpri
 - **Microsoft Azure**: Enable agents to manage Azure resources, provision services and automate cloud operations alongside your OpenShift workloads.
 - **Dynatrace**: Bring full-stack observability into your agentic workflows. Agents can query performance data, investigate incidents and correlate metrics across your environment.
 
-**Two community MCP servers** round out the data tier:
+**Two community MCP servers** round out the data tier (Listed under Other MCP servers):
 
 - **MongoDB**: Query and manage document collections through your agents. Useful for RAG workflows and applications backed by unstructured or semi-structured data.
 - **MariaDB**: Relational database connectivity for agents that need to query and manage structured data stores.
 
-To put this in concrete terms: before the MCP Catalog, connecting Dynatrace to your agents meant finding a server on GitHub, building a container from source, debugging transport issues and configuring authentication, all before you could make a single tool call. Now, you select Dynatrace in the catalog and the Lifecycle Operator handles the rest.
+--------------------
+**[Figure 2: MCP Catalog in AI Hub]**
+
+**Placement rationale**: Shows the reader the catalog experience after the detailed server listings, including the AI Hub tabs, MCP server cards with partner branding and the deploy action path.
+
+**Alt text**: The MCP Catalog in the Red Hat OpenShift AI Hub UI displaying MCP server cards organized by tier (Red Hat, partner and other), each with a deploy action, showing the governed path from discovery to deployment.
+
+--------------------
+
+**To put this in concrete terms:** before the MCP Catalog, connecting any of these servers to your agents meant finding it on GitHub, building a container from source, debugging transport issues and configuring authentication, all before you could make a single tool call. Now, you select it in the catalog and the Lifecycle Operator handles the rest.
 
 **[Explore the MCP Lifecycle Operator on GitHub](https://github.com/kubernetes-sigs/mcp-lifecycle-operator)** to see how MCP servers are deployed and managed on Kubernetes.
-
---------------------
-**[Image Placeholder 2: Three-tier MCP ecosystem]**
-
-**Placement rationale**: Visually reinforces the three-tier structure (Red Hat, partner, community) and the breadth of use cases covered, giving the reader a scannable summary after the detailed listing.
-
-**Image generation prompt**: Clean horizontal three-column layout on #FFFFFF white background. Left column labeled "Red Hat" (#EE0000 header bar): three rows listing OpenShift, Ansible Automation Platform, Insights with text labels in Red Hat Text 400 weight. Center column labeled "Partners" (#0066CC header bar): five rows listing Confluent, EnterpriseDB, HashiCorp | an IBM Company, Microsoft, Dynatrace with text labels. Right column labeled "Community" (#3D7317 header bar): two rows listing MongoDB, MariaDB with text labels. Center title above columns: "MCP Catalog" in Red Hat Display 600 weight. Thin #D2D2D2 borders between columns. Each row is the same height with centered text. 16:9 wide aspect ratio for inline placement.
-
-**Alt text**: Diagram showing the three tiers of MCP servers shipping in the catalog: three Red Hat servers (OpenShift, Ansible Automation Platform, Insights), five partner servers (Confluent, EnterpriseDB, HashiCorp | an IBM Company, Microsoft, Dynatrace) and two community servers (MongoDB, MariaDB), illustrating the breadth of the day-one ecosystem.
-
---------------------
 
 ## Building the enterprise MCP ecosystem
 
