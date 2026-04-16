@@ -68,7 +68,7 @@ The catalog ships with three tiers of MCP servers, each addressing real enterpri
 
 **Five technology partner MCP servers** extend your agents into the broader enterprise stack:
 
-- **Confluent Kafka**: Connect agents to your event streams for topic management, pipeline monitoring and real-time data access. If your agentic workflows need to react to live data, this is the integration point.
+- **Confluent Cloud**: Allow AI to manage and debug data streaming operations on Kafka and Flink.
 - **EnterpriseDB (PostgreSQL)**: Connect agents to PostgreSQL databases for queries, schema management and database operations, powered by EDB's pg-airman-mcp server.
 - **HashiCorp | an IBM Company Terraform**: Let agents provision and manage infrastructure as code, bridging the gap between AI-driven decisions and infrastructure execution.
 - **Microsoft Azure**: Enable agents to manage Azure resources, provision services and automate cloud operations alongside your OpenShift workloads.
