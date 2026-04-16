@@ -31,7 +31,7 @@
 
 You have tried it. Pulled an MCP server from a GitHub repo, wrestled it into a container, sorted out authentication yourself and hoped it would hold up in production. That is the state of [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) adoption in the enterprise today: promising protocol, painful deployment.
 
-[Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai) 3.4 takes a different approach. We are introducing the **MCP Catalog** in Developer Preview, a curated catalog of MCP servers that you can discover, deploy and manage directly on [Red Hat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift). It ships pre-loaded with MCP servers from Red Hat, technology partners and the open source community, and we are actively adding more.
+[Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai) 3.4, part of the [Red Hat AI](https://www.redhat.com/en/artificial-intelligence) portfolio, takes a different approach. We are introducing the **MCP Catalog** in Developer Preview, a curated catalog of MCP servers that you can discover, deploy and manage directly on [Red Hat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift). It ships pre-loaded with MCP servers from Red Hat, technology partners and the open source community, and we are actively adding more.
 
 [**Try Red Hat OpenShift AI**](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai/trial) to explore the MCP Catalog yourself.
 

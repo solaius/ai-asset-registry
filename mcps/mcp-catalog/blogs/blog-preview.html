@@ -303,6 +303,36 @@
       font-style: italic;
     }
 
+    /* --- Actual images --- */
+    .article-wrap figure {
+      margin: 40px 0;
+    }
+    .article-wrap figure a {
+      display: block;
+      border: 1px solid #D2D2D2;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+    .article-wrap figure a:hover {
+      border-color: #0066CC;
+    }
+    .article-wrap figure img {
+      display: block;
+      width: 100%;
+      max-width: 720px;
+      height: auto;
+      margin: 0;
+      border-radius: 0;
+    }
+    .article-wrap figcaption {
+      font-size: 14px;
+      color: #6A6E73;
+      margin-top: 10px;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
     /* --- Three-tier diagram --- */
     .tier-diagram {
       margin: 40px 0;
@@ -470,7 +500,7 @@
 
     <p>You have tried it. Pulled an MCP server from a GitHub repo, wrestled it into a container, sorted out authentication yourself and hoped it would hold up in production. That is the state of <a href="https://modelcontextprotocol.io/">Model Context Protocol (MCP)</a> adoption in the enterprise today: promising protocol, painful deployment.</p>
 
-    <p><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai">Red Hat OpenShift AI</a> 3.4 takes a different approach. We are introducing the <strong>MCP Catalog</strong> in Developer Preview, a curated catalog of MCP servers that you can discover, deploy and manage directly on <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a>. It ships pre-loaded with MCP servers from Red Hat, technology partners and the open source community, and we are actively adding more.</p>
+    <p><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai">Red Hat OpenShift AI</a> 3.4, part of the <a href="https://www.redhat.com/en/artificial-intelligence">Red Hat AI</a> portfolio, takes a different approach. We are introducing the <strong>MCP Catalog</strong> in Developer Preview, a curated catalog of MCP servers that you can discover, deploy and manage directly on <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a>. It ships pre-loaded with MCP servers from Red Hat, technology partners and the open source community, and we are actively adding more.</p>
 
     <p><strong><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai/trial">Try Red Hat OpenShift AI</a></strong> to explore the MCP Catalog yourself.</p>
 
@@ -487,7 +517,9 @@
     <p>The result is a governed path from discovery to deployment to consumption. Select, deploy, connect.</p>
 
     <figure>
-      <img src="images/catalog-partners.png" alt="The MCP Catalog in the Red Hat OpenShift AI Hub UI displaying MCP server cards organized by tier (Red Hat, partner and other), each with a deploy action, showing the governed path from discovery to deployment.">
+      <a href="images/catalog-partners.png" target="_blank">
+        <img src="images/catalog-partners.png" alt="The MCP Catalog in the Red Hat OpenShift AI Hub UI displaying MCP server cards organized by tier (Red Hat, partner and other), each with a deploy action, showing the governed path from discovery to deployment.">
+      </a>
       <figcaption>Figure 1: The MCP Catalog in the Red Hat OpenShift AI Hub UI displaying MCP server cards organized by tier (Red Hat, partner and other), each with a deploy action, showing the governed path from discovery to deployment.</figcaption>
     </figure>
 
