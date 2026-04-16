@@ -1102,7 +1102,7 @@ const state = {
   currentView: 'list',        // 'list' | 'detail' | 'version'
   selectedServerId: null,      // MCP_SERVERS[].id
   selectedVersionNum: null,    // version number
-  featureToggle: false,        // false = 3.5 DP, true = 3.next
+  featureToggle: false,        // false = MVP, true = Future
   searchQuery: '',
   filterState: 'all',
   filterSource: 'all',
@@ -1239,13 +1239,13 @@ function renderSidebar() {
         <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 5h6M5 8h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         Prompts
       </div>
-      <div class="nav-item" onclick="navigateTo('gateway')">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M8 2a6 6 0 100 12A6 6 0 008 2z" stroke="currentColor" stroke-width="1.5"/><path d="M2 8h12M8 2c2 2 3 4 3 6s-1 4-3 6M8 2c-2 2-3 4-3 6s1 4 3 6" stroke="currentColor" stroke-width="1.5"/></svg>
-        AI Gateway
-      </div>
       <div class="nav-item active" onclick="navigateTo('mcp-servers')">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="5" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="9" width="12" height="5" rx="1.5" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="4.5" r="1" fill="currentColor"/><circle cx="5" cy="11.5" r="1" fill="currentColor"/></svg>
         MCP Servers
+      </div>
+      <div class="nav-item" onclick="navigateTo('gateway')">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M8 2a6 6 0 100 12A6 6 0 008 2z" stroke="currentColor" stroke-width="1.5"/><path d="M2 8h12M8 2c2 2 3 4 3 6s-1 4-3 6M8 2c-2 2-3 4-3 6s1 4 3 6" stroke="currentColor" stroke-width="1.5"/></svg>
+        AI Gateway
       </div>
     </div>
 
@@ -1281,13 +1281,13 @@ function renderListView() {
     ${is3next ? `
     <div class="next-banner">
       <div class="feature-toggle">
-        <span>3.5 DP</span>
+        <span>MVP</span>
         <div class="toggle-track on" onclick="toggleFeature()">
           <div class="toggle-thumb"></div>
         </div>
-        <span class="label-active">3.next</span>
+        <span class="label-active">Future</span>
       </div>
-      <span>Showing advanced governance features</span>
+      <span>Showing future governance features</span>
     </div>` : ''}
 
     <div class="page-header">
@@ -1302,11 +1302,11 @@ function renderListView() {
         <div class="title-actions">
           ${!is3next ? `
           <div class="feature-toggle">
-            <span class="label-active">3.5 DP</span>
+            <span class="label-active">MVP</span>
             <div class="toggle-track" onclick="toggleFeature()">
               <div class="toggle-thumb"></div>
             </div>
-            <span>3.next</span>
+            <span>Future</span>
           </div>` : ''}
           <button class="btn btn-primary" onclick="openRegisterModal()">
             <span style="font-size:15px;line-height:1;">+</span> Register MCP Server
@@ -1414,11 +1414,11 @@ function renderDetailView() {
     ${is3next ? `
     <div class="next-banner">
       <div class="feature-toggle">
-        <span>3.5 DP</span>
+        <span>MVP</span>
         <div class="toggle-track on" onclick="toggleFeature()"><div class="toggle-thumb"></div></div>
-        <span class="label-active">3.next</span>
+        <span class="label-active">Future</span>
       </div>
-      <span>Showing advanced governance features</span>
+      <span>Showing future governance features</span>
     </div>` : ''}
 
     <div class="page-header" style="border-bottom:1px solid var(--color-border-light);">
@@ -1438,9 +1438,9 @@ function renderDetailView() {
         <div class="title-actions">
           ${!is3next ? `
           <div class="feature-toggle">
-            <span class="label-active">3.5 DP</span>
+            <span class="label-active">MVP</span>
             <div class="toggle-track" onclick="toggleFeature()"><div class="toggle-thumb"></div></div>
-            <span>3.next</span>
+            <span>Future</span>
           </div>` : ''}
           <div class="lifecycle-dropdown-wrapper">
             <button class="lifecycle-btn" onclick="toggleLifecycleMenu('detail')">
@@ -1494,7 +1494,7 @@ function renderDetailView() {
           <div class="section-header" onclick="toggleSection('detail-gov')">
             ${CHEVRON_SVG}
             <h3>Governance Status</h3>
-            <span class="next-label">3.next</span>
+            <span class="next-label">Future</span>
           </div>
           <div class="section-content" id="section-detail-gov">
             <div class="governance-grid">
@@ -1643,7 +1643,7 @@ function renderDetailView() {
           <div class="section-header" onclick="toggleSection('detail-audit')">
             ${CHEVRON_SVG}
             <h3>Audit Trail</h3>
-            <span class="next-label">3.next</span>
+            <span class="next-label">Future</span>
           </div>
           <div class="section-content" id="section-detail-audit">
             <div class="audit-trail">
@@ -1708,11 +1708,11 @@ function renderVersionView() {
     ${is3next ? `
     <div class="next-banner">
       <div class="feature-toggle">
-        <span>3.5 DP</span>
+        <span>MVP</span>
         <div class="toggle-track on" onclick="toggleFeature()"><div class="toggle-thumb"></div></div>
-        <span class="label-active">3.next</span>
+        <span class="label-active">Future</span>
       </div>
-      <span>Showing advanced governance features</span>
+      <span>Showing future governance features</span>
     </div>` : ''}
 
     <div class="page-header" style="border-bottom:1px solid var(--color-border-light);">
@@ -1731,9 +1731,9 @@ function renderVersionView() {
         <div class="title-actions">
           ${!is3next ? `
           <div class="feature-toggle">
-            <span class="label-active">3.5 DP</span>
+            <span class="label-active">MVP</span>
             <div class="toggle-track" onclick="toggleFeature()"><div class="toggle-thumb"></div></div>
-            <span>3.next</span>
+            <span>Future</span>
           </div>` : ''}
           <div class="lifecycle-dropdown-wrapper">
             <button class="lifecycle-btn" onclick="toggleLifecycleMenu('version')">
