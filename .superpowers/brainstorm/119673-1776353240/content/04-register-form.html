@@ -1,0 +1,144 @@
+<h2>Section 4: Register MCP Server</h2>
+<p class="subtitle">Modal dialog for registering a new MCP server — follows MLflow's "Create Model" modal pattern but with MCP-specific fields</p>
+
+<div class="mockup">
+  <div class="mockup-header">Register MCP Server — Modal Dialog</div>
+  <div class="mockup-body" style="background:rgba(0,0,0,0.4); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size:13px; color:#11171C; line-height:20px; padding:40px; display:flex; align-items:flex-start; justify-content:center; min-height:620px;">
+
+    <!-- Modal -->
+    <div style="background:white; border-radius:8px; box-shadow:0px 8px 40px rgba(0,0,0,0.13); width:560px; max-height:600px; overflow-y:auto;">
+      <!-- Modal Header -->
+      <div style="padding:20px 24px 16px 24px; border-bottom:1px solid #E8ECF0; display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="margin:0; font-size:18px; font-weight:600; color:#11171C;">Register MCP Server</h3>
+        <button style="background:none; border:none; cursor:pointer; padding:4px; color:#8396A5; font-size:18px; line-height:1;">&times;</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div style="padding:20px 24px;">
+
+        <!-- Name -->
+        <div style="margin-bottom:20px;">
+          <label style="display:block; font-size:13px; font-weight:600; color:#11171C; margin-bottom:6px;">
+            Name <span style="color:#C82D4C;">*</span>
+          </label>
+          <input type="text" value="Confluent Kafka" style="width:100%; padding:8px 12px; height:36px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#11171C; outline:none;">
+          <div style="font-size:11px; color:#8396A5; margin-top:4px;">A unique name for this MCP server in the registry</div>
+        </div>
+
+        <!-- Description -->
+        <div style="margin-bottom:20px;">
+          <label style="display:block; font-size:13px; font-weight:600; color:#11171C; margin-bottom:6px;">
+            Description
+          </label>
+          <textarea rows="3" style="width:100%; padding:8px 12px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#11171C; outline:none; resize:vertical;" placeholder="Describe what this MCP server does...">Connect agents to your event streams for topic management, pipeline monitoring and real-time data access.</textarea>
+        </div>
+
+        <!-- Source Type -->
+        <div style="margin-bottom:20px;">
+          <label style="display:block; font-size:13px; font-weight:600; color:#11171C; margin-bottom:6px;">
+            Source Type <span style="color:#C82D4C;">*</span>
+          </label>
+          <div style="display:flex; border:1px solid #C0CDD8; border-radius:4px; overflow:hidden;">
+            <button style="flex:1; padding:8px; font-size:12px; background:#11171C; color:white; border:none; cursor:pointer; font-family:inherit;">Internal</button>
+            <button style="flex:1; padding:8px; font-size:12px; background:white; color:#5F7281; border:none; border-left:1px solid #C0CDD8; cursor:pointer; font-family:inherit;">External</button>
+          </div>
+          <div style="font-size:11px; color:#8396A5; margin-top:4px;">Internal: deployed in-cluster via Lifecycle Operator. External: hosted outside the cluster.</div>
+        </div>
+
+        <!-- server.json Upload / Paste -->
+        <div style="margin-bottom:20px;">
+          <label style="display:block; font-size:13px; font-weight:600; color:#11171C; margin-bottom:6px;">
+            MCP Server Definition (server.json) <span style="color:#C82D4C;">*</span>
+          </label>
+          <!-- Tab switcher -->
+          <div style="display:flex; gap:0; margin-bottom:8px;">
+            <button style="padding:6px 16px; font-size:12px; background:#F6F7F9; color:#11171C; border:1px solid #C0CDD8; border-bottom:2px solid #2272B4; border-radius:4px 4px 0 0; cursor:pointer; font-family:inherit; font-weight:600;">Paste JSON</button>
+            <button style="padding:6px 16px; font-size:12px; background:white; color:#5F7281; border:1px solid #C0CDD8; border-bottom:1px solid #C0CDD8; border-radius:4px 4px 0 0; cursor:pointer; font-family:inherit; margin-left:-1px;">Upload File</button>
+            <button style="padding:6px 16px; font-size:12px; background:white; color:#5F7281; border:1px solid #C0CDD8; border-bottom:1px solid #C0CDD8; border-radius:4px 4px 0 0; cursor:pointer; font-family:inherit; margin-left:-1px;">From URL</button>
+          </div>
+          <div style="border:1px solid #C0CDD8; border-top:none; border-radius:0 0 4px 4px; background:#1F272D; padding:12px; font-family:'Cascadia Code', 'Fira Code', monospace; font-size:12px; color:#E8ECF0; line-height:1.6; max-height:140px; overflow-y:auto;">
+<span style="color:#8396A5;">{</span>
+  <span style="color:#4299E0;">"name"</span>: <span style="color:#3CAA60;">"confluent-kafka"</span>,
+  <span style="color:#4299E0;">"version"</span>: <span style="color:#3CAA60;">"2.0.0"</span>,
+  <span style="color:#4299E0;">"description"</span>: <span style="color:#3CAA60;">"Kafka MCP Server"</span>,
+  <span style="color:#4299E0;">"tools"</span>: <span style="color:#8396A5;">[</span>
+    <span style="color:#8396A5;">{</span> <span style="color:#4299E0;">"name"</span>: <span style="color:#3CAA60;">"list_topics"</span>, ... <span style="color:#8396A5;">}</span>,
+    <span style="color:#8396A5;">{</span> <span style="color:#4299E0;">"name"</span>: <span style="color:#3CAA60;">"produce_message"</span>, ... <span style="color:#8396A5;">}</span>
+  <span style="color:#8396A5;">]</span>
+<span style="color:#8396A5;">}</span>
+          </div>
+          <div style="font-size:11px; color:#8396A5; margin-top:4px;">The canonical MCP server payload. This becomes immutable once registered.</div>
+        </div>
+
+        <!-- Initial Tags -->
+        <div style="margin-bottom:20px;">
+          <label style="display:block; font-size:13px; font-weight:600; color:#11171C; margin-bottom:6px;">
+            Tags
+          </label>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+            <span style="display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:4px; font-size:12px; background:rgba(0,0,59,0.05); color:#11171C;">
+              streaming <button style="background:none; border:none; color:#8396A5; cursor:pointer; font-size:14px; line-height:1; padding:0 2px;">&times;</button>
+            </span>
+            <span style="display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:4px; font-size:12px; background:rgba(0,0,59,0.05); color:#11171C;">
+              data <button style="background:none; border:none; color:#8396A5; cursor:pointer; font-size:14px; line-height:1; padding:0 2px;">&times;</button>
+            </span>
+            <input type="text" placeholder="Add tag..." style="padding:3px 8px; border:1px dashed #C0CDD8; border-radius:4px; font-size:12px; font-family:inherit; color:#11171C; outline:none; width:80px;">
+          </div>
+        </div>
+
+        <!-- Initial Version (informational) -->
+        <div style="margin-bottom:8px; padding:12px; background:#F6F7F9; border-radius:4px; display:flex; align-items:center; gap:10px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#2272B4" stroke-width="1.5"/><path d="M8 6v1.5M8 10h.01" stroke="#2272B4" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span style="font-size:12px; color:#445461;">This will create <strong>Version 1</strong> in <strong>Draft</strong> state. You can publish it after review.</span>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div style="padding:16px 24px; border-top:1px solid #E8ECF0; display:flex; justify-content:flex-end; gap:8px;">
+        <button style="padding:0 16px; height:32px; border-radius:4px; font-size:13px; background:white; color:#11171C; border:1px solid #C0CDD8; cursor:pointer; font-family:inherit;">Cancel</button>
+        <button style="padding:0 16px; height:32px; border-radius:4px; font-size:13px; background:#2272B4; color:white; border:none; cursor:pointer; font-family:inherit;">Register</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <h3>Design Decisions</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Modal dialog</strong> — matches MLflow's "Create Model" pattern (not a separate page)</li>
+    <li><strong>Fields:</strong> Name (required), Description, Source Type toggle (Internal/External), server.json definition (required), Tags</li>
+    <li><strong>server.json input</strong> — three methods: Paste JSON, Upload File, From URL. This is MCP-specific (MLflow has a simple name+description form)</li>
+    <li><strong>Syntax-highlighted JSON preview</strong> in a dark code editor block — shows the server definition clearly</li>
+    <li><strong>Internal/External toggle</strong> — segmented control distinguishing in-cluster (Lifecycle Operator) vs external MCPs</li>
+    <li><strong>Info banner</strong> — tells the user what will happen ("creates Version 1 in Draft state")</li>
+    <li><strong>Immutability note</strong> — server.json becomes immutable once registered (key data model invariant)</li>
+  </ul>
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <h3>3.next Additions</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Workspace selector</strong> — choose which workspace/scope to register in</li>
+    <li><strong>Auto-submit for approval</strong> checkbox — "Submit for approval after registration"</li>
+    <li><strong>Policy association</strong> — link governance policies at registration time</li>
+    <li><strong>Source verification</strong> — verify source repo/image before accepting</li>
+  </ul>
+</div>
+
+<div class="options" style="margin-top:24px;">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">&#10003;</div>
+    <div class="content">
+      <h3>Looks good — move to Section 5 (Version Detail)</h3>
+      <p>Registration form and modal layout work</p>
+    </div>
+  </div>
+  <div class="option" data-choice="revise" onclick="toggleSelect(this)">
+    <div class="letter">&#8635;</div>
+    <div class="content">
+      <h3>Needs changes</h3>
+      <p>Tell me what to adjust in the terminal</p>
+    </div>
+  </div>
+</div>

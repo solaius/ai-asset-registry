@@ -1,0 +1,320 @@
+<h2>Section 2: MCP Server List Table</h2>
+<p class="subtitle">Main registry view — all 10 MCP servers with lifecycle states, versions, and metadata</p>
+
+<div class="mockup">
+  <div class="mockup-header">MCP Servers — List View (3.5 DP scope)</div>
+  <div class="mockup-body" style="background:#fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size:13px; color:#11171C; line-height:20px; padding:0; overflow-x:auto;">
+
+    <!-- Search/Filter bar -->
+    <div style="padding:16px 20px; display:flex; gap:8px; border-bottom:1px solid #E8ECF0;">
+      <div style="flex:1; position:relative;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="position:absolute; left:10px; top:9px;"><circle cx="6" cy="6" r="4.5" stroke="#8396A5" stroke-width="1.5"/><path d="M9.5 9.5L13 13" stroke="#8396A5" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <input type="text" placeholder="Search MCP servers..." style="width:100%; padding:6px 12px 6px 30px; height:32px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#11171C; outline:none;">
+      </div>
+      <select style="padding:6px 12px; height:32px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#5F7281; background:white;">
+        <option>All States</option>
+        <option>Published</option>
+        <option>Draft</option>
+        <option>Deprecated</option>
+      </select>
+      <select style="padding:6px 12px; height:32px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#5F7281; background:white;">
+        <option>All Sources</option>
+        <option>Red Hat</option>
+        <option>Partner</option>
+        <option>Community</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+      <thead>
+        <tr style="border-bottom:1px solid #E8ECF0; background:#FAFBFC;">
+          <th style="text-align:left; padding:10px 16px; font-weight:600; color:#5F7281; font-size:12px; white-space:nowrap;">Name</th>
+          <th style="text-align:left; padding:10px 12px; font-weight:600; color:#5F7281; font-size:12px; white-space:nowrap;">Latest Version</th>
+          <th style="text-align:left; padding:10px 12px; font-weight:600; color:#5F7281; font-size:12px; white-space:nowrap;">Lifecycle State</th>
+          <th style="text-align:left; padding:10px 12px; font-weight:600; color:#5F7281; font-size:12px; white-space:nowrap;">Source</th>
+          <th style="text-align:left; padding:10px 12px; font-weight:600; color:#5F7281; font-size:12px; white-space:nowrap;">Tools</th>
+          <th style="text-align:left; padding:10px 12px; font-weight:600; color:#5F7281; font-size:12px; white-space:nowrap;">Last Modified</th>
+          <th style="text-align:left; padding:10px 12px; font-weight:600; color:#5F7281; font-size:12px; white-space:nowrap;">Tags</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Red Hat OpenShift -->
+        <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <td style="padding:12px 16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:24px; height:24px; background:#EE0000; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                <span style="color:white; font-size:11px; font-weight:700;">RH</span>
+              </div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">Red Hat OpenShift</a>
+            </div>
+          </td>
+          <td style="padding:12px 12px; color:#11171C;">v3</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; align-items:center; padding:2px 8px; border-radius:4px; font-size:12px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+          </td>
+          <td style="padding:12px 12px; color:#5F7281;">Red Hat</td>
+          <td style="padding:12px 12px; color:#5F7281;">12</td>
+          <td style="padding:12px 12px; color:#5F7281;">2 hours ago</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C; margin-right:4px;">infrastructure</span>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">kubernetes</span>
+          </td>
+        </tr>
+        <!-- Ansible -->
+        <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <td style="padding:12px 16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:24px; height:24px; background:#EE0000; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                <span style="color:white; font-size:11px; font-weight:700;">RH</span>
+              </div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">Red Hat Ansible Automation Platform</a>
+            </div>
+          </td>
+          <td style="padding:12px 12px; color:#11171C;">v2</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; align-items:center; padding:2px 8px; border-radius:4px; font-size:12px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+          </td>
+          <td style="padding:12px 12px; color:#5F7281;">Red Hat</td>
+          <td style="padding:12px 12px; color:#5F7281;">8</td>
+          <td style="padding:12px 12px; color:#5F7281;">1 day ago</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C; margin-right:4px;">automation</span>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">playbooks</span>
+          </td>
+        </tr>
+        <!-- Insights -->
+        <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <td style="padding:12px 16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:24px; height:24px; background:#EE0000; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                <span style="color:white; font-size:11px; font-weight:700;">RH</span>
+              </div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">Red Hat Insights</a>
+            </div>
+          </td>
+          <td style="padding:12px 12px; color:#11171C;">v1</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; align-items:center; padding:2px 8px; border-radius:4px; font-size:12px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+          </td>
+          <td style="padding:12px 12px; color:#5F7281;">Red Hat</td>
+          <td style="padding:12px 12px; color:#5F7281;">6</td>
+          <td style="padding:12px 12px; color:#5F7281;">3 days ago</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C; margin-right:4px;">observability</span>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">advisories</span>
+          </td>
+        </tr>
+        <!-- Confluent Kafka -->
+        <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <td style="padding:12px 16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:24px; height:24px; background:#1F1C4F; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                <span style="color:white; font-size:11px; font-weight:700;">CK</span>
+              </div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">Confluent Kafka</a>
+            </div>
+          </td>
+          <td style="padding:12px 12px; color:#11171C;">v2</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; align-items:center; padding:2px 8px; border-radius:4px; font-size:12px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+          </td>
+          <td style="padding:12px 12px; color:#5F7281;">Partner</td>
+          <td style="padding:12px 12px; color:#5F7281;">9</td>
+          <td style="padding:12px 12px; color:#5F7281;">5 days ago</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C; margin-right:4px;">streaming</span>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">data</span>
+          </td>
+        </tr>
+        <!-- EnterpriseDB -->
+        <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <td style="padding:12px 16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:24px; height:24px; background:#FF6A00; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                <span style="color:white; font-size:11px; font-weight:700;">ED</span>
+              </div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">EnterpriseDB (PostgreSQL)</a>
+            </div>
+          </td>
+          <td style="padding:12px 12px; color:#11171C;">v1</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; align-items:center; padding:2px 8px; border-radius:4px; font-size:12px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+          </td>
+          <td style="padding:12px 12px; color:#5F7281;">Partner</td>
+          <td style="padding:12px 12px; color:#5F7281;">7</td>
+          <td style="padding:12px 12px; color:#5F7281;">1 week ago</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C; margin-right:4px;">database</span>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">sql</span>
+          </td>
+        </tr>
+        <!-- HashiCorp Terraform -->
+        <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <td style="padding:12px 16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:24px; height:24px; background:#7B42BC; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                <span style="color:white; font-size:11px; font-weight:700;">HC</span>
+              </div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">HashiCorp Terraform</a>
+            </div>
+          </td>
+          <td style="padding:12px 12px; color:#11171C;">v1</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; align-items:center; padding:2px 8px; border-radius:4px; font-size:12px; background:rgba(0,0,59,0.05); color:#11171C;">Draft</span>
+          </td>
+          <td style="padding:12px 12px; color:#5F7281;">Partner</td>
+          <td style="padding:12px 12px; color:#5F7281;">14</td>
+          <td style="padding:12px 12px; color:#5F7281;">2 weeks ago</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C; margin-right:4px;">iac</span>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">provisioning</span>
+          </td>
+        </tr>
+        <!-- Microsoft Azure -->
+        <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <td style="padding:12px 16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:24px; height:24px; background:#0078D4; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                <span style="color:white; font-size:11px; font-weight:700;">Az</span>
+              </div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">Microsoft Azure</a>
+            </div>
+          </td>
+          <td style="padding:12px 12px; color:#11171C;">v2</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; align-items:center; padding:2px 8px; border-radius:4px; font-size:12px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+          </td>
+          <td style="padding:12px 12px; color:#5F7281;">Partner</td>
+          <td style="padding:12px 12px; color:#5F7281;">11</td>
+          <td style="padding:12px 12px; color:#5F7281;">4 days ago</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C; margin-right:4px;">cloud</span>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">azure</span>
+          </td>
+        </tr>
+        <!-- Dynatrace -->
+        <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <td style="padding:12px 16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:24px; height:24px; background:#1496FF; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                <span style="color:white; font-size:11px; font-weight:700;">DT</span>
+              </div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">Dynatrace</a>
+            </div>
+          </td>
+          <td style="padding:12px 12px; color:#11171C;">v1</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; align-items:center; padding:2px 8px; border-radius:4px; font-size:12px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+          </td>
+          <td style="padding:12px 12px; color:#5F7281;">Partner</td>
+          <td style="padding:12px 12px; color:#5F7281;">10</td>
+          <td style="padding:12px 12px; color:#5F7281;">6 days ago</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C; margin-right:4px;">observability</span>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">apm</span>
+          </td>
+        </tr>
+        <!-- MongoDB -->
+        <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <td style="padding:12px 16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:24px; height:24px; background:#00684A; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                <span style="color:white; font-size:11px; font-weight:700;">MG</span>
+              </div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">MongoDB</a>
+            </div>
+          </td>
+          <td style="padding:12px 12px; color:#11171C;">v1</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; align-items:center; padding:2px 8px; border-radius:4px; font-size:12px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+          </td>
+          <td style="padding:12px 12px; color:#5F7281;">Community</td>
+          <td style="padding:12px 12px; color:#5F7281;">5</td>
+          <td style="padding:12px 12px; color:#5F7281;">1 week ago</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C; margin-right:4px;">database</span>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">nosql</span>
+          </td>
+        </tr>
+        <!-- MariaDB -->
+        <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <td style="padding:12px 16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:24px; height:24px; background:#003545; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                <span style="color:white; font-size:11px; font-weight:700;">MD</span>
+              </div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">MariaDB</a>
+            </div>
+          </td>
+          <td style="padding:12px 12px; color:#11171C;">v1</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; align-items:center; padding:2px 8px; border-radius:4px; font-size:12px; background:rgba(255,191,1,0.18); color:#4F3422;">Deprecated</span>
+          </td>
+          <td style="padding:12px 12px; color:#5F7281;">Community</td>
+          <td style="padding:12px 12px; color:#5F7281;">4</td>
+          <td style="padding:12px 12px; color:#5F7281;">3 weeks ago</td>
+          <td style="padding:12px 12px;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C; margin-right:4px;">database</span>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">relational</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div style="padding:12px 16px; border-top:1px solid #E8ECF0; display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-size:12px; color:#5F7281;">Showing 1-10 of 10 MCP servers</span>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:12px; color:#5F7281;">Rows per page:</span>
+        <select style="padding:2px 8px; height:28px; border:1px solid #C0CDD8; border-radius:4px; font-size:12px; font-family:inherit; color:#11171C; background:white;">
+          <option>10</option>
+          <option>25</option>
+          <option>50</option>
+          <option>100</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <h3>Table Design Decisions</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Columns</strong> follow MLflow's model registry pattern: Name (with icon + link), Latest Version, Lifecycle State, then MCP-specific columns (Source, Tools count, Tags)</li>
+    <li><strong>Name column</strong> — brand-colored icon + clickable link (matches MLflow model names)</li>
+    <li><strong>Lifecycle State badges</strong> — DuBois Tag component colors: <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span> (lime), <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">Draft</span> (default), <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(255,191,1,0.18); color:#4F3422;">Deprecated</span> (lemon)</li>
+    <li><strong>Source column</strong> — Red Hat / Partner / Community (MCP-specific, no MLflow equivalent)</li>
+    <li><strong>Tools column</strong> — count of tools exposed by the MCP server (MCP-specific)</li>
+    <li><strong>Row hover</strong> — subtle background tint matching DuBois table hover</li>
+    <li><strong>Data variety</strong> — most Published, one Draft (Terraform), one Deprecated (MariaDB) to show state diversity</li>
+  </ul>
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <h3>3.next Additions (when toggle is ON)</h3>
+  <p style="color:#5F7281;">These columns/badges would appear when the 3.next feature toggle is enabled:</p>
+  <ul style="line-height:1.9;">
+    <li><strong>Approval Status</strong> column — Pending / Approved / Rejected badges</li>
+    <li><strong>Verification</strong> badge on name — checkmark for verified sources</li>
+    <li><strong>Certification</strong> badge — "Certified" tag for compliance-approved MCPs</li>
+    <li><strong>Deployed</strong> indicator — icon showing if an active deployment exists</li>
+  </ul>
+</div>
+
+<div class="options" style="margin-top:24px;">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">&#10003;</div>
+    <div class="content">
+      <h3>Looks good — move to Section 3 (Detail View)</h3>
+      <p>Table layout, columns, and badge styling work</p>
+    </div>
+  </div>
+  <div class="option" data-choice="revise" onclick="toggleSelect(this)">
+    <div class="letter">&#8635;</div>
+    <div class="content">
+      <h3>Needs changes</h3>
+      <p>Tell me what to adjust in the terminal</p>
+    </div>
+  </div>
+</div>

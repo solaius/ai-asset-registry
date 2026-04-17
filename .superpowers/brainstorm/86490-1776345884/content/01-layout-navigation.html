@@ -1,0 +1,113 @@
+<h2>Section 1: Overall Layout & Navigation</h2>
+<p class="subtitle">MLflow app shell with MCP Registry as a first-class navigation item</p>
+
+<div class="mockup">
+  <div class="mockup-header">MLflow UI Shell — MCP Registry Active</div>
+  <div class="mockup-body" style="display:flex; min-height:500px; background:#fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:13px; color:#1a1a2e;">
+
+    <!-- Left Sidebar -->
+    <div style="width:200px; background:#f5f3ff; border-right:1px solid #e8e0ff; padding:0; flex-shrink:0; display:flex; flex-direction:column;">
+      <!-- Logo -->
+      <div style="padding:16px 20px; border-bottom:1px solid #e8e0ff; display:flex; align-items:center; gap:8px;">
+        <div style="width:28px; height:28px; background:#7B3FE4; border-radius:6px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; font-size:14px;">M</div>
+        <span style="font-weight:600; font-size:15px; color:#1a1a2e;">MLflow</span>
+      </div>
+      <!-- Nav Items -->
+      <div style="padding:12px 0; flex:1;">
+        <div style="padding:8px 20px; color:#666; display:flex; align-items:center; gap:10px; cursor:pointer;">
+          <span style="font-size:16px;">📊</span> Experiments
+        </div>
+        <div style="padding:8px 20px; color:#666; display:flex; align-items:center; gap:10px; cursor:pointer;">
+          <span style="font-size:16px;">📦</span> Models
+        </div>
+        <div style="padding:8px 20px; background:#ede7fb; color:#7B3FE4; font-weight:600; border-right:3px solid #7B3FE4; display:flex; align-items:center; gap:10px; cursor:pointer;">
+          <span style="font-size:16px;">🔌</span> MCP Servers
+        </div>
+        <div style="padding:8px 20px; color:#666; display:flex; align-items:center; gap:10px; cursor:pointer;">
+          <span style="font-size:16px;">🚀</span> Deployments
+        </div>
+        <div style="padding:8px 20px; color:#666; display:flex; align-items:center; gap:10px; cursor:pointer;">
+          <span style="font-size:16px;">⚡</span> Prompts
+        </div>
+        <hr style="margin:8px 20px; border:none; border-top:1px solid #e8e0ff;">
+        <div style="padding:8px 20px; color:#999; font-size:11px; text-transform:uppercase; letter-spacing:1px;">Settings</div>
+        <div style="padding:8px 20px; color:#666; display:flex; align-items:center; gap:10px; cursor:pointer;">
+          <span style="font-size:16px;">⚙️</span> Configuration
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div style="flex:1; display:flex; flex-direction:column;">
+      <!-- Top Bar -->
+      <div style="padding:10px 24px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; background:#fafafa;">
+        <!-- Breadcrumb -->
+        <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+          <span style="color:#999;">MLflow</span>
+          <span style="color:#ccc;">/</span>
+          <span style="font-weight:600; color:#1a1a2e;">MCP Servers</span>
+        </div>
+        <!-- Feature Toggle -->
+        <div style="display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #e0e0e0; border-radius:20px; padding:4px 12px; font-size:12px;">
+          <span style="color:#666;">3.5 DP</span>
+          <div style="width:36px; height:20px; background:#ccc; border-radius:10px; position:relative; cursor:pointer;">
+            <div style="width:16px; height:16px; background:white; border-radius:50%; position:absolute; top:2px; left:2px; box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>
+          </div>
+          <span style="color:#999;">3.next</span>
+        </div>
+      </div>
+
+      <!-- Content Area Preview -->
+      <div style="flex:1; padding:24px; background:#fff;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <h2 style="margin:0; font-size:22px; font-weight:600; color:#1a1a2e;">Registered MCP Servers</h2>
+          <button style="background:#7B3FE4; color:white; border:none; padding:8px 16px; border-radius:6px; font-size:13px; font-weight:500; cursor:pointer;">+ Register MCP Server</button>
+        </div>
+        <!-- Search/Filter bar -->
+        <div style="display:flex; gap:12px; margin-bottom:16px;">
+          <input type="text" placeholder="Search MCP servers..." style="flex:1; padding:8px 12px; border:1px solid #ddd; border-radius:6px; font-size:13px; outline:none;">
+          <select style="padding:8px 12px; border:1px solid #ddd; border-radius:6px; font-size:13px; color:#666; background:white;">
+            <option>All States</option>
+          </select>
+          <select style="padding:8px 12px; border:1px solid #ddd; border-radius:6px; font-size:13px; color:#666; background:white;">
+            <option>All Types</option>
+          </select>
+        </div>
+        <!-- Table hint -->
+        <div style="background:#f9f9f9; border:1px solid #eee; border-radius:8px; padding:40px; text-align:center; color:#999;">
+          <p style="margin:0;">MCP Server list table goes here</p>
+          <p style="margin:4px 0 0; font-size:12px;">(Covered in Section 2)</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <h3>Key Design Decisions</h3>
+  <ul style="line-height:1.8;">
+    <li><strong>Left sidebar:</strong> "MCP Servers" sits alongside Models, Experiments, Deployments, Prompts — showing MCPs as a peer asset type in MLflow</li>
+    <li><strong>Feature toggle:</strong> Top-right pill toggle switches between "3.5 DP" and "3.next" — unobtrusive but always accessible</li>
+    <li><strong>Purple accent (#7B3FE4):</strong> MLflow's signature color for active states and primary actions</li>
+    <li><strong>Breadcrumb nav:</strong> MLflow → MCP Servers → [Server Name] → [Version] for drill-down context</li>
+    <li><strong>"Register MCP Server":</strong> Primary action button, parallels MLflow's "Create Model" pattern</li>
+  </ul>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>Looks good, move to next section</h3>
+      <p>Layout and navigation structure works</p>
+    </div>
+  </div>
+  <div class="option" data-choice="revise" onclick="toggleSelect(this)">
+    <div class="letter">↻</div>
+    <div class="content">
+      <h3>Needs changes</h3>
+      <p>Tell me what to adjust in the terminal</p>
+    </div>
+  </div>
+</div>

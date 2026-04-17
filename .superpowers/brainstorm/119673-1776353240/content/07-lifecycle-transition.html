@@ -1,0 +1,151 @@
+<h2>Section 7: Lifecycle State Transitions</h2>
+<p class="subtitle">The dropdown and confirmation modal for changing lifecycle state — mirrors MLflow's stage transition pattern</p>
+
+<div class="split">
+  <!-- LEFT: The dropdown -->
+  <div class="mockup">
+    <div class="mockup-header">Lifecycle Dropdown (Open)</div>
+    <div class="mockup-body" style="background:#fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size:13px; color:#11171C; line-height:20px; padding:24px; min-height:320px; position:relative;">
+
+      <!-- Current state button -->
+      <div style="display:inline-flex; align-items:center; gap:6px; border:1px solid #2272B4; border-radius:4px; padding:6px 12px; cursor:pointer; background:rgba(34,114,180,0.04);">
+        <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">Draft</span>
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#2272B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <!-- Dropdown menu -->
+      <div style="position:absolute; top:60px; left:24px; width:260px; background:white; border:1px solid #D1D9E1; border-radius:6px; box-shadow:0px 2px 16px rgba(0,0,0,0.08); z-index:10;">
+        <div style="padding:8px 12px; font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #F0F2F4;">
+          Transition to
+        </div>
+        <!-- Published -->
+        <div style="padding:10px 12px; display:flex; align-items:center; gap:10px; cursor:pointer; border-bottom:1px solid #F0F2F4;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-6" stroke="#203C25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+            <div style="font-size:11px; color:#8396A5; margin-top:2px;">Make available for consumption</div>
+          </div>
+        </div>
+        <!-- Deprecated -->
+        <div style="padding:10px 12px; display:flex; align-items:center; gap:10px; cursor:pointer; border-bottom:1px solid #F0F2F4;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 4v3M7 9h.01" stroke="#4F3422" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(255,191,1,0.18); color:#4F3422;">Deprecated</span>
+            <div style="font-size:11px; color:#8396A5; margin-top:2px;">Mark as superseded, still accessible</div>
+          </div>
+        </div>
+        <!-- Retired -->
+        <div style="padding:10px 12px; display:flex; align-items:center; gap:10px; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="#E8ECF0" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div>
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:#37444F; color:#E8ECF0;">Retired</span>
+            <div style="font-size:11px; color:#8396A5; margin-top:2px;">Remove from active use</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- State flow diagram -->
+      <div style="margin-top:200px; padding:16px; background:#F6F7F9; border-radius:6px;">
+        <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">Valid Transitions</div>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span style="padding:2px 8px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">Draft</span>
+          <span style="color:#C0CDD8;">→</span>
+          <span style="padding:2px 8px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+          <span style="color:#C0CDD8;">→</span>
+          <span style="padding:2px 8px; border-radius:4px; font-size:11px; background:rgba(255,191,1,0.18); color:#4F3422;">Deprecated</span>
+          <span style="color:#C0CDD8;">→</span>
+          <span style="padding:2px 8px; border-radius:4px; font-size:11px; background:#37444F; color:#E8ECF0;">Retired</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Confirmation modal -->
+  <div class="mockup">
+    <div class="mockup-header">Transition Confirmation Modal</div>
+    <div class="mockup-body" style="background:rgba(0,0,0,0.4); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size:13px; color:#11171C; line-height:20px; padding:40px 20px; display:flex; align-items:flex-start; justify-content:center; min-height:380px;">
+
+      <!-- Modal -->
+      <div style="background:white; border-radius:8px; box-shadow:0px 8px 40px rgba(0,0,0,0.13); width:420px;">
+        <!-- Header -->
+        <div style="padding:20px 24px 16px; border-bottom:1px solid #E8ECF0; display:flex; justify-content:space-between; align-items:center;">
+          <h3 style="margin:0; font-size:16px; font-weight:600;">Transition Lifecycle State</h3>
+          <button style="background:none; border:none; cursor:pointer; color:#8396A5; font-size:18px;">&times;</button>
+        </div>
+
+        <!-- Body -->
+        <div style="padding:20px 24px;">
+          <!-- Transition visualization -->
+          <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:20px; padding:16px; background:#F6F7F9; border-radius:6px;">
+            <span style="padding:3px 10px; border-radius:4px; font-size:12px; background:rgba(0,0,59,0.05); color:#11171C; font-weight:500;">Draft</span>
+            <svg width="20" height="14" viewBox="0 0 20 14" fill="none"><path d="M2 7h16M14 3l4 4-4 4" stroke="#2272B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span style="padding:3px 10px; border-radius:4px; font-size:12px; background:rgba(2,179,2,0.08); color:#203C25; font-weight:500;">Published</span>
+          </div>
+
+          <!-- Info alert -->
+          <div style="padding:12px; border-left:3px solid #2272B4; background:rgba(34,114,180,0.04); border-radius:0 4px 4px 0; margin-bottom:16px;">
+            <div style="font-size:12px; color:#445461; line-height:1.5;">
+              Publishing this version will make it available for consumption through the catalog and Gen AI Studio. Other published versions of this MCP server will remain published.
+            </div>
+          </div>
+
+          <!-- Comment -->
+          <div style="margin-bottom:16px;">
+            <label style="display:block; font-size:12px; font-weight:600; color:#11171C; margin-bottom:6px;">Comment (optional)</label>
+            <textarea rows="2" placeholder="Reason for this transition..." style="width:100%; padding:8px 12px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#11171C; outline:none; resize:vertical;"></textarea>
+          </div>
+
+          <!-- Deprecate previous checkbox -->
+          <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; color:#445461; cursor:pointer;">
+            <input type="checkbox" style="margin-top:2px; accent-color:#2272B4;">
+            <span>Deprecate all other published versions of this MCP server</span>
+          </label>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding:16px 24px; border-top:1px solid #E8ECF0; display:flex; justify-content:flex-end; gap:8px;">
+          <button style="padding:0 16px; height:32px; border-radius:4px; font-size:13px; background:white; color:#11171C; border:1px solid #C0CDD8; cursor:pointer; font-family:inherit;">Cancel</button>
+          <button style="padding:0 16px; height:32px; border-radius:4px; font-size:13px; background:#2272B4; color:white; border:none; cursor:pointer; font-family:inherit;">Publish</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <h3>Design Decisions</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Dropdown</strong> mirrors MLflow's stage transition dropdown — current state badge + chevron, opens a menu showing valid target states with descriptions</li>
+    <li><strong>Only valid transitions shown</strong> — Draft can go to Published; Published can go to Deprecated; Deprecated can go to Retired. Invalid paths are not offered.</li>
+    <li><strong>Confirmation modal</strong> — matches MLflow's transition confirmation with: visual state change arrow, info alert explaining impact, optional comment, and checkbox to deprecate previous versions</li>
+    <li><strong>"Deprecate all other published versions"</strong> checkbox — mirrors MLflow's "archive existing versions in Production" pattern</li>
+    <li><strong>Context-sensitive button label</strong> — "Publish" when transitioning to Published, "Deprecate" when deprecating, etc.</li>
+  </ul>
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <h3>3.next Additions</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Candidate state</strong> — between Draft and Published, requiring approval before publishing</li>
+    <li><strong>Approval gate</strong> — "Submit for Approval" button instead of direct "Publish" when approval workflow is enabled</li>
+    <li><strong>Required comment</strong> — comment becomes mandatory for certain transitions (Deprecate, Retire)</li>
+  </ul>
+</div>
+
+<div class="options" style="margin-top:24px;">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">&#10003;</div>
+    <div class="content">
+      <h3>Looks good — all sections covered, ready for design doc</h3>
+      <p>Lifecycle transitions and confirmation flow work</p>
+    </div>
+  </div>
+  <div class="option" data-choice="revise" onclick="toggleSelect(this)">
+    <div class="letter">&#8635;</div>
+    <div class="content">
+      <h3>Needs changes</h3>
+      <p>Tell me what to adjust in the terminal</p>
+    </div>
+  </div>
+</div>

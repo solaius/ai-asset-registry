@@ -1,0 +1,228 @@
+<h2>Section 6: 3.next Features (Toggle ON)</h2>
+<p class="subtitle">What appears across all views when the "3.next" toggle is enabled — governance tracks, approval workflows, and deployment integration</p>
+
+<!-- PART 1: List Table Additions -->
+<div class="mockup">
+  <div class="mockup-header">List View — Additional Columns When 3.next is ON</div>
+  <div class="mockup-body" style="background:#fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size:13px; color:#11171C; line-height:20px; padding:0; overflow-x:auto;">
+
+    <!-- Toggle indicator -->
+    <div style="padding:10px 16px; background:linear-gradient(135deg, rgba(66,153,224,0.06) 20%, rgba(202,66,224,0.06) 35%, rgba(255,95,70,0.06) 50%, transparent 80%); border-bottom:1px solid #E8ECF0; display:flex; align-items:center; gap:8px;">
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px;">
+        <span style="color:#5F7281;">3.5 DP</span>
+        <div style="width:36px; height:20px; background:#2272B4; border-radius:10px; position:relative;">
+          <div style="width:16px; height:16px; background:white; border-radius:50%; position:absolute; top:2px; right:2px; box-shadow:0 1px 2px rgba(0,0,0,0.15);"></div>
+        </div>
+        <span style="font-weight:600; color:#11171C;">3.next</span>
+      </div>
+      <span style="font-size:11px; color:#8396A5; margin-left:8px;">Showing advanced governance features</span>
+    </div>
+
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+      <thead>
+        <tr style="border-bottom:1px solid #E8ECF0; background:#FAFBFC;">
+          <th style="text-align:left; padding:10px 12px; font-weight:600; color:#5F7281; font-size:12px;">Name</th>
+          <th style="text-align:left; padding:10px 12px; font-weight:600; color:#5F7281; font-size:12px;">Version</th>
+          <th style="text-align:left; padding:10px 12px; font-weight:600; color:#5F7281; font-size:12px;">Lifecycle</th>
+          <th style="text-align:left; padding:10px 10px; font-weight:600; color:#CA42E0; font-size:12px; border-left:2px solid rgba(202,66,224,0.2);">Approval</th>
+          <th style="text-align:left; padding:10px 10px; font-weight:600; color:#CA42E0; font-size:12px;">Verified</th>
+          <th style="text-align:left; padding:10px 10px; font-weight:600; color:#CA42E0; font-size:12px;">Certified</th>
+          <th style="text-align:left; padding:10px 10px; font-weight:600; color:#CA42E0; font-size:12px;">Deployed</th>
+          <th style="text-align:left; padding:10px 12px; font-weight:600; color:#5F7281; font-size:12px;">Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #F0F2F4;">
+          <td style="padding:10px 12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:22px; height:22px; background:#EE0000; border-radius:4px; display:flex; align-items:center; justify-content:center;"><span style="color:white; font-size:10px; font-weight:700;">RH</span></div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">Red Hat OpenShift</a>
+            </div>
+          </td>
+          <td style="padding:10px 12px;">v3</td>
+          <td style="padding:10px 12px;"><span style="padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span></td>
+          <td style="padding:10px 10px; border-left:2px solid rgba(202,66,224,0.2);"><span style="padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Approved</span></td>
+          <td style="padding:10px 10px;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#3CAA60" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#3CAA60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </td>
+          <td style="padding:10px 10px;"><span style="padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Certified</span></td>
+          <td style="padding:10px 10px;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="#3CAA60"/></svg>
+          </td>
+          <td style="padding:10px 12px; color:#5F7281;">Red Hat</td>
+        </tr>
+        <tr style="border-bottom:1px solid #F0F2F4;">
+          <td style="padding:10px 12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:22px; height:22px; background:#7B42BC; border-radius:4px; display:flex; align-items:center; justify-content:center;"><span style="color:white; font-size:10px; font-weight:700;">HC</span></div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">HashiCorp Terraform</a>
+            </div>
+          </td>
+          <td style="padding:10px 12px;">v1</td>
+          <td style="padding:10px 12px;"><span style="padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">Draft</span></td>
+          <td style="padding:10px 10px; border-left:2px solid rgba(202,66,224,0.2);"><span style="padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(255,191,1,0.18); color:#4F3422;">Pending</span></td>
+          <td style="padding:10px 10px;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#C0CDD8" stroke-width="1.5"/></svg>
+          </td>
+          <td style="padding:10px 10px;"><span style="padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(0,0,59,0.05); color:#11171C;">None</span></td>
+          <td style="padding:10px 10px;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="#C0CDD8"/></svg>
+          </td>
+          <td style="padding:10px 12px; color:#5F7281;">Partner</td>
+        </tr>
+        <tr style="border-bottom:1px solid #F0F2F4;">
+          <td style="padding:10px 12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:22px; height:22px; background:#1496FF; border-radius:4px; display:flex; align-items:center; justify-content:center;"><span style="color:white; font-size:10px; font-weight:700;">DT</span></div>
+              <a href="#" style="color:#2272B4; text-decoration:none; font-weight:500;">Dynatrace</a>
+            </div>
+          </td>
+          <td style="padding:10px 12px;">v1</td>
+          <td style="padding:10px 12px;"><span style="padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span></td>
+          <td style="padding:10px 10px; border-left:2px solid rgba(202,66,224,0.2);"><span style="padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Approved</span></td>
+          <td style="padding:10px 10px;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#3CAA60" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#3CAA60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </td>
+          <td style="padding:10px 10px;"><span style="padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(255,191,1,0.18); color:#4F3422;">Candidate</span></td>
+          <td style="padding:10px 10px;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="#3CAA60"/></svg>
+          </td>
+          <td style="padding:10px 12px; color:#5F7281;">Partner</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="padding:8px 16px; font-size:11px; color:#8396A5; border-top:1px solid #E8ECF0;">
+      Purple column headers indicate 3.next-only columns. Separated by left border.
+    </div>
+  </div>
+</div>
+
+<!-- PART 2: Governance Panel on Detail View -->
+<div class="mockup" style="margin-top:24px;">
+  <div class="mockup-header">Detail View — Governance Status Panel (3.next)</div>
+  <div class="mockup-body" style="background:#fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size:13px; color:#11171C; line-height:20px; padding:20px 24px;">
+
+    <!-- Governance Status Section -->
+    <div style="margin-bottom:4px;">
+      <div style="display:flex; align-items:center; gap:6px; margin-bottom:16px; cursor:pointer;">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-size:14px; font-weight:600; color:#11171C;">Governance Status</span>
+        <span style="font-size:11px; color:#CA42E0; font-weight:500; margin-left:4px;">3.next</span>
+      </div>
+
+      <!-- Four governance tracks -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <!-- Approval -->
+        <div style="border:1px solid #E8ECF0; border-radius:6px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-size:12px; font-weight:600; color:#5F7281; text-transform:uppercase; letter-spacing:0.5px;">Approval</span>
+            <span style="padding:2px 8px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Approved</span>
+          </div>
+          <div style="font-size:12px; color:#5F7281; line-height:1.6;">
+            Approved by <span style="color:#11171C;">ai-governance-team</span><br>
+            Apr 13, 2026 &middot; "Meets security and compliance requirements"
+          </div>
+        </div>
+
+        <!-- Verification -->
+        <div style="border:1px solid #E8ECF0; border-radius:6px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-size:12px; font-weight:600; color:#5F7281; text-transform:uppercase; letter-spacing:0.5px;">Verification</span>
+            <span style="display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#3CAA60" stroke-width="1.2"/><path d="M4 6l1.5 1.5 3-3" stroke="#3CAA60" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Verified
+            </span>
+          </div>
+          <div style="font-size:12px; color:#5F7281; line-height:1.6;">
+            Source verified from <span style="color:#11171C;">registry.redhat.io</span><br>
+            Image signature validated Apr 12, 2026
+          </div>
+        </div>
+
+        <!-- Certification -->
+        <div style="border:1px solid #E8ECF0; border-radius:6px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-size:12px; font-weight:600; color:#5F7281; text-transform:uppercase; letter-spacing:0.5px;">Certification</span>
+            <span style="padding:2px 8px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Certified</span>
+          </div>
+          <div style="font-size:12px; color:#5F7281; line-height:1.6;">
+            Red Hat Certified Partner MCP<br>
+            Certified Apr 11, 2026 &middot; Expires Oct 11, 2026
+          </div>
+        </div>
+
+        <!-- Policy -->
+        <div style="border:1px solid #E8ECF0; border-radius:6px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-size:12px; font-weight:600; color:#5F7281; text-transform:uppercase; letter-spacing:0.5px;">Linked Policies</span>
+            <span style="padding:2px 8px; border-radius:4px; font-size:11px; background:rgba(1,68,255,0.06); color:#101D46;">2 active</span>
+          </div>
+          <div style="font-size:12px; color:#5F7281; line-height:1.6;">
+            <a href="#" style="color:#2272B4; text-decoration:none;">rate-limit-default</a> &middot;
+            <a href="#" style="color:#2272B4; text-decoration:none;">rbac-namespace-scope</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audit Trail -->
+    <div style="margin-top:20px;">
+      <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px; cursor:pointer;">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 3l2.5 3L3 9" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-size:14px; font-weight:600; color:#11171C;">Audit Trail</span>
+        <span style="font-size:11px; color:#CA42E0; font-weight:500; margin-left:4px;">3.next</span>
+      </div>
+      <div style="border-left:2px solid #E8ECF0; padding-left:16px; margin-left:8px;">
+        <div style="position:relative; padding-bottom:16px;">
+          <div style="position:absolute; left:-22px; top:2px; width:10px; height:10px; background:#3CAA60; border-radius:50%; border:2px solid white;"></div>
+          <div style="font-size:12px; color:#11171C; font-weight:500;">Published</div>
+          <div style="font-size:11px; color:#8396A5;">Apr 14, 2026 10:30 AM &middot; platform-admin &middot; "Ready for production use"</div>
+        </div>
+        <div style="position:relative; padding-bottom:16px;">
+          <div style="position:absolute; left:-22px; top:2px; width:10px; height:10px; background:#2272B4; border-radius:50%; border:2px solid white;"></div>
+          <div style="font-size:12px; color:#11171C; font-weight:500;">Approved</div>
+          <div style="font-size:11px; color:#8396A5;">Apr 13, 2026 3:15 PM &middot; ai-governance-team &middot; "Meets security requirements"</div>
+        </div>
+        <div style="position:relative; padding-bottom:16px;">
+          <div style="position:absolute; left:-22px; top:2px; width:10px; height:10px; background:#DE7921; border-radius:50%; border:2px solid white;"></div>
+          <div style="font-size:12px; color:#11171C; font-weight:500;">Submitted for approval</div>
+          <div style="font-size:11px; color:#8396A5;">Apr 12, 2026 9:00 AM &middot; platform-admin</div>
+        </div>
+        <div style="position:relative;">
+          <div style="position:absolute; left:-22px; top:2px; width:10px; height:10px; background:#8396A5; border-radius:50%; border:2px solid white;"></div>
+          <div style="font-size:12px; color:#11171C; font-weight:500;">Registered as Draft</div>
+          <div style="font-size:11px; color:#8396A5;">Apr 12, 2026 8:45 AM &middot; platform-admin</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <h3>3.next Feature Summary</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>List view:</strong> 4 new columns — Approval, Verified, Certified, Deployed — visually separated by purple header text and a left border</li>
+    <li><strong>Detail view:</strong> New "Governance Status" section with 4 cards — Approval, Verification, Certification, Linked Policies — each showing current state, who/when, and rationale</li>
+    <li><strong>Audit trail:</strong> Timeline showing all state changes with colored dots, timestamps, actors, and comments</li>
+    <li><strong>Toggle indicator:</strong> AI gradient background banner at top of page when 3.next is active</li>
+    <li><strong>"3.next" label:</strong> Small purple text next to section headers that only appear in 3.next mode</li>
+  </ul>
+</div>
+
+<div class="options" style="margin-top:24px;">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">&#10003;</div>
+    <div class="content">
+      <h3>Looks good — move to Section 7 (Lifecycle Transition)</h3>
+      <p>3.next governance features and visual treatment work</p>
+    </div>
+  </div>
+  <div class="option" data-choice="revise" onclick="toggleSelect(this)">
+    <div class="letter">&#8635;</div>
+    <div class="content">
+      <h3>Needs changes</h3>
+      <p>Tell me what to adjust in the terminal</p>
+    </div>
+  </div>
+</div>

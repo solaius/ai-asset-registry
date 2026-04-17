@@ -1,0 +1,266 @@
+<h2>Section 3: MCP Server Detail View</h2>
+<p class="subtitle">What you see when clicking into "Red Hat OpenShift" — follows MLflow's model detail page pattern</p>
+
+<div class="mockup">
+  <div class="mockup-header">MCP Server Detail — Red Hat OpenShift</div>
+  <div class="mockup-body" style="background:#fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size:13px; color:#11171C; line-height:20px; padding:0; max-height:700px; overflow-y:auto;">
+
+    <!-- Page Header -->
+    <div style="padding:20px 24px 0 24px; border-bottom:1px solid #E8ECF0;">
+      <!-- Breadcrumb -->
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#5F7281; margin-bottom:8px;">
+        <a href="#" style="color:#2272B4; text-decoration:none;">MCP Servers</a>
+        <span style="color:#D1D9E1;">/</span>
+        <span style="color:#11171C;">Red Hat OpenShift</span>
+      </div>
+      <!-- Title + Actions -->
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:32px; height:32px; background:#EE0000; border-radius:6px; display:flex; align-items:center; justify-content:center;">
+            <span style="color:white; font-size:14px; font-weight:700;">RH</span>
+          </div>
+          <div>
+            <h2 style="margin:0; font-size:22px; font-weight:600; color:#11171C; line-height:28px;">Red Hat OpenShift</h2>
+            <span style="font-size:12px; color:#5F7281;">Registered by platform-admin &middot; Source: Red Hat</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <!-- Lifecycle dropdown (MLflow stage transition pattern) -->
+          <div style="display:flex; align-items:center; gap:6px; border:1px solid #C0CDD8; border-radius:4px; padding:6px 12px; cursor:pointer; height:32px; box-sizing:border-box;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <!-- Overflow menu -->
+          <button style="border:1px solid #C0CDD8; border-radius:4px; background:white; padding:6px 10px; cursor:pointer; height:32px; box-sizing:border-box; display:flex; align-items:center;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="3" r="1" fill="#445461"/><circle cx="7" cy="7" r="1" fill="#445461"/><circle cx="7" cy="11" r="1" fill="#445461"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metadata Section (collapsible) -->
+    <div style="padding:0 24px;">
+      <div style="padding:16px 0; border-bottom:1px solid #F0F2F4;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px; cursor:pointer;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px; font-weight:600; color:#11171C;">Metadata</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Created</div>
+            <div style="color:#11171C;">Apr 10, 2026 09:15 AM</div>
+          </div>
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Last Modified</div>
+            <div style="color:#11171C;">Apr 16, 2026 02:30 PM</div>
+          </div>
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Creator</div>
+            <div style="color:#11171C;">platform-admin</div>
+          </div>
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Transport</div>
+            <div style="color:#11171C;">Streamable HTTP</div>
+          </div>
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Endpoint</div>
+            <div style="color:#2272B4; font-family:monospace; font-size:12px;">https://mcp.openshift.internal/sse</div>
+          </div>
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Workspace</div>
+            <div style="color:#11171C;">default</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tags Section (collapsible) -->
+    <div style="padding:0 24px;">
+      <div style="padding:16px 0; border-bottom:1px solid #F0F2F4;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px; cursor:pointer;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px; font-weight:600; color:#11171C;">Tags</span>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <span style="display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:4px; font-size:12px; background:rgba(0,0,59,0.05); color:#11171C;">
+            <span style="color:#5F7281;">category:</span> infrastructure
+          </span>
+          <span style="display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:4px; font-size:12px; background:rgba(0,0,59,0.05); color:#11171C;">
+            <span style="color:#5F7281;">platform:</span> kubernetes
+          </span>
+          <span style="display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:4px; font-size:12px; background:rgba(0,0,59,0.05); color:#11171C;">
+            <span style="color:#5F7281;">source:</span> red-hat
+          </span>
+          <span style="display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:4px; font-size:12px; background:rgba(0,0,59,0.05); color:#11171C;">
+            <span style="color:#5F7281;">tier:</span> supported
+          </span>
+          <button style="padding:3px 10px; border-radius:4px; font-size:12px; background:transparent; color:#2272B4; border:1px dashed #C0CDD8; cursor:pointer;">+ Add tag</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description Section (collapsible) -->
+    <div style="padding:0 24px;">
+      <div style="padding:16px 0; border-bottom:1px solid #F0F2F4;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px; cursor:pointer;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px; font-weight:600; color:#11171C;">Description</span>
+          <button style="margin-left:auto; font-size:12px; color:#2272B4; background:none; border:none; cursor:pointer;">Edit</button>
+        </div>
+        <p style="color:#445461; margin:0; line-height:1.6;">
+          Connect your AI agents to OpenShift clusters for querying cluster state, managing workloads, and troubleshooting deployments through natural language. When a pod fails at 2 a.m., your on-call engineer asks the agent for the last 50 log lines and the resource status of the affected deployment. No context-switching between dashboards, no kubectl gymnastics.
+        </p>
+      </div>
+    </div>
+
+    <!-- Tools Section (MCP-specific, no MLflow equivalent) -->
+    <div style="padding:0 24px;">
+      <div style="padding:16px 0; border-bottom:1px solid #F0F2F4;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px; cursor:pointer;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px; font-weight:600; color:#11171C;">Tools</span>
+          <span style="font-size:12px; color:#8396A5; font-weight:400;">(12)</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <div style="padding:8px 12px; background:#F6F7F9; border-radius:4px; display:flex; align-items:center; gap:8px;">
+            <code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">get_pods</code>
+            <span style="font-size:12px; color:#5F7281;">List pods in a namespace</span>
+          </div>
+          <div style="padding:8px 12px; background:#F6F7F9; border-radius:4px; display:flex; align-items:center; gap:8px;">
+            <code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">get_logs</code>
+            <span style="font-size:12px; color:#5F7281;">Get container logs</span>
+          </div>
+          <div style="padding:8px 12px; background:#F6F7F9; border-radius:4px; display:flex; align-items:center; gap:8px;">
+            <code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">get_deployments</code>
+            <span style="font-size:12px; color:#5F7281;">List deployments</span>
+          </div>
+          <div style="padding:8px 12px; background:#F6F7F9; border-radius:4px; display:flex; align-items:center; gap:8px;">
+            <code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">describe_resource</code>
+            <span style="font-size:12px; color:#5F7281;">Describe any K8s resource</span>
+          </div>
+          <div style="padding:8px 12px; background:#F6F7F9; border-radius:4px; display:flex; align-items:center; gap:8px;">
+            <code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">get_events</code>
+            <span style="font-size:12px; color:#5F7281;">Get cluster events</span>
+          </div>
+          <div style="padding:8px 12px; background:#F6F7F9; border-radius:4px; display:flex; align-items:center; gap:8px;">
+            <code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">scale_deployment</code>
+            <span style="font-size:12px; color:#5F7281;">Scale replicas up/down</span>
+          </div>
+          <div style="padding:8px 0; text-align:center; grid-column:1/3;">
+            <a href="#" style="font-size:12px; color:#2272B4; text-decoration:none;">Show all 12 tools</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Versions Section (expanded by default, matches MLflow) -->
+    <div style="padding:0 24px 24px 24px;">
+      <div style="padding:16px 0 0 0;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+          <div style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span style="font-size:14px; font-weight:600; color:#11171C;">Versions</span>
+          </div>
+          <!-- Segmented control: All / Active -->
+          <div style="display:flex; border:1px solid #C0CDD8; border-radius:4px; overflow:hidden;">
+            <button style="padding:4px 12px; font-size:12px; background:#11171C; color:white; border:none; cursor:pointer;">All <span style="opacity:0.7;">(3)</span></button>
+            <button style="padding:4px 12px; font-size:12px; background:white; color:#5F7281; border:none; border-left:1px solid #C0CDD8; cursor:pointer;">Active <span>(2)</span></button>
+          </div>
+        </div>
+        <!-- Version table -->
+        <table style="width:100%; border-collapse:collapse; font-size:13px;">
+          <thead>
+            <tr style="border-bottom:1px solid #E8ECF0; background:#FAFBFC;">
+              <th style="text-align:left; padding:8px 12px; font-weight:600; color:#5F7281; font-size:12px; width:30px;"></th>
+              <th style="text-align:left; padding:8px 12px; font-weight:600; color:#5F7281; font-size:12px;">Version</th>
+              <th style="text-align:left; padding:8px 12px; font-weight:600; color:#5F7281; font-size:12px;">Registered at</th>
+              <th style="text-align:left; padding:8px 12px; font-weight:600; color:#5F7281; font-size:12px;">Lifecycle State</th>
+              <th style="text-align:left; padding:8px 12px; font-weight:600; color:#5F7281; font-size:12px;">Created by</th>
+              <th style="text-align:left; padding:8px 12px; font-weight:600; color:#5F7281; font-size:12px;">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+              <td style="padding:8px 12px;">
+                <div style="width:8px; height:8px; background:#3CAA60; border-radius:50;" title="Active"></div>
+              </td>
+              <td style="padding:8px 12px;"><a href="#" style="color:#2272B4; text-decoration:none;">Version 3</a></td>
+              <td style="padding:8px 12px; color:#5F7281;">Apr 14, 2026</td>
+              <td style="padding:8px 12px;">
+                <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+              </td>
+              <td style="padding:8px 12px; color:#5F7281;">platform-admin</td>
+              <td style="padding:8px 12px; color:#5F7281;">Added scale_deployment, get_events tools</td>
+            </tr>
+            <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+              <td style="padding:8px 12px;">
+                <div style="width:8px; height:8px; background:#3CAA60; border-radius:50%;" title="Active"></div>
+              </td>
+              <td style="padding:8px 12px;"><a href="#" style="color:#2272B4; text-decoration:none;">Version 2</a></td>
+              <td style="padding:8px 12px; color:#5F7281;">Apr 11, 2026</td>
+              <td style="padding:8px 12px;">
+                <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(255,191,1,0.18); color:#4F3422;">Deprecated</span>
+              </td>
+              <td style="padding:8px 12px; color:#5F7281;">platform-admin</td>
+              <td style="padding:8px 12px; color:#5F7281;">Initial tool set with get_pods, get_logs</td>
+            </tr>
+            <tr style="border-bottom:1px solid #F0F2F4; cursor:pointer;" onmouseover="this.style.background='rgba(68,83,95,0.04)'" onmouseout="this.style.background='transparent'">
+              <td style="padding:8px 12px;">
+                <div style="width:8px; height:8px; background:#8396A5; border-radius:50%;" title="Archived"></div>
+              </td>
+              <td style="padding:8px 12px;"><a href="#" style="color:#2272B4; text-decoration:none;">Version 1</a></td>
+              <td style="padding:8px 12px; color:#5F7281;">Apr 10, 2026</td>
+              <td style="padding:8px 12px;">
+                <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:#37444F; color:#E8ECF0;">Retired</span>
+              </td>
+              <td style="padding:8px 12px; color:#5F7281;">platform-admin</td>
+              <td style="padding:8px 12px; color:#5F7281;">Proof of concept, limited tools</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <h3>Design Decisions</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Follows MLflow model detail pattern exactly:</strong> Breadcrumb → Title + Actions → Metadata → Tags → Description → Versions (all collapsible sections)</li>
+    <li><strong>Lifecycle state dropdown</strong> in header — mirrors MLflow's stage transition dropdown (badge + chevron)</li>
+    <li><strong>Overflow menu (⋮)</strong> — for Delete action, matching MLflow pattern</li>
+    <li><strong>Tools section</strong> — MCP-specific, no MLflow equivalent. Shows tool name + description in a 2-column grid with "Show all" expand</li>
+    <li><strong>MCP-specific metadata fields:</strong> Transport, Endpoint, Workspace (MLflow has Source Run, Copied From)</li>
+    <li><strong>Tags use key:value format</strong> — matches MLflow's editable tag pattern</li>
+    <li><strong>Version table</strong> — matches MLflow's version table with status dot, version link, registered date, lifecycle state, creator, description</li>
+    <li><strong>Lifecycle states shown:</strong> Published (lime/green), Deprecated (lemon/yellow), Retired (charcoal/dark)</li>
+  </ul>
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <h3>3.next Additions (when toggle is ON)</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Governance panel</strong> below metadata — shows Approval Status, Verification Status, Certification Status as badge rows</li>
+    <li><strong>Deployment References section</strong> — linked deployments with gateway registration status</li>
+    <li><strong>Approval Status column</strong> in version table</li>
+    <li><strong>"Request Approval" button</strong> in header next to lifecycle dropdown</li>
+  </ul>
+</div>
+
+<div class="options" style="margin-top:24px;">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">&#10003;</div>
+    <div class="content">
+      <h3>Looks good — move to Section 4 (Register Form)</h3>
+      <p>Detail page layout and sections work</p>
+    </div>
+  </div>
+  <div class="option" data-choice="revise" onclick="toggleSelect(this)">
+    <div class="letter">&#8635;</div>
+    <div class="content">
+      <h3>Needs changes</h3>
+      <p>Tell me what to adjust in the terminal</p>
+    </div>
+  </div>
+</div>

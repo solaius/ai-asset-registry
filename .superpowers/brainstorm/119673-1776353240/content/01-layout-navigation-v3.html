@@ -1,0 +1,171 @@
+<h2>Section 1: Layout & Navigation (MLflow 3.10 Accurate)</h2>
+<p class="subtitle">Based on MLflow 3.10 sidebar redesign with GenAI/ML workflow switcher</p>
+
+<div class="mockup">
+  <div class="mockup-header">MLflow 3.10 UI — GenAI Workflow, MCP Servers Active</div>
+  <div class="mockup-body" style="display:flex; min-height:560px; background:#F6F7F9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size:13px; color:#11171C; line-height:20px;">
+
+    <!-- Left Sidebar (190px) -->
+    <div style="width:190px; background:#FFFFFF; border-right:1px solid #E8ECF0; padding:0; flex-shrink:0; display:flex; flex-direction:column;">
+
+      <!-- Logo + Version -->
+      <div style="padding:16px 16px 8px 16px; display:flex; align-items:center; justify-content:space-between;">
+        <div style="display:flex; align-items:center; gap:4px;">
+          <svg width="80" height="24" viewBox="0 0 80 24">
+            <text x="0" y="19" font-size="18" font-weight="700" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+              <tspan fill="#0194E2">ML</tspan><tspan fill="#11171C">flow</tspan>
+            </text>
+          </svg>
+          <span style="font-size:11px; color:#8396A5; font-weight:400;">3.10</span>
+        </div>
+        <!-- Collapse button -->
+        <div style="width:24px; height:24px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#8396A5; border-radius:4px;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7l4 4" stroke="#8396A5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- Workflow Switcher (GenAI / Model training) -->
+      <div style="padding:8px 12px 12px 12px;">
+        <div style="position:relative; display:flex; border-radius:6px; overflow:hidden; height:32px; background:#F6F7F9;">
+          <!-- AI Gradient border (visible when GenAI selected) -->
+          <div style="position:absolute; inset:-1px; border-radius:7px; background:linear-gradient(135deg, #4299E0 20.5%, #CA42E0 46.91%, #FF5F46 79.5%); z-index:0;"></div>
+          <div style="position:absolute; inset:1px; border-radius:5px; background:#F6F7F9; z-index:1;"></div>
+          <!-- GenAI pill (active) -->
+          <div style="position:relative; z-index:2; flex:1; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#11171C; background:white; margin:3px; border-radius:4px; cursor:pointer; box-shadow:0px 1px 2px rgba(0,0,0,0.08);">
+            GenAI
+          </div>
+          <!-- Model training pill (inactive) -->
+          <div style="position:relative; z-index:2; flex:1; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:400; color:#8396A5; margin:3px 3px 3px 0; border-radius:4px; cursor:pointer;">
+            Model training
+          </div>
+        </div>
+      </div>
+
+      <!-- Nav Items (GenAI mode) -->
+      <div style="display:flex; flex-direction:column; gap:1px; padding:0 8px; flex:1;">
+        <!-- Home -->
+        <div style="padding:8px 8px; color:#11171C; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 2.5l5 4V13a1 1 0 01-1 1H4a1 1 0 01-1-1V6.5z" stroke="#445461" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          Home
+        </div>
+        <!-- Experiments -->
+        <div style="padding:8px 8px; color:#11171C; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 2v4.5L4 10v1h8v-1L10 6.5V2" stroke="#445461" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 2h6" stroke="#445461" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Experiments
+        </div>
+        <!-- Prompts -->
+        <div style="padding:8px 8px; color:#11171C; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="#445461" stroke-width="1.5"/><path d="M5 5h6M5 8h4" stroke="#445461" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Prompts
+        </div>
+        <!-- AI Gateway -->
+        <div style="padding:8px 8px; color:#11171C; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2a6 6 0 100 12A6 6 0 008 2z" stroke="#445461" stroke-width="1.5"/><path d="M2 8h12M8 2c2 2 3 4 3 6s-1 4-3 6M8 2c-2 2-3 4-3 6s1 4 3 6" stroke="#445461" stroke-width="1.5"/></svg>
+          AI Gateway
+        </div>
+        <!-- MCP Servers (NEW — ACTIVE) -->
+        <div style="padding:8px 8px; background:rgba(34,114,180,0.16); color:#0E538B; font-weight:600; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="5" rx="1.5" stroke="#0E538B" stroke-width="1.5"/><rect x="2" y="9" width="12" height="5" rx="1.5" stroke="#0E538B" stroke-width="1.5"/><circle cx="5" cy="4.5" r="1" fill="#0E538B"/><circle cx="5" cy="11.5" r="1" fill="#0E538B"/></svg>
+          MCP Servers
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div style="display:flex; flex-direction:column; gap:1px; padding:8px; border-top:1px solid #E8ECF0;">
+        <div style="padding:8px 8px; color:#5F7281; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#5F7281" stroke-width="1.5"/><path d="M8 6v1.5M8 10h.01" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Docs
+        </div>
+        <div style="padding:8px 8px; color:#5F7281; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2" stroke="#5F7281" stroke-width="1.5"/><path d="M8 2v2M8 12v2M14 8h-2M4 8H2M12.2 3.8l-1.4 1.4M5.2 10.8l-1.4 1.4M12.2 12.2l-1.4-1.4M5.2 5.2L3.8 3.8" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Settings
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content (white card on grey bg) -->
+    <div style="flex:1; margin:8px; background:#FFFFFF; border-radius:8px; box-shadow:0px 3px 6px 0px rgba(0,0,0,0.05); display:flex; flex-direction:column; overflow:hidden;">
+
+      <!-- Page Header -->
+      <div style="padding:20px 24px 0 24px;">
+        <!-- Breadcrumb -->
+        <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#5F7281; margin-bottom:8px;">
+          <span style="cursor:pointer; color:#2272B4;">MCP Servers</span>
+        </div>
+        <!-- Title row -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <svg width="22" height="22" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="5" rx="1.5" stroke="#11171C" stroke-width="1.5"/><rect x="2" y="9" width="12" height="5" rx="1.5" stroke="#11171C" stroke-width="1.5"/><circle cx="5" cy="4.5" r="1" fill="#11171C"/><circle cx="5" cy="11.5" r="1" fill="#11171C"/></svg>
+            <h2 style="margin:0; font-size:22px; font-weight:600; color:#11171C; line-height:28px;">MCP Servers</h2>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <!-- 3.5 DP / 3.next Feature Toggle -->
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#5F7281;">
+              <span style="font-weight:600; color:#11171C;">3.5 DP</span>
+              <div style="width:36px; height:20px; background:#D1D9E1; border-radius:10px; position:relative; cursor:pointer;">
+                <div style="width:16px; height:16px; background:white; border-radius:50%; position:absolute; top:2px; left:2px; box-shadow:0 1px 2px rgba(0,0,0,0.15); transition:left 0.2s;"></div>
+              </div>
+              <span>3.next</span>
+            </div>
+            <!-- Register Button -->
+            <button style="background:#2272B4; color:white; border:none; padding:0 16px; height:32px; border-radius:4px; font-size:13px; font-weight:400; cursor:pointer; display:flex; align-items:center; gap:6px; font-family:inherit;">
+              <span style="font-size:15px; line-height:1;">+</span> Register MCP Server
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search/Filter bar -->
+      <div style="padding:0 24px 16px 24px;">
+        <div style="display:flex; gap:8px;">
+          <input type="text" placeholder="Search MCP servers..." style="flex:1; padding:6px 12px; height:32px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#11171C; outline:none;">
+          <select style="padding:6px 12px; height:32px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#5F7281; background:white; cursor:pointer;">
+            <option>All Lifecycle States</option>
+          </select>
+          <select style="padding:6px 12px; height:32px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#5F7281; background:white; cursor:pointer;">
+            <option>All Sources</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table placeholder -->
+      <div style="flex:1; margin:0 24px 24px 24px; background:#F6F7F9; border:1px solid #E8ECF0; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#5F7281;">
+        <div style="text-align:center;">
+          <svg width="32" height="32" viewBox="0 0 16 16" fill="none" style="margin-bottom:8px;"><rect x="2" y="2" width="12" height="5" rx="1.5" stroke="#C0CDD8" stroke-width="1.5"/><rect x="2" y="9" width="12" height="5" rx="1.5" stroke="#C0CDD8" stroke-width="1.5"/><circle cx="5" cy="4.5" r="1" fill="#C0CDD8"/><circle cx="5" cy="11.5" r="1" fill="#C0CDD8"/></svg>
+          <p style="margin:0; font-size:13px;">10 registered MCP servers</p>
+          <p style="margin:4px 0 0; font-size:12px; color:#8396A5;">Table design covered in Section 2</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <h3>MLflow 3.10 Changes Reflected</h3>
+  <ul style="line-height:2;">
+    <li><strong>No header bar</strong> — logo, version, and collapse button live in the sidebar</li>
+    <li><strong>Workflow Switcher</strong> — "GenAI / Model training" pill toggle with <span style="background:linear-gradient(135deg, #4299E0, #CA42E0, #FF5F46); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:600;">AI gradient border</span> when GenAI is selected</li>
+    <li><strong>GenAI-mode nav</strong> — Home, Experiments, Prompts, AI Gateway, <strong>MCP Servers</strong> (new)</li>
+    <li><strong>Sidebar is white</strong> with right border, not grey background</li>
+    <li><strong>3.5 DP / 3.next toggle</strong> placed in the page header area (per-page, not sidebar)</li>
+    <li><strong>Bottom nav</strong> — Docs + Settings below separator line</li>
+  </ul>
+</div>
+
+<div class="options" style="margin-top:24px;">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">&#10003;</div>
+    <div class="content">
+      <h3>This matches — move to Section 2 (List Table)</h3>
+      <p>3.10 layout and workflow switcher look correct</p>
+    </div>
+  </div>
+  <div class="option" data-choice="revise" onclick="toggleSelect(this)">
+    <div class="letter">&#8635;</div>
+    <div class="content">
+      <h3>Needs changes</h3>
+      <p>Tell me what to adjust in the terminal</p>
+    </div>
+  </div>
+</div>

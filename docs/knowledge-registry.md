@@ -2,7 +2,7 @@
 
 This file tracks key information, decisions, concepts, and references gathered from all source materials for the AI Asset Registry proposal. It serves as a living document to support continued proposal development, prototyping, and documentation.
 
-Last updated: 2026-04-14
+Last updated: 2026-04-16
 
 ---
 
@@ -38,7 +38,7 @@ A **federated AI Asset Registry framework** for Red Hat OpenShift AI that provid
 | **Agents** | MLflow Registry | High priority for 3.5 | Composed capabilities referencing models, prompts, MCP servers, skills, guardrails |
 | **Models** | Kubeflow Model Registry (current) -> MLflow (future) | Existing capability | Model registry already exists; future alignment with MLflow direction |
 | **Prompts** | MLflow Prompt Registry | Active upstream work | MLflow already has prompt registry support |
-| **Skills** | MLflow (prototype) | End of April 2026 target | Packaging format unsettled; Databricks building prototype |
+| **Skills** | MLflow Registry | Active — Red Hat driving upstream proposal | RHAIRFE-1712 (public), RHAIRFE-1713 (in-cluster). Full strategy, user stories, data model, and upstream proposal drafted. See `skills/skills-registry/`. **Databricks MVP prototype now visible** at `B-Step62/mlflow` branch `skill-registry-mvp` — dedicated entity type with full CRUD, CLI, UI, and Claude Code integration. See Section 7. |
 | **Guardrails** | TBD | RHOAI 3.4 ships MCP guardrail DP | Safety/behavioral boundaries for AI interactions |
 | **Knowledge Sources** | TBD | Future | Governed info sources for RAG, agents, retrieval workflows |
 
@@ -129,6 +129,7 @@ Notebooks, Pipelines, Evaluators, Skill Packs, Code Snippets, Workflows
 - **Role**: Unified UI in RHOAI
 - **Structure**: Tabs for Catalog, Registry, Deployments per asset type
 - **AAA (AI Available Assets)**: RBAC-scoped consumption surface for AI Engineers
+- **Design System**: PatternFly (https://www.patternfly.org/) — Red Hat's open source design system; all RHOAI UI and prototypes use PatternFly components, design tokens, and layout patterns
 
 ---
 
@@ -313,9 +314,69 @@ The partner onboarding pipeline has both business and technical dimensions:
 
 ### Current Upstream Work
 - MLflow: Prompt Registry (exists), expanding GenAI capabilities
-- Skills registry prototype: targeting end of April 2026
+- **Skills Registry MVP prototype visible**: `B-Step62/mlflow` branch `skill-registry-mvp` (B-Step62 = Yuki Watanabe, Databricks). Full implementation with dedicated entity type, REST API, CLI, UI, and Claude Code integration. See below.
 - Plugin architecture: Kubeflow PR #2219 for genericizing asset types
 - Model registry alignment: future move toward MLflow-based direction
+
+### Skills Registry MVP — Databricks Prototype (discovered 2026-04-16)
+
+**Repository**: [B-Step62/mlflow](https://github.com/B-Step62/mlflow/tree/skill-registry-mvp) — branch `skill-registry-mvp`
+**Author**: Yuki Watanabe (B-Step62, Databricks) — same person leading PR #21725 (Skills Evaluation Phase 1)
+**Status**: MVP prototype on a personal fork branch — not merged upstream, not announced publicly
+
+**Key design decisions (confirmed)**:
+- **Dedicated entity type** — NOT a specialized ModelVersion. Uses its own `registered_skills`, `skill_versions`, `skill_version_tags`, `skill_aliases` tables. This is the cleaner approach Red Hat's upstream proposal advocated for.
+- **SKILL.md as the canonical format** — Skills are defined by SKILL.md files with YAML frontmatter (name, description). `manifest_content` (full SKILL.md text) stored on each version.
+- **Packaging-agnostic artifacts** — Skill bundles stored in MLflow's artifact repository at `mlflow-artifacts:/skills/{name}/{version}/`. Supports S3, GCS, Azure, local filesystem.
+- **Auto-incrementing integer versions** — Same pattern as Model Registry and Prompt Registry.
+- **Aliases** — Named pointers to versions (e.g., `copilot@champion → v3`), consistent with MLflow 3 alias model.
+
+**Data Model**:
+- `Skill`: name, description, creation_timestamp, last_updated_timestamp, latest_version, aliases
+- `SkillVersion`: name, version, source (GitHub URL or local path), description, manifest_content (full SKILL.md), artifact_location, creation_timestamp, tags, aliases, created_by
+- `SkillAlias`: name, alias, version
+- Tags: user-defined key-value pairs + system tags (`mlflow.skill.commit_hash`, `mlflow.skill.artifact_location`)
+
+**REST API**: Under `/ajax-api/3.0/mlflow/skills/` (NOT `2.0/mlflow/` — uses the newer API version). Full CRUD: preview, register, list, get, delete skills/versions, plus tag and alias management.
+
+**SDK API** (under `mlflow.genai`):
+- `register_skill(source, tags, skill_names)` — accepts GitHub URL or local path; auto-discovers SKILL.md files
+- `load_skill(name, version, alias)` — retrieve by version or alias
+- `preview_skills(source)` — preview before registering
+- `search_skills(filter_string, max_results)` — list with filtering
+- `install_skill(name, version, alias, scope, project_path)` — install to Claude Code (global or project scope)
+- `set_skill_alias()`, `delete_skill_alias()`, `set_skill_tag()`, `delete_skill_tag()`
+
+**CLI** (under `mlflow skills`):
+- `mlflow skills register <source>` — register from GitHub URL or local path
+- `mlflow skills list` — list all registered skills
+- `mlflow skills load <ref>` — install to Claude Code (supports `name`, `name/version`, `name@alias`, bulk)
+- `mlflow skills show <ref>` — show details
+
+**Claude Code Integration**:
+- `install_skill()` copies artifacts to `~/.claude/skills/{name}/` (global) or `.claude/skills/{name}/` (project)
+- Writes `.mlflow_skill_info` JSON sidecar alongside SKILL.md with version, source, commit_hash, tracking_uri, installed_at
+- Tracing integration enriches tool spans with skill version info from sidecar — creates transparent link between skill usage and registry without runtime server dependency
+- Span names: `tool_Skill:{skillName}` for usage analytics
+
+**UI**:
+- Skills list page with search, bulk selection, register modal (GitHub URL input), usage breakdown chart (stacked bar, 24h/7d/30d)
+- Skills detail page with version table, SKILL.md preview (rendered markdown), file browser, tag/alias management, usage tab (per-skill line chart)
+
+**What the MVP does NOT include** (alignment with Red Hat's governance layer):
+- No lifecycle states beyond implicit (no Draft/Published/Deprecated)
+- No approval workflows, certification, or verification tracks
+- No trust tiers or security scanning
+- No formal dependency/relationship model
+- No workspace-scoped RBAC beyond basic workspace boundary
+- No packaging format validation
+
+**Implications for Red Hat**:
+1. **Our preferred architecture was chosen**: Dedicated entity type, not tag-based ModelVersion specialization. This validates our upstream proposal's recommendation.
+2. **Our upstream proposal still adds value**: The MVP has no publish_state, no governance tracks, no formal relationships — exactly the features our proposal adds.
+3. **Risk reduced**: The prototype exists and is well-architected. The question shifts from "will they build it?" to "how do we influence the design before merge?"
+4. **Coordinate with B-Step62**: Yuki Watanabe built both the Skills Evaluation PR (#21725) and this registry MVP. He is the key Databricks engineer to align with.
+5. **Gap analysis needed**: Compare our proposed data model and API against MVP implementation — identify what to align with vs. what to propose as extensions.
 
 ### Open Questions for Upstream
 - What exact MCP metadata should be mandatory for registry records?
@@ -486,6 +547,11 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 | Partners MCP servers in RHOAI Catalog | 1Z2rA0fiAC2Zt_AWnond_Ogi3-2cqEzElN-U76M1x740 | **DECIDED**: Partner selection, consent, technical pipeline, Summit outcome (5 partners + 2 community in 3.4 DP), post-Summit plans |
 | Internal Support and Product Agreement (RHOAI-RHCL) | 11JTt4SHZJ1UFG9RWZsVL2t6MZqBFZ4Iuq4niXxtE59g | **DECIDED**: Signed support agreement — RHCL version matrix, support workflow, permitted RHOAI use cases (MaaS tokens/metrics, rate limiting, Authorino), known OCP 4.19 gap |
 
+### External References
+| Resource | URL | Key Content |
+|---|---|---|
+| PatternFly Design System | https://www.patternfly.org/ | **REFERENCE**: Red Hat's open source design system (v6.4.0). 100+ enterprise UI components, design tokens, accessibility guidance, theming. All RHOAI UI prototypes and product interfaces must use PatternFly. Includes React component library, layout systems (flex, grid, gallery, stack), charts/topology, and UX writing standards. |
+
 ### GitHub Repositories
 | Repository | Purpose |
 |---|---|
@@ -498,6 +564,7 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 | opdev/partner-mcp-dockerfiles | Partner MCP server container build files |
 | chambridge/ocp-mcp-servers-research | Engineering evaluation of partner MCP servers (23 evaluated) |
 | RHEcosystemAppEng/mcp-validation | MCP server validation tool (Q3/Q4 FY25 work) |
+| B-Step62/mlflow (branch: skill-registry-mvp) | **Databricks Skills Registry MVP prototype**. Full implementation: dedicated entity type (Skill/SkillVersion), 4 DB tables, REST API (`/ajax-api/3.0/mlflow/skills/`), CLI (`mlflow skills`), SDK (`mlflow.genai`), Claude Code integration (.mlflow_skill_info sidecar), UI (list/detail with usage analytics). Author: Yuki Watanabe (B-Step62). Not merged upstream. |
 
 ### Blog Artifacts
 | Blog | Author | Type | Path | Description |
@@ -514,7 +581,7 @@ Enterprise governance, lifecycle management, policy enforcement, and platform in
 3. How should registry-governed state inform gateway behavior?
 4. How should registry state influence catalog surfacing?
 5. What belongs in MLflow upstream proposal now vs later?
-6. Skills packaging format - OCI artifacts? Markdown? Zip bundles?
+6. Skills packaging format - OCI artifacts? Markdown? Zip bundles? **Partially answered**: Databricks MVP uses SKILL.md with YAML frontmatter as the canonical format, stored as directory artifacts in MLflow artifact store. OCI and other formats not addressed in MVP.
 7. Agent identity model - SPIFFE/SPIRE or alternative?
 8. How to handle OLM 1.0 dependency removal in OCP 5.0?
 9. Whether certification programs should be backed by an admin-managed allowlist (from Data Model Proposal)

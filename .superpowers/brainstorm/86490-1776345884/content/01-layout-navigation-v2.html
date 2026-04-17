@@ -1,0 +1,185 @@
+<h2>Section 1: Overall Layout & Navigation (Corrected)</h2>
+<p class="subtitle">Based on actual MLflow / Databricks DuBois design system research</p>
+
+<div class="mockup">
+  <div class="mockup-header">MLflow UI Shell — MCP Servers Active (Accurate)</div>
+  <div class="mockup-body" style="display:flex; min-height:520px; background:#F6F7F9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size:13px; color:#11171C; line-height:20px;">
+
+    <!-- Left Sidebar (190px, grey050 bg) -->
+    <div style="width:190px; background:#F6F7F9; padding:8px; padding-right:0; flex-shrink:0; display:flex; flex-direction:column; gap:16px;">
+      <!-- Logo -->
+      <div style="padding:8px 8px 0 8px; display:flex; align-items:center; gap:6px;">
+        <svg width="109" height="28" viewBox="0 0 109 40">
+          <text x="0" y="28" font-size="24" font-weight="700" fill="#11171C" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+            <tspan fill="#0194E2">ML</tspan><tspan fill="#11171C">flow</tspan>
+          </text>
+        </svg>
+      </div>
+
+      <!-- Top Nav Section -->
+      <div style="display:flex; flex-direction:column; gap:2px; flex:1;">
+        <!-- Experiments -->
+        <div style="padding:8px 12px; color:#11171C; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 2v4.5L4 10v1h8v-1L10 6.5V2" stroke="#445461" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 2h6" stroke="#445461" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Experiments
+        </div>
+        <!-- Models -->
+        <div style="padding:8px 12px; color:#11171C; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="#445461" stroke-width="1.5"/><path d="M5 7h6M5 10h4" stroke="#445461" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Models
+        </div>
+        <!-- MCP Servers (ACTIVE) -->
+        <div style="padding:8px 12px; background:rgba(34,114,180,0.16); color:#0E538B; font-weight:600; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="5" rx="1.5" stroke="#0E538B" stroke-width="1.5"/><rect x="2" y="9" width="12" height="5" rx="1.5" stroke="#0E538B" stroke-width="1.5"/><circle cx="5" cy="4.5" r="1" fill="#0E538B"/><circle cx="5" cy="11.5" r="1" fill="#0E538B"/></svg>
+          MCP Servers
+        </div>
+        <!-- Deployments -->
+        <div style="padding:8px 12px; color:#11171C; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="#445461" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Deployments
+        </div>
+        <!-- Prompts -->
+        <div style="padding:8px 12px; color:#11171C; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="#445461" stroke-width="1.5"/><path d="M5 5h6M5 8h4" stroke="#445461" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Prompts
+        </div>
+      </div>
+
+      <!-- Bottom Nav Section -->
+      <div style="display:flex; flex-direction:column; gap:2px; padding-bottom:8px;">
+        <div style="padding:8px 12px; color:#5F7281; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#5F7281" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Docs
+        </div>
+        <div style="padding:8px 12px; color:#5F7281; display:flex; align-items:center; gap:10px; cursor:pointer; border-radius:4px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#5F7281" stroke-width="1.5"/><circle cx="8" cy="8" r="2" stroke="#5F7281" stroke-width="1.5"/></svg>
+          Settings
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content (white card with shadow) -->
+    <div style="flex:1; margin:8px; background:#FFFFFF; border-radius:8px; box-shadow:0px 3px 6px 0px rgba(0,0,0,0.05); display:flex; flex-direction:column; overflow:hidden;">
+
+      <!-- Page Header (per-page, not global) -->
+      <div style="padding:16px 24px 0 24px;">
+        <!-- Breadcrumb -->
+        <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#5F7281; margin-bottom:8px;">
+          <span>Registered Models</span>
+          <span style="color:#D1D9E1;">/</span>
+          <span style="color:#11171C; font-weight:600;">MCP Servers</span>
+        </div>
+        <!-- Title row -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="5" rx="1.5" stroke="#11171C" stroke-width="1.5"/><rect x="2" y="9" width="12" height="5" rx="1.5" stroke="#11171C" stroke-width="1.5"/><circle cx="5" cy="4.5" r="1" fill="#11171C"/><circle cx="5" cy="11.5" r="1" fill="#11171C"/></svg>
+            <h2 style="margin:0; font-size:22px; font-weight:600; color:#11171C; line-height:28px;">MCP Servers</h2>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <!-- Feature Toggle -->
+            <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:#5F7281; background:#F6F7F9; border:1px solid #D1D9E1; border-radius:4px; padding:4px 10px;">
+              <span style="font-weight:600; color:#11171C;">3.5 DP</span>
+              <div style="width:32px; height:18px; background:#D1D9E1; border-radius:9px; position:relative; cursor:pointer;">
+                <div style="width:14px; height:14px; background:white; border-radius:50%; position:absolute; top:2px; left:2px; box-shadow:0 1px 2px rgba(0,0,0,0.2);"></div>
+              </div>
+              <span>3.next</span>
+            </div>
+            <!-- Register Button (DuBois primary) -->
+            <button style="background:#2272B4; color:white; border:none; padding:0 16px; height:32px; border-radius:4px; font-size:13px; font-weight:400; cursor:pointer; display:flex; align-items:center; gap:6px; font-family:inherit;">
+              <span style="font-size:16px; line-height:1;">+</span> Register MCP Server
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search/Filter bar -->
+      <div style="padding:0 24px 16px 24px;">
+        <div style="display:flex; gap:8px;">
+          <input type="text" placeholder="Search MCP servers..." style="flex:1; padding:6px 12px; height:32px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#11171C; outline:none;">
+          <select style="padding:6px 12px; height:32px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#5F7281; background:white; cursor:pointer;">
+            <option>All Lifecycle States</option>
+          </select>
+          <select style="padding:6px 12px; height:32px; box-sizing:border-box; border:1px solid #C0CDD8; border-radius:4px; font-size:13px; font-family:inherit; color:#5F7281; background:white; cursor:pointer;">
+            <option>All Types</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table placeholder -->
+      <div style="flex:1; margin:0 24px 24px 24px; background:#F6F7F9; border:1px solid #E8ECF0; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#5F7281;">
+        <div style="text-align:center;">
+          <p style="margin:0; font-size:13px;">MCP Server list table (Section 2)</p>
+          <p style="margin:4px 0 0; font-size:12px; color:#8396A5;">10 registered servers with lifecycle badges</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <h3>Corrections from MLflow Research</h3>
+  <table style="width:100%; border-collapse:collapse; font-size:13px; margin-top:8px;">
+    <thead>
+      <tr style="text-align:left; border-bottom:2px solid #ddd;">
+        <th style="padding:8px;">Element</th>
+        <th style="padding:8px;">Initial (Wrong)</th>
+        <th style="padding:8px;">Actual MLflow</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #eee;">
+        <td style="padding:8px;">Primary color</td>
+        <td style="padding:8px;"><span style="color:#7B3FE4;">Purple #7B3FE4</span></td>
+        <td style="padding:8px;"><span style="color:#2272B4; font-weight:600;">Blue #2272B4</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee;">
+        <td style="padding:8px;">Design system</td>
+        <td style="padding:8px;">Generic</td>
+        <td style="padding:8px;">Databricks DuBois</td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee;">
+        <td style="padding:8px;">Sidebar width</td>
+        <td style="padding:8px;">200px, lavender bg</td>
+        <td style="padding:8px;">190px, grey050 (#F6F7F9)</td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee;">
+        <td style="padding:8px;">Header bar</td>
+        <td style="padding:8px;">Global top bar</td>
+        <td style="padding:8px;">None — per-page PageHeader</td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee;">
+        <td style="padding:8px;">Content area</td>
+        <td style="padding:8px;">Flat white</td>
+        <td style="padding:8px;">White card with 8px margin, 8px radius, shadow</td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee;">
+        <td style="padding:8px;">Active nav style</td>
+        <td style="padding:8px;">Purple highlight + border</td>
+        <td style="padding:8px;">Blue-tinted bg rgba(34,114,180,0.16) + bold blue700</td>
+      </tr>
+      <tr>
+        <td style="padding:8px;">Button style</td>
+        <td style="padding:8px;">Rounded, purple</td>
+        <td style="padding:8px;">4px radius, blue #2272B4, 32px height</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="options" style="margin-top:24px;">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>Accurate — move to Section 2 (List Table)</h3>
+      <p>Layout and DuBois styling looks right</p>
+    </div>
+  </div>
+  <div class="option" data-choice="revise" onclick="toggleSelect(this)">
+    <div class="letter">↻</div>
+    <div class="content">
+      <h3>Needs changes</h3>
+      <p>Tell me what to adjust in the terminal</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,263 @@
+<h2>Section 5: Version Detail View</h2>
+<p class="subtitle">Clicking "Version 3" of Red Hat OpenShift — follows MLflow's model version detail pattern with MCP-specific sections</p>
+
+<div class="mockup">
+  <div class="mockup-header">MCP Server Version Detail — Red Hat OpenShift v3</div>
+  <div class="mockup-body" style="background:#fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size:13px; color:#11171C; line-height:20px; padding:0; max-height:720px; overflow-y:auto;">
+
+    <!-- Page Header -->
+    <div style="padding:20px 24px 0 24px; border-bottom:1px solid #E8ECF0;">
+      <!-- Breadcrumb -->
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#5F7281; margin-bottom:8px;">
+        <a href="#" style="color:#2272B4; text-decoration:none;">MCP Servers</a>
+        <span style="color:#D1D9E1;">/</span>
+        <a href="#" style="color:#2272B4; text-decoration:none;">Red Hat OpenShift</a>
+        <span style="color:#D1D9E1;">/</span>
+        <span style="color:#11171C;">Version 3</span>
+      </div>
+      <!-- Title + Actions -->
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
+        <div>
+          <h2 style="margin:0; font-size:22px; font-weight:600; color:#11171C; line-height:28px;">Version 3</h2>
+          <span style="font-size:12px; color:#5F7281;">Red Hat OpenShift</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <!-- Lifecycle transition dropdown -->
+          <div style="display:flex; align-items:center; gap:6px; border:1px solid #C0CDD8; border-radius:4px; padding:6px 12px; cursor:pointer; height:32px; box-sizing:border-box;">
+            <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <!-- Overflow -->
+          <button style="border:1px solid #C0CDD8; border-radius:4px; background:white; padding:6px 10px; cursor:pointer; height:32px; box-sizing:border-box; display:flex; align-items:center;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="3" r="1" fill="#445461"/><circle cx="7" cy="7" r="1" fill="#445461"/><circle cx="7" cy="11" r="1" fill="#445461"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metadata Section -->
+    <div style="padding:0 24px;">
+      <div style="padding:16px 0; border-bottom:1px solid #F0F2F4;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px; cursor:pointer;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px; font-weight:600; color:#11171C;">Metadata</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Registered At</div>
+            <div style="color:#11171C;">Apr 14, 2026 10:22 AM</div>
+          </div>
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Last Modified</div>
+            <div style="color:#11171C;">Apr 16, 2026 02:30 PM</div>
+          </div>
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Creator</div>
+            <div style="color:#11171C;">platform-admin</div>
+          </div>
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Version</div>
+            <div style="color:#11171C; font-family:monospace;">2.1.0</div>
+          </div>
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Source Run</div>
+            <div><a href="#" style="color:#2272B4; text-decoration:none; font-family:monospace; font-size:12px;">run-4a8f3c2d</a></div>
+          </div>
+          <div>
+            <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Lifecycle State</div>
+            <div>
+              <span style="display:inline-flex; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25;">Published</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deployment References Section (MCP-specific) -->
+    <div style="padding:0 24px;">
+      <div style="padding:16px 0; border-bottom:1px solid #F0F2F4;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px; cursor:pointer;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px; font-weight:600; color:#11171C;">Deployment</span>
+          <span style="display:inline-flex; align-items:center; gap:4px; padding:1px 6px; border-radius:4px; font-size:11px; background:rgba(2,179,2,0.08); color:#203C25; margin-left:4px;">
+            <span style="width:6px; height:6px; background:#3CAA60; border-radius:50%; display:inline-block;"></span>
+            Active
+          </span>
+        </div>
+        <div style="background:#F6F7F9; border-radius:4px; padding:12px 16px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
+            <div>
+              <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Namespace</div>
+              <div style="color:#11171C; font-family:monospace; font-size:12px;">rhoai-mcp-servers</div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Endpoint</div>
+              <div style="color:#2272B4; font-family:monospace; font-size:12px;">https://openshift-mcp.rhoai.svc:8443</div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:#8396A5; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Gateway Registered</div>
+              <div style="display:flex; align-items:center; gap:4px;">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#3CAA60" stroke-width="1.5"/><path d="M4.5 7l2 2 3.5-4" stroke="#3CAA60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span style="color:#203C25; font-size:12px;">Yes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div style="padding:0 24px;">
+      <div style="padding:16px 0; border-bottom:1px solid #F0F2F4;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px; cursor:pointer;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px; font-weight:600; color:#11171C;">Description</span>
+          <button style="margin-left:auto; font-size:12px; color:#2272B4; background:none; border:none; cursor:pointer;">Edit</button>
+        </div>
+        <p style="color:#445461; margin:0; line-height:1.6;">
+          Added scale_deployment and get_events tools. Improved error handling for namespace-scoped queries. Updated to support OpenShift 4.16+ API changes.
+        </p>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <div style="padding:0 24px;">
+      <div style="padding:16px 0; border-bottom:1px solid #F0F2F4;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px; cursor:pointer;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px; font-weight:600; color:#11171C;">Tags</span>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <span style="display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:4px; font-size:12px; background:rgba(0,0,59,0.05); color:#11171C;">
+            <span style="color:#5F7281;">release:</span> 2.1.0
+          </span>
+          <span style="display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:4px; font-size:12px; background:rgba(0,0,59,0.05); color:#11171C;">
+            <span style="color:#5F7281;">ocp-version:</span> 4.16+
+          </span>
+          <button style="padding:3px 10px; border-radius:4px; font-size:12px; background:transparent; color:#2272B4; border:1px dashed #C0CDD8; cursor:pointer;">+ Add tag</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- server.json Section (MCP-specific — the immutable payload) -->
+    <div style="padding:0 24px;">
+      <div style="padding:16px 0; border-bottom:1px solid #F0F2F4;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px; cursor:pointer;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px; font-weight:600; color:#11171C;">Server Definition</span>
+          <span style="font-size:11px; color:#8396A5; font-weight:400; margin-left:4px;">server.json &middot; immutable</span>
+        </div>
+        <div style="background:#1F272D; border-radius:4px; padding:16px; font-family:'Cascadia Code', 'Fira Code', monospace; font-size:12px; color:#E8ECF0; line-height:1.7; max-height:160px; overflow-y:auto;">
+<span style="color:#8396A5;">{</span>
+  <span style="color:#4299E0;">"name"</span>: <span style="color:#3CAA60;">"openshift-mcp"</span>,
+  <span style="color:#4299E0;">"version"</span>: <span style="color:#3CAA60;">"2.1.0"</span>,
+  <span style="color:#4299E0;">"transport"</span>: <span style="color:#3CAA60;">"streamable-http"</span>,
+  <span style="color:#4299E0;">"tools"</span>: <span style="color:#8396A5;">[</span>
+    <span style="color:#8396A5;">{</span> <span style="color:#4299E0;">"name"</span>: <span style="color:#3CAA60;">"get_pods"</span>, <span style="color:#4299E0;">"description"</span>: <span style="color:#3CAA60;">"List pods in a namespace"</span> <span style="color:#8396A5;">}</span>,
+    <span style="color:#8396A5;">{</span> <span style="color:#4299E0;">"name"</span>: <span style="color:#3CAA60;">"get_logs"</span>, <span style="color:#4299E0;">"description"</span>: <span style="color:#3CAA60;">"Get container logs"</span> <span style="color:#8396A5;">}</span>,
+    <span style="color:#8396A5;">{</span> <span style="color:#4299E0;">"name"</span>: <span style="color:#3CAA60;">"get_deployments"</span>, <span style="color:#4299E0;">"description"</span>: <span style="color:#3CAA60;">"List deployments"</span> <span style="color:#8396A5;">}</span>,
+    <span style="color:#8396A5;">{</span> <span style="color:#4299E0;">"name"</span>: <span style="color:#3CAA60;">"scale_deployment"</span>, <span style="color:#4299E0;">"description"</span>: <span style="color:#3CAA60;">"Scale replicas"</span> <span style="color:#8396A5;">}</span>,
+    <span style="color:#8396A5;">{</span> <span style="color:#4299E0;">"name"</span>: <span style="color:#3CAA60;">"get_events"</span>, <span style="color:#4299E0;">"description"</span>: <span style="color:#3CAA60;">"Get cluster events"</span> <span style="color:#8396A5;">}</span>,
+    <span style="color:#F8D4A5;">...</span> <span style="color:#8396A5;">(12 tools total)</span>
+  <span style="color:#8396A5;">]</span>
+<span style="color:#8396A5;">}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schema Section (matches MLflow's Schema section) -->
+    <div style="padding:0 24px 24px 24px;">
+      <div style="padding:16px 0;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px; cursor:pointer;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3l3 3.5L8 3" stroke="#5F7281" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px; font-weight:600; color:#11171C;">Tools Schema</span>
+          <span style="font-size:12px; color:#8396A5; font-weight:400;">(12 tools)</span>
+        </div>
+        <!-- Tools table (like MLflow's Input/Output schema table) -->
+        <table style="width:100%; border-collapse:collapse; font-size:13px;">
+          <thead>
+            <tr style="border-bottom:1px solid #E8ECF0; background:#FAFBFC;">
+              <th style="text-align:left; padding:8px 12px; font-weight:600; color:#5F7281; font-size:12px;">Tool Name</th>
+              <th style="text-align:left; padding:8px 12px; font-weight:600; color:#5F7281; font-size:12px;">Description</th>
+              <th style="text-align:left; padding:8px 12px; font-weight:600; color:#5F7281; font-size:12px;">Input Schema</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #F0F2F4;">
+              <td style="padding:8px 12px;"><code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">get_pods</code></td>
+              <td style="padding:8px 12px; color:#445461;">List pods in a namespace</td>
+              <td style="padding:8px 12px; font-family:monospace; font-size:11px; color:#5F7281;">{namespace: string, label_selector?: string}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #F0F2F4;">
+              <td style="padding:8px 12px;"><code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">get_logs</code></td>
+              <td style="padding:8px 12px; color:#445461;">Get container logs</td>
+              <td style="padding:8px 12px; font-family:monospace; font-size:11px; color:#5F7281;">{pod: string, namespace: string, lines?: number}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #F0F2F4;">
+              <td style="padding:8px 12px;"><code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">get_deployments</code></td>
+              <td style="padding:8px 12px; color:#445461;">List deployments</td>
+              <td style="padding:8px 12px; font-family:monospace; font-size:11px; color:#5F7281;">{namespace: string}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #F0F2F4;">
+              <td style="padding:8px 12px;"><code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">describe_resource</code></td>
+              <td style="padding:8px 12px; color:#445461;">Describe any K8s resource</td>
+              <td style="padding:8px 12px; font-family:monospace; font-size:11px; color:#5F7281;">{kind: string, name: string, namespace: string}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #F0F2F4;">
+              <td style="padding:8px 12px;"><code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">scale_deployment</code></td>
+              <td style="padding:8px 12px; color:#445461;">Scale replicas up/down</td>
+              <td style="padding:8px 12px; font-family:monospace; font-size:11px; color:#5F7281;">{name: string, namespace: string, replicas: number}</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;"><code style="font-size:12px; color:#0E538B; background:rgba(34,114,180,0.08); padding:2px 6px; border-radius:3px;">get_events</code></td>
+              <td style="padding:8px 12px; color:#445461;">Get cluster events</td>
+              <td style="padding:8px 12px; font-family:monospace; font-size:11px; color:#5F7281;">{namespace?: string, limit?: number}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding:8px 0; text-align:center;">
+          <a href="#" style="font-size:12px; color:#2272B4; text-decoration:none;">Show all 12 tools</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <h3>Design Decisions</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Follows MLflow version detail exactly:</strong> Breadcrumb → Title + lifecycle dropdown → Metadata → Description → Tags → Schema</li>
+    <li><strong>Deployment section</strong> — MCP-specific. Shows namespace, endpoint, and gateway registration status. No MLflow equivalent.</li>
+    <li><strong>Server Definition (server.json)</strong> — MCP-specific. The immutable payload displayed as syntax-highlighted JSON. Analogous to MLflow's artifact reference.</li>
+    <li><strong>Tools Schema table</strong> — maps to MLflow's Input/Output Schema section. Shows tool name, description, and input schema per tool.</li>
+    <li><strong>Source Run link</strong> — in metadata, follows MLflow's run lineage pattern</li>
+    <li><strong>Lifecycle dropdown in header</strong> — same stage transition pattern as MLflow (Transition to → [state])</li>
+  </ul>
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <h3>3.next Additions</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Governance Status panel</strong> — below Deployment section showing Approval (Pending/Approved/Rejected), Verification (Unverified/Verified), Certification (None/Certified) as badge rows with timestamps and decision rationale</li>
+    <li><strong>"Request Approval" button</strong> in header</li>
+    <li><strong>Audit trail</strong> — collapsible section showing state change history with who/when/why</li>
+  </ul>
+</div>
+
+<div class="options" style="margin-top:24px;">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">&#10003;</div>
+    <div class="content">
+      <h3>Looks good — move to Section 6 (3.next Features)</h3>
+      <p>Version detail page layout works</p>
+    </div>
+  </div>
+  <div class="option" data-choice="revise" onclick="toggleSelect(this)">
+    <div class="letter">&#8635;</div>
+    <div class="content">
+      <h3>Needs changes</h3>
+      <p>Tell me what to adjust in the terminal</p>
+    </div>
+  </div>
+</div>
