@@ -70,7 +70,7 @@ The catalog ships with three tiers of MCP servers, each addressing real enterpri
 
 - **Confluent Cloud**: Allow AI to manage and debug data streaming operations on Kafka and Flink.
 - **EnterpriseDB (PostgreSQL)**: Connect agents to PostgreSQL databases for queries, schema management and database operations, powered by EDB's pg-airman-mcp server.
-- **HashiCorp | an IBM Company Terraform**: Let agents provision and manage infrastructure as code, bridging the gap between AI-driven decisions and infrastructure execution.
+- **HashiCorp | an IBM Company (Terraform)**: Let agents provision and manage infrastructure as code, bridging the gap between AI-driven decisions and infrastructure execution.
 - **Microsoft Azure**: Enable agents to manage Azure resources, provision services and automate cloud operations alongside your OpenShift workloads.
 - **Dynatrace**: Bring full-stack observability into your agentic workflows. Agents can query performance data, investigate incidents and correlate metrics across your environment.
 
